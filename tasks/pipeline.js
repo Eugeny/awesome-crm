@@ -41,6 +41,7 @@ var jsFilesToInject = [
   'js/dependencies/**/*.js',
   'bower_components/angular/angular.min.js',
   'bower_components/angular-ui-router/release/angular-ui-router.min.js',
+  'bower_components/angular-resource/angular-resource.min.js',
 
   'bower_components/gentelella/vendors/jquery/dist/jquery.min.js',
   'bower_components/gentelella/vendors/bootstrap/dist/js/bootstrap.min.js',

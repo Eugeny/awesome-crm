@@ -17,12 +17,20 @@
 module.exports = function(grunt) {
 
   grunt.config.set('concat', {
+    jsDeps: {
+      src: require('../pipeline').jsFilesToInject.filter(function(x){return x.indexOf('bower_components') != -1;}),
+      dest: '.tmp/public/min/deps.min.js'
+    },
     js: {
-      src: require('../pipeline').jsFilesToInject,
+      src: require('../pipeline').jsFilesToInject.filter(function(x){return x.indexOf('bower_components') == -1;}),
       dest: '.tmp/public/concat/production.js'
     },
+    cssDeps: {
+      src: require('../pipeline').cssFilesToInject.filter(function(x){return x.indexOf('bower_components') != -1;}),
+      dest: '.tmp/public/min/deps.min.css'
+    },
     css: {
-      src: require('../pipeline').cssFilesToInject,
+      src: require('../pipeline').cssFilesToInject.filter(function(x){return x.indexOf('bower_components') == -1;}),
       dest: '.tmp/public/concat/production.css'
     }
   });

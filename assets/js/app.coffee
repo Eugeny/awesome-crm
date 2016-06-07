@@ -1,8 +1,10 @@
 angular.module('awesomeCRM', [
   'ui.router'
+  'ngResource'
   'formstamp'
   'awesomeCRM.contacts'
-]).config(['$stateProvider', '$urlRouterProvider',
-  ($stateProvider, $urlRouterProvider) ->
-    $urlRouterProvider.otherwise("/");
-]);
+]).config(($stateProvider, $urlRouterProvider) ->
+  "ngInject"
+
+  $urlRouterProvider.otherwise("/");
+);

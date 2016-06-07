@@ -28,6 +28,10 @@
  *
  */
 module.exports = function(grunt) {
+  var prodStyles = ['.tmp/public/min/deps.min.css', '.tmp/public/min/production.min.css'].concat(
+    require('../pipeline').cssFilesToInject.filter(function(x){return !x.match(/\.css$/);})
+  );
+  var prodScripts = ['.tmp/public/min/deps.min.js', '.tmp/public/min/production.min.js'];
 
   grunt.config.set('sails-linker', {
     devJs: {
@@ -67,9 +71,9 @@ module.exports = function(grunt) {
         appRoot: '.tmp/public'
       },
       files: {
-        '.tmp/public/**/*.html': ['.tmp/public/min/production.min.js'],
-        'views/**/*.html': ['.tmp/public/min/production.min.js'],
-        'views/**/*.ejs': ['.tmp/public/min/production.min.js']
+        '.tmp/public/**/*.html': prodScripts,
+        'views/**/*.html': prodScripts,
+        'views/**/*.ejs': prodScripts
       }
     },
 
@@ -82,9 +86,9 @@ module.exports = function(grunt) {
         relative: true
       },
       files: {
-        '.tmp/public/**/*.html': ['.tmp/public/min/production.min.js'],
-        'views/**/*.html': ['.tmp/public/min/production.min.js'],
-        'views/**/*.ejs': ['.tmp/public/min/production.min.js']
+        '.tmp/public/**/*.html': prodScripts,
+        'views/**/*.html': prodScripts,
+        'views/**/*.ejs': prodScripts
       }
     },
 
@@ -127,9 +131,9 @@ module.exports = function(grunt) {
         appRoot: '.tmp/public'
       },
       files: {
-        '.tmp/public/index.html': ['.tmp/public/min/production.min.css'],
-        'views/**/*.html': ['.tmp/public/min/production.min.css'],
-        'views/**/*.ejs': ['.tmp/public/min/production.min.css']
+        '.tmp/public/index.html': prodStyles,
+        'views/**/*.html': prodStyles,
+        'views/**/*.ejs': prodStyles
       }
     },
 
@@ -142,9 +146,9 @@ module.exports = function(grunt) {
         relative: true
       },
       files: {
-        '.tmp/public/index.html': ['.tmp/public/min/production.min.css'],
-        'views/**/*.html': ['.tmp/public/min/production.min.css'],
-        'views/**/*.ejs': ['.tmp/public/min/production.min.css']
+        '.tmp/public/index.html': prodStyles,
+        'views/**/*.html': prodStyles,
+        'views/**/*.ejs': prodStyles
       }
     },
 
@@ -196,7 +200,7 @@ module.exports = function(grunt) {
         appRoot: '.tmp/public'
       },
       files: {
-        'views/**/*.jade': ['.tmp/public/min/production.min.js']
+        'views/**/*.jade': prodScripts
       }
     },
 
@@ -209,7 +213,7 @@ module.exports = function(grunt) {
         relative: true
       },
       files: {
-        'views/**/*.jade': ['.tmp/public/min/production.min.js']
+        'views/**/*.jade': prodScripts
       }
     },
 
@@ -248,7 +252,7 @@ module.exports = function(grunt) {
         appRoot: '.tmp/public'
       },
       files: {
-        'views/**/*.jade': ['.tmp/public/min/production.min.css']
+        'views/**/*.jade': prodStyles
       }
     },
 
@@ -261,7 +265,7 @@ module.exports = function(grunt) {
         relative: true
       },
       files: {
-        'views/**/*.jade': ['.tmp/public/min/production.min.css']
+        'views/**/*.jade': prodStyles
       }
     },
 
