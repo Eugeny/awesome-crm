@@ -25,6 +25,7 @@ var cssFilesToInject = [
   'bower_components/gentelella/build/css/custom.min.css',
   'bower_components/gentelella/vendors/font-awesome/fonts/fontawesome-webfont.woff2',
   'bower_components/gentelella/vendors/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2',
+  'bower_components/angular-formstamp/dist/formstamp.css',
 
   'styles/**/*.css'
 ];
@@ -47,8 +48,10 @@ var jsFilesToInject = [
   'bower_components/gentelella/vendors/bootstrap/dist/js/bootstrap.min.js',
   'bower_components/gentelella/build/js/custom.min.js',
 
-  'bower_components/angular-formstamp/formstamp.js',
-
+  'bower_components/angular-formstamp/dist/formstamp.js',
+  'bower_components/moment/min/moment.min.js',
+  'bower_components/angular-moment/angular-moment.min.js',
+  'node_modules/ng-country-select/dist/ng-country-select.min.js',
 
   // All of the rest of your client-side js files
   // will be injected here in no particular order.

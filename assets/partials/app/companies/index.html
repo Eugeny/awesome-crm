@@ -1,0 +1,53 @@
+<div ui-view>
+
+  <form>
+  </form>
+  <div class="">
+    <div class="page-title">
+      <div class="title_left">
+        <h3>Companies</h3>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+          <div class="x_content">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="(k,i) in companies">
+                  <td><a ui-sref="companies.edit({id: i.id})">{{i.name}}</a></td>
+                  <td>
+                    <ul>
+                      <li><a href ng-click="delete(i, k)">Delete</a></li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+          <div class="x_content">
+            <div class="pull-right">
+              <a ui-sref="companies.create">Create New Company</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

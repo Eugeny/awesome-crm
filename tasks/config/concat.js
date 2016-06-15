@@ -16,21 +16,23 @@
  */
 module.exports = function(grunt) {
 
+  isDep = function(x){return x.indexOf('bower_components') != -1 || x.indexOf('node_modules') != -1;};
+
   grunt.config.set('concat', {
     jsDeps: {
-      src: require('../pipeline').jsFilesToInject.filter(function(x){return x.indexOf('bower_components') != -1;}),
+      src: require('../pipeline').jsFilesToInject.filter(isDep),
       dest: '.tmp/public/min/deps.min.js'
     },
     js: {
-      src: require('../pipeline').jsFilesToInject.filter(function(x){return x.indexOf('bower_components') == -1;}),
+      src: require('../pipeline').jsFilesToInject.filter(isDep),
       dest: '.tmp/public/concat/production.js'
     },
     cssDeps: {
-      src: require('../pipeline').cssFilesToInject.filter(function(x){return x.indexOf('bower_components') != -1;}),
+      src: require('../pipeline').cssFilesToInject.filter(isDep),
       dest: '.tmp/public/min/deps.min.css'
     },
     css: {
-      src: require('../pipeline').cssFilesToInject.filter(function(x){return x.indexOf('bower_components') == -1;}),
+      src: require('../pipeline').cssFilesToInject.filter(isDep),
       dest: '.tmp/public/concat/production.css'
     }
   });

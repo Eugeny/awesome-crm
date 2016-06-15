@@ -1,0 +1,114 @@
+<div class="">
+  <div class="page-title">
+    <div class="title_left">
+      <h3 ng-if="company.id">Edit Company {{company.name}}</h3>
+      <h3 ng-if="!company.id">Create New Company</h3>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_content">
+          <form fs-form-for model="company" ng-submit="save()">
+            <fieldset class="form-horizontal">
+              <fs-input as="text" name="name" required="true" label="Name"></fs-input>
+              <fs-input as="text" name="address" required="true" label="Address"></fs-input>
+              <fs-input as="text" name="zip" required="true" label="Zip"></fs-input>
+              <fs-input as="text" name="city" required="true" label="City"></fs-input>
+
+              <fs-row label="Country">
+                <div fs-select items="countries" ng-model="company.country" freetext="true" >
+                  <span ng-show="item">
+                    {{item}}
+                  </span>
+                  <span ng-hide="item"> No country </span>
+                </div>
+              </fs-row>
+
+              <fs-row label="Type">
+                <div fs-select freetext="true" ng-model="company.type" items="['End Customer', 'Partner', 'Potential Partner', 'Supplier', 'Marketing']">
+                  <span ng-show="item">{{item}}</span>
+                  <span ng-hide="item">No Type</span>
+                </div>
+              </fs-row>
+
+              <fs-row label="Subtype">
+                <div fs-select freetext="true" ng-model="company.subtype" items="['Broadcast', 'Postproduction']">
+                  <span ng-show="item">{{item}}</span>
+                  <span ng-hide="item">No Subtype</span>
+                </div>
+              </fs-row>
+
+              <fs-input as="text" name="fax" required="true" label="Fax"></fs-input>
+              <fs-input as="email" name="email" required="true" label="Email"></fs-input>
+              <fs-input as="text" name="website" required="true" label="Website"></fs-input>
+
+              <div class="ln_solid"></div>
+              <div class="form-group">
+                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                  <a ui-sref="contacts" class="btn btn-primary">Cancel</a>
+                  <button type="submit" class="btn btn-success">Submit</button>
+                  <a ng-if="company.id" href ng-click="delete(company.id)" class="btn btn-danger">Delete</a>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_content">
+          <div class="comments-box">
+            <div class="row">
+              <div class="col-xs-12">
+                <h3>User Comment Example</h3>
+              </div>
+            </div>
+            <div class="row" ng-repeat="c in company.comments">
+              <div class="col-xs-2">
+                <div class="thumbnail">
+                  <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                </div>
+              </div>
+
+              <div class="col-xs-10">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <strong>{{c.createdBy.username}}</strong>
+                    <span class="text-muted">
+                      commented
+                      <span am-time-ago="c.createdAt"></span>
+                    </span>
+                  </div>
+                  <div class="panel-body">
+                    {{c.text}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <h3>Comments</h3>
+          <form fs-form-for model="comment" ng-submit="addComment()">
+            <fieldset class="row form-horizontal">
+              <fs-input as="textarea" name="text" required="true" label="Comment"></fs-input>
+
+              <div class="ln_solid"></div>
+              <div class="form-group">
+                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                  <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

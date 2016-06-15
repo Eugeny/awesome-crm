@@ -20,11 +20,12 @@
  *
  */
 module.exports = function(grunt) {
-  var pipeline = require('../pipeline')
-  var bowerAssets = pipeline.jsFilesToInject.concat(pipeline.cssFilesToInject)
-    .filter(function(x){return x.indexOf('bower_components') != -1;})
-    .map(function(x){return x.match(/bower_components\/(.*)/)[1];})
+  var pipeline = require('../pipeline');
+  var deps = pipeline.jsFilesToInject.concat(pipeline.cssFilesToInject)
+    .filter(function(x){return x.indexOf('bower_components') != -1 || x.indexOf('node_modules') != -1;})
+    .map(function(x){return x.match(/(bower_components|node_modules).*$/)[0];})
   ;
+  console.log(deps)
 
   grunt.config.set('copy', {
     dev: {
@@ -35,9 +36,9 @@ module.exports = function(grunt) {
         dest: '.tmp/public'
       }, {
         expand: true,
-        cwd: './bower_components',
-        src: bowerAssets,
-        dest: '.tmp/public/bower_components'
+        cwd: './',
+        src: deps,
+        dest: '.tmp/public'
       }]
     },
     build: {

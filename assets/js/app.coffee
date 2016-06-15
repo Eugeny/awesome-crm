@@ -2,7 +2,10 @@ angular.module('awesomeCRM', [
   'ui.router'
   'ngResource'
   'formstamp'
+  'angularMoment'
+  'countrySelect'
   'awesomeCRM.contacts'
+  'awesomeCRM.companies'
   'awesomeCRM.auth'
   'awesomeCRM.index'
 ]).config(($stateProvider, $urlRouterProvider, $httpProvider) ->

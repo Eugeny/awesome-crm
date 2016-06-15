@@ -11,9 +11,9 @@ angular.module('awesomeCRM.contacts', [
 
     controller: ($scope, $state, contacts, contactsProvider) ->
       $scope.contacts = contacts
-      $scope.delete = (contact, k) ->
+      $scope.delete = (contact, k = -1) ->
         contactsProvider.delete(contact)
-        $scope.contacts.splice(k, 1) if k
+        $scope.contacts.splice(k, 1) if k != -1
   )
 
   # Create page
