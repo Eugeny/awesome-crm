@@ -1,53 +1,100 @@
 <div ui-view>
-
-  <form>
-  </form>
-  <div class="">
-    <div class="page-title">
-      <div class="title_left">
-        <h3>Companies</h3>
-      </div>
+  <div class="page-title">
+    <div class="title_left">
+      <h3>Companies</h3>
     </div>
-    <div class="clearfix"></div>
+  </div>
+  <div class="clearfix"></div>
 
-    <div class="row">
-      <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-          <div class="x_content">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="(k,i) in companies">
-                  <td><a ui-sref="companies.edit({id: i.id})">{{i.name}}</a></td>
-                  <td>
-                    <ul>
-                      <li><a href ng-click="delete(i, k)">Delete</a></li>
-                    </ul>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Filters and grouping</h2>
+          <ul class="nav navbar-right panel_toolbox">
+            <li>
+              <a ng-click="filterShown = !filterShown">
+                <i class="fa" ng-class="filterShown ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+              </a>
+            </li>
+            <li>
+              <a ng-click="resetFilters()">
+                <i class="fa fa-close"></i>
+              </a>
+            </li>
+          </ul>
+          <div class="clearfix"></div>
         </div>
-      </div>
-    </div>
 
-    <div class="row">
-      <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-          <div class="x_content">
-            <div class="pull-right">
-              <a ui-sref="companies.create">Create New Company</a>
-            </div>
-          </div>
+        <div class="x_content" ng-show="filterShown">
+          <form fs-form-for model="filters">
+            <fieldset class="form-horizontal">
+              <fs-input as="text" name="search" label="Search"></fs-input>
+
+              <fs-row label="Type">
+                <div fs-select required="" ng-model="filters.type" items="companyTypesFilter">
+                  <span ng-show="item">{{item.label}}</span>
+                  <span ng-hide="item">All</span>
+                </div>
+              </fs-row>
+
+              <fs-row label="Grouping">
+                <div fs-select required="" ng-model="filters.groupField" items="[{key: 'alph', label: 'Alphabetic'}, {key: 'country', label:'By Country'}]">
+                  <span ng-show="item">{{item.label}}</span>
+                  <span ng-hide="item">No Grouping</span>
+                </div>
+              </fs-row>
+            </fieldset>
+          </form>
         </div>
       </div>
     </div>
   </div>
 
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_content">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Country</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody ng-repeat="(k,group) in companies | filter:customFilter | filter:filters.search | groupBy:(filters.groupField.key ? filters.groupField.key : 'id') | toArray:true | orderBy:groupMinSortField">
+              <tr class="active" ng-if="filters.groupField.key">
+                <td colspan="3">
+                  <a href ng-click="groupHidden[k] = !groupHidden[k]"><b>{{ group.$key }}</b></a>
+                </td>
+              </tr>
+              <tr ng-hide="!!groupHidden[k]" ng-repeat="i in group">
+                <td><a ui-sref="companies.edit({id: i.id})">{{i.name}}</a></td>
+                <td>{{i.country}}</td>
+                <td>
+                  <div class="btn-group">
+                    <a class="btn btn-danger btn-xs" href ng-click="delete(i, k)">Delete</a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_content">
+          <div class="pull-right">
+            <a class="btn btn-default" ui-sref="companies.create">Create New Company</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -11,12 +11,14 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
       <div class="x_panel">
         <div class="x_content">
-          <form fs-form-for model="company" ng-submit="save()">
+          <pre ng-if="errors">{{errors}}</pre>
+
+          <form fs-form-for name="companyForm" model="company" ng-submit="save()">
             <fieldset class="form-horizontal">
-              <fs-input as="text" name="name" required="true" label="Name"></fs-input>
-              <fs-input as="text" name="address" required="true" label="Address"></fs-input>
-              <fs-input as="text" name="zip" required="true" label="Zip"></fs-input>
-              <fs-input as="text" name="city" required="true" label="City"></fs-input>
+              <fs-input as="text" name="name" label="Name"></fs-input>
+              <fs-input as="text" name="address" label="Address"></fs-input>
+              <fs-input as="text" name="zip" label="Zip"></fs-input>
+              <fs-input as="text" name="city" label="City"></fs-input>
 
               <fs-row label="Country">
                 <div fs-select items="countries" ng-model="company.country" freetext="true" >
@@ -28,7 +30,7 @@
               </fs-row>
 
               <fs-row label="Type">
-                <div fs-select freetext="true" ng-model="company.type" items="['End Customer', 'Partner', 'Potential Partner', 'Supplier', 'Marketing']">
+                <div fs-select freetext="true" ng-model="company.type" items="companyTypes">
                   <span ng-show="item">{{item}}</span>
                   <span ng-hide="item">No Type</span>
                 </div>
@@ -41,9 +43,9 @@
                 </div>
               </fs-row>
 
-              <fs-input as="text" name="fax" required="true" label="Fax"></fs-input>
-              <fs-input as="email" name="email" required="true" label="Email"></fs-input>
-              <fs-input as="text" name="website" required="true" label="Website"></fs-input>
+              <fs-input as="text" name="fax" label="Fax"></fs-input>
+              <fs-input as="email" name="email" label="Email"></fs-input>
+              <fs-input as="text" name="website" label="Website"></fs-input>
 
               <div class="ln_solid"></div>
               <div class="form-group">

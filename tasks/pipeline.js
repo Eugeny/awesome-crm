@@ -51,6 +51,7 @@ var jsFilesToInject = [
   'bower_components/angular-formstamp/formstamp.js',
   'bower_components/moment/min/moment.min.js',
   'bower_components/angular-moment/angular-moment.min.js',
+  'bower_components/angular-filter/dist/angular-filter.min.js',
   'node_modules/ng-country-select/dist/ng-country-select.min.js',
 
   // All of the rest of your client-side js files

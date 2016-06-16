@@ -4,6 +4,7 @@ angular.module('awesomeCRM', [
   'formstamp'
   'angularMoment'
   'countrySelect'
+  'angular.filter'
   'awesomeCRM.contacts'
   'awesomeCRM.companies'
   'awesomeCRM.auth'
