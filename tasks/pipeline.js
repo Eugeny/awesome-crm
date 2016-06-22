@@ -26,6 +26,8 @@ var cssFilesToInject = [
   'bower_components/gentelella/vendors/font-awesome/fonts/fontawesome-webfont.woff2',
   'bower_components/gentelella/vendors/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2',
   'bower_components/angular-formstamp/formstamp.css',
+  'bower_components/angular-bootstrap/ui-bootstrap-csp.css',
+
 
   'styles/**/*.css'
 ];
@@ -51,7 +53,9 @@ var jsFilesToInject = [
   'bower_components/angular-formstamp/formstamp.js',
   'bower_components/moment/min/moment.min.js',
   'bower_components/angular-moment/angular-moment.min.js',
+  'bower_components/ng-file-upload/ng-file-upload-all.min.js',
   'bower_components/angular-filter/dist/angular-filter.min.js',
+  'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
   'node_modules/ng-country-select/dist/ng-country-select.min.js',
 
   // All of the rest of your client-side js files

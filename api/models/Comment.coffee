@@ -11,3 +11,7 @@ module.exports =
     company:
       model: 'company'
 
+#    files:
+#      collection: 'Filey',
+#      via: 'comment'
+

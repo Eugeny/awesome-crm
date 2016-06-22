@@ -17,6 +17,7 @@ module.exports =
       ]
     ).spread((company, commentUsers) ->
       commentUsers = _.keyBy(commentUsers, 'id')
+
       company.comments = _.map(company.comments, (comment) ->
         comment.createdBy = commentUsers[comment.createdBy]
         return comment

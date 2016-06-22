@@ -16,7 +16,8 @@
  */
 module.exports = function(grunt) {
 
-  isDep = function(x){return x.indexOf('bower_components') != -1 || x.indexOf('node_modules') != -1;};
+  var isDep = function(x){return x.indexOf('bower_components') != -1 || x.indexOf('node_modules') != -1;};
+  var isNotDep = function(x){return !isDep(x)};
 
   grunt.config.set('concat', {
     jsDeps: {
@@ -24,7 +25,7 @@ module.exports = function(grunt) {
       dest: '.tmp/public/min/deps.min.js'
     },
     js: {
-      src: require('../pipeline').jsFilesToInject.filter(isDep),
+      src: require('../pipeline').jsFilesToInject.filter(isNotDep),
       dest: '.tmp/public/concat/production.js'
     },
     cssDeps: {
@@ -32,7 +33,7 @@ module.exports = function(grunt) {
       dest: '.tmp/public/min/deps.min.css'
     },
     css: {
-      src: require('../pipeline').cssFilesToInject.filter(isDep),
+      src: require('../pipeline').cssFilesToInject.filter(isNotDep),
       dest: '.tmp/public/concat/production.css'
     }
   });

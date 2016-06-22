@@ -1,0 +1,13 @@
+<div class="thumbnail">
+  <a ng-if="file.type.indexOf('image/') >= 0" href="{{file.fd}}">
+    <img src="{{file.fd}}" alt="{{file.filename}}">
+  </a>
+</div>
+
+<div class="caption">
+  <p>
+    <a href="{{file.fd}}">
+      {{file.filename}} ({{file.size|bytes}})
+    </a>
+  </p>
+</div>

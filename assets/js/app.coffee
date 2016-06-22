@@ -5,6 +5,9 @@ angular.module('awesomeCRM', [
   'angularMoment'
   'countrySelect'
   'angular.filter'
+  'ngFileUpload'
+  'ui.bootstrap'
+  'awesomeCRM.services'
   'awesomeCRM.contacts'
   'awesomeCRM.companies'
   'awesomeCRM.auth'
@@ -25,4 +28,4 @@ angular.module('awesomeCRM', [
   ])
 
   $urlRouterProvider.otherwise("/");
-);
+)

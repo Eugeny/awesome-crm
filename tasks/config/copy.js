@@ -25,7 +25,6 @@ module.exports = function(grunt) {
     .filter(function(x){return x.indexOf('bower_components') != -1 || x.indexOf('node_modules') != -1;})
     .map(function(x){return x.match(/(bower_components|node_modules).*$/)[0];})
   ;
-  console.log(deps)
 
   grunt.config.set('copy', {
     dev: {

@@ -69,7 +69,7 @@
           <div class="comments-box">
             <div class="row">
               <div class="col-xs-12">
-                <h3>User Comment Example</h3>
+                <h3>Comments</h3>
               </div>
             </div>
             <div class="row" ng-repeat="c in company.comments">
@@ -91,19 +91,34 @@
                   <div class="panel-body">
                     {{c.text}}
                   </div>
+                  <div class="panel-footer">
+                    <div class="row">
+                      <div class="col-xs-3" ng-repeat="f in c.files">
+                        <div file="f"></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
           </div>
-          <h3>Comments</h3>
-          <form fs-form-for model="comment" ng-submit="addComment()">
+          <h3>Add Comment</h3>
+          <form fs-form-for model="comment" ng-submit="addComment()" ngf-drop="uploadFiles($files)" ngf-drag-over-class="'dragover'" ngf-multiple="true">
             <fieldset class="row form-horizontal">
               <fs-input as="textarea" name="text" required="true" label="Comment"></fs-input>
+
+              <div class="row">
+                <div class="col-xs-3" ng-repeat="f in comment.files">
+                  <div file="f"></div>
+                </div>
+              </div>
+              <uib-progressbar ng-if="uploadingProgress >= 0" class="progress-striped" value="uploadingProgress">{{uploadingProgress}}%</uib-progressbar>
 
               <div class="ln_solid"></div>
               <div class="form-group">
                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                  <a class="btn" ngf-select="uploadFiles($files)" multiple="multiple">Attach Files</a>
                   <button type="submit" class="btn btn-success">Submit</button>
                 </div>
               </div>
