@@ -1,6 +1,9 @@
-<div class="thumbnail">
+<div class="thumbnail text-center">
   <a ng-if="file.type.indexOf('image/') >= 0" href="{{file.fd}}">
     <img src="{{file.fd}}" alt="{{file.filename}}">
+  </a>
+  <a ng-if="file.type.indexOf('image/') < 0" href="{{file.fd}}">
+    <i class="fa fa-file fa-5x"></i>
   </a>
 </div>
 

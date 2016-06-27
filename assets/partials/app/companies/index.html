@@ -11,34 +11,22 @@
       <div class="x_panel">
         <div class="x_title">
           <h2>Filters and grouping</h2>
-          <ul class="nav navbar-right panel_toolbox">
-            <li>
-              <a ng-click="filterShown = !filterShown">
-                <i class="fa" ng-class="filterShown ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-              </a>
-            </li>
-            <li>
-              <a ng-click="resetFilters()">
-                <i class="fa fa-close"></i>
-              </a>
-            </li>
-          </ul>
           <div class="clearfix"></div>
         </div>
 
-        <div class="x_content" ng-show="filterShown">
-          <form fs-form-for model="filters">
-            <fieldset class="form-horizontal">
-              <fs-input as="text" name="search" label="Search"></fs-input>
+        <div class="x_content">
+          <form fs-form-for model="filters" id="filters">
+            <fieldset class="form-inline">
+              <fs-input as="text" name="search" placeholder="Search" label=""></fs-input>
 
-              <fs-row label="Type">
+              <fs-row label="">
                 <div fs-select required="" ng-model="filters.type" items="companyTypesFilter">
                   <span ng-show="item">{{item.label}}</span>
-                  <span ng-hide="item">All</span>
+                  <span ng-hide="item">All Types</span>
                 </div>
               </fs-row>
 
-              <fs-row label="Grouping">
+              <fs-row label="">
                 <div fs-select required="" ng-model="filters.groupField" items="[{key: 'alph', label: 'Alphabetic'}, {key: 'country', label:'By Country'}]">
                   <span ng-show="item">{{item.label}}</span>
                   <span ng-hide="item">No Grouping</span>

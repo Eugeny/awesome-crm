@@ -12,9 +12,13 @@ angular.module('awesomeCRM', [
   'awesomeCRM.companies'
   'awesomeCRM.auth'
   'awesomeCRM.index'
-]).config(($stateProvider, $urlRouterProvider, $httpProvider) ->
+]).config(($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) ->
   "ngInject"
 
+  $locationProvider.html5Mode(
+    enabled: true
+    requireBase: false
+  ).hashPrefix('*');
   $httpProvider.interceptors.push(['$q', '$location', ($q, $location) ->
     return {
       'responseError': (response) ->
