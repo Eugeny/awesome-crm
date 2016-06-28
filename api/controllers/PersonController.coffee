@@ -9,6 +9,7 @@ module.exports =
 
   findone: (req, res) ->
     Person.findOne(id: req.param('id'))
+    .populate('company')
     .populate('comments')
     .then((person) ->
       commentUsers = User.find(id: _.map(person.comments, 'createdBy'))

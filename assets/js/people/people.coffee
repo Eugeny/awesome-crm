@@ -82,10 +82,11 @@ angular.module('awesomeCRM.people', [
       person: (peopleProvider, $stateParams) -> peopleProvider.get(id: $stateParams.id)
       companies: (companiesProvider) -> companiesProvider.query()
 
-    controller: ($scope, $state, person, peopleProvider, commentsProvider, Upload, companies) ->
+    controller: ($scope, $state, person, peopleProvider, commentsProvider, Upload, companies, countriesProvider) ->
       $scope.person = person
       $scope.comment = {}
       $scope.companies = companies
+      $scope.countries = countriesProvider.countryNames
 
       $scope.addComment = () ->
         $scope.comment.person = person.id

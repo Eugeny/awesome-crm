@@ -26,6 +26,9 @@
                         {{item.name}}
                       </span>
                       <span ng-hide="item"> No Company </span>
+                      <a ui-sref="companies.edit({id:item.id})" aria-hidden="true" ng-show="item && $index*1 != $index" class="btn btn-default">
+                        <i class="fa fa-external-link"></i>
+                      </a>
                     </div>
                   </fs-row>
 
@@ -42,28 +45,40 @@
                     </div>
                   </div>
 
-                  <div ng-if="person.hasOwnAddress">
-                    <fs-input ng-if="person.hasOwnAddress" as="text" name="address" label="Address"></fs-input>
-                  </div>
+                  <fs-row label="Address">
+                    <span ng-switch="person.hasOwnAddress">
+                      <input ng-switch-when="true"  type="text" ng-model="person.address" class="form-control">
+                      <input ng-switch-default type="text" ng-model="person.company.address" disabled class="form-control">
+                    </span>
+                  </fs-row>
                 </div>
                 <div class="col-xs-6">
-                  <div ng-if="person.hasOwnAddress">
-                    <fs-input ng-if="person.hasOwnAddress" as="text" name="zip" label="Zip"></fs-input>
-                  </div>
-                  <div ng-if="person.hasOwnAddress">
-                    <fs-input ng-if="person.hasOwnAddress" as="text" name="city" label="City"></fs-input>
-                  </div>
 
-                  <div ng-if="person.hasOwnAddress">
-                    <fs-row label="Country">
-                      <div fs-select items="countries" ng-model="person.country" freetext="true" >
-                        <span ng-show="item">
-                          {{item}}
-                        </span>
-                        <span ng-hide="item"> No Country </span>
+                  <fs-row label="Zip">
+                    <span ng-switch="person.hasOwnAddress">
+                      <input ng-switch-when="true"  type="text" ng-model="person.zip" class="form-control">
+                      <input ng-switch-default type="text" ng-model="person.company.zip" disabled class="form-control">
+                    </span>
+                  </fs-row>
+                  <fs-row label="City">
+                    <span ng-switch="person.hasOwnAddress">
+                      <input ng-switch-when="true"  type="text" ng-model="person.city" class="form-control">
+                      <input ng-switch-default type="text" ng-model="person.company.city" disabled class="form-control">
+                    </span>
+                  </fs-row>
+                  <fs-row label="Country">
+                    <div ng-switch="person.hasOwnAddress">
+                      <div ng-switch-when="true">
+                        <div fs-select items="countries" ng-model="person.country" freetext="true" >
+                          <span ng-show="item">
+                            {{item}}
+                          </span>
+                          <span ng-hide="item"> No Country </span>
+                        </div>
                       </div>
-                    </fs-row>
-                  </div>
+                      <input ng-switch-default type="text" ng-model="person.company.city" disabled class="form-control">
+                    </div>
+                  </fs-row>
 
                   <fs-row label="Phone">
                     <div class="input-group">

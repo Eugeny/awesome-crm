@@ -108,10 +108,11 @@ angular.module('awesomeCRM.companies', [
       company: (companiesProvider, $stateParams) ->
         companiesProvider.get(id: $stateParams.id)
 
-    controller: ($scope, $state, company, companiesProvider, commentsProvider, Upload, $timeout) ->
+    controller: ($scope, $state, company, companiesProvider, commentsProvider, Upload, $timeout, countriesProvider) ->
       $scope.company = company
       $scope.comment = {}
       $scope.companyTypes = companyTypes
+      $scope.countries = countriesProvider.countryNames
 
       $scope.addComment = () ->
         $scope.comment.company = company.id
