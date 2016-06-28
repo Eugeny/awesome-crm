@@ -56,6 +56,7 @@ var jsFilesToInject = [
   'bower_components/ng-file-upload/ng-file-upload-all.min.js',
   'bower_components/angular-filter/dist/angular-filter.min.js',
   'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+  'bower_components/angular-cookies/angular-cookies.min.js',
   'node_modules/ng-country-select/dist/ng-country-select.min.js',
 
   // All of the rest of your client-side js files

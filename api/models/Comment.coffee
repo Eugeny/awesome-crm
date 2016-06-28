@@ -7,11 +7,7 @@ module.exports =
   attributes:
     text:
       type: 'string'
-
     company:
       model: 'company'
-
-#    files:
-#      collection: 'Filey',
-#      via: 'comment'
-
+    person:
+      model: 'person'

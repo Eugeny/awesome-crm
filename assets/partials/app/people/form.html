@@ -1,8 +1,8 @@
 <div class="">
   <div class="page-title">
     <div class="title">
-      <h3 ng-if="company.id">Edit Company {{company.name}}</h3>
-      <h3 ng-if="!company.id">Create New Company</h3>
+      <h3 ng-if="person.id">Edit Person {{person.firstName}} {{person.lastName}}</h3>
+      <h3 ng-if="!person.id">Create New Person</h3>
     </div>
   </div>
   <div class="clearfix"></div>
@@ -13,46 +13,64 @@
         <div class="x_content">
           <pre ng-if="errors">{{errors}}</pre>
 
-          <form fs-form-for name="companyForm" model="company" ng-submit="save()">
+          <form fs-form-for name="personForm" model="person" ng-submit="save()">
             <fieldset class="form-horizontal">
               <div class="row">
                 <div class="col-xs-6">
-                  <fs-input as="text" name="name" label="Name"></fs-input>
-                  <fs-input as="text" name="address" label="Address"></fs-input>
-                  <fs-input as="text" name="zip" label="Zip"></fs-input>
-                  <fs-input as="text" name="city" label="City"></fs-input>
+                  <fs-input as="text" name="firstName" label="First Name"></fs-input>
+                  <fs-input as="text" name="lastName" label="Last Name"></fs-input>
 
-                  <fs-row label="Country">
-                    <div fs-select items="countries" ng-model="company.country" freetext="true" >
-                    <span ng-show="item">
-                      {{item}}
-                    </span>
-                      <span ng-hide="item"> No country </span>
+                  <fs-row label="Company">
+                    <div fs-select items="companies" ng-model="person.company">
+                      <span ng-show="item">
+                        {{item.name}}
+                      </span>
+                      <span ng-hide="item"> No Company </span>
                     </div>
                   </fs-row>
-                  <fs-row label="Type">
-                    <div fs-select freetext="true" ng-model="company.type" items="companyTypes">
-                      <span ng-show="item">{{item}}</span>
-                      <span ng-hide="item">No Type</span>
+
+                  <fs-input as="text" name="position" label="Position"></fs-input>
+
+                  <div class="form-group">
+                    <div class="col-xs-offset-2 col-xs-10">
+                      <div class="checkbox">
+                        <label>
+                          <input name="hasOwnAddress" ng-model="person.hasOwnAddress" type="checkbox">
+                          Has Own Address
+                        </label>
+                      </div>
                     </div>
-                  </fs-row>
+                  </div>
+
+                  <div ng-if="person.hasOwnAddress">
+                    <fs-input ng-if="person.hasOwnAddress" as="text" name="address" label="Address"></fs-input>
+                  </div>
                 </div>
                 <div class="col-xs-6">
+                  <div ng-if="person.hasOwnAddress">
+                    <fs-input ng-if="person.hasOwnAddress" as="text" name="zip" label="Zip"></fs-input>
+                  </div>
+                  <div ng-if="person.hasOwnAddress">
+                    <fs-input ng-if="person.hasOwnAddress" as="text" name="city" label="City"></fs-input>
+                  </div>
 
-                  <fs-row label="Subtype">
-                    <div fs-select freetext="true" ng-model="company.subtype" items="['Broadcast', 'Postproduction']">
-                      <span ng-show="item">{{item}}</span>
-                      <span ng-hide="item">No Subtype</span>
-                    </div>
-                  </fs-row>
-
+                  <div ng-if="person.hasOwnAddress">
+                    <fs-row label="Country">
+                      <div fs-select items="countries" ng-model="person.country" freetext="true" >
+                        <span ng-show="item">
+                          {{item}}
+                        </span>
+                        <span ng-hide="item"> No Country </span>
+                      </div>
+                    </fs-row>
+                  </div>
 
                   <fs-row label="Phone">
                     <div class="input-group">
-                      <input name="phone" ng-model="company.phone" type="text" class="form-control">
+                      <input name="phone" ng-model="person.phone" type="text" class="form-control">
 
                       <span class="input-group-btn">
-                        <a class="btn btn-default" href="tel:{{company.phone}}">
+                        <a class="btn btn-default" href="tel:{{person.phone}}">
                           <i class="fa fa-phone"></i>
                         </a>
                       </span>
@@ -61,10 +79,10 @@
 
                   <fs-row label="Fax">
                     <div class="input-group">
-                      <input name="fax" ng-model="company.fax" type="text" class="form-control">
+                      <input name="fax" ng-model="person.fax" type="text" class="form-control">
 
                       <span class="input-group-btn">
-                        <a class="btn btn-default" href="tel:{{company.fax}}">
+                        <a class="btn btn-default" href="tel:{{person.fax}}">
                           <i class="fa fa-fax"></i>
                         </a>
                       </span>
@@ -73,23 +91,11 @@
 
                   <fs-row label="Email">
                     <div class="input-group">
-                      <input name="email" ng-model="company.email" type="text" class="form-control">
+                      <input name="email" ng-model="person.email" type="text" class="form-control">
 
                       <span class="input-group-btn">
-                        <a class="btn btn-default" href="mailto:{{company.email}}">
+                        <a class="btn btn-default" href="mailto:{{person.email}}">
                           <i class="fa fa-envelope-o"></i>
-                        </a>
-                      </span>
-                    </div>
-                  </fs-row>
-
-                  <fs-row label="Website">
-                    <div class="input-group">
-                      <input name="website" ng-model="company.website" type="text" class="form-control">
-
-                      <span class="input-group-btn">
-                        <a class="btn btn-default" href="{{(company.website.indexOf('http') === 0 ? '' : 'http://') + company.website}}">
-                          <i class="fa fa-external-link"></i>
                         </a>
                       </span>
                     </div>
@@ -102,7 +108,7 @@
                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                   <a ui-sref="contacts" class="btn btn-primary">Cancel</a>
                   <button type="submit" class="btn btn-success">Submit</button>
-                  <a ng-if="company.id" href ng-click="delete(company.id)" class="btn btn-danger">Delete</a>
+                  <a ng-if="person.id" href ng-click="delete(person.id)" class="btn btn-danger">Delete</a>
                 </div>
               </div>
             </fieldset>
@@ -123,7 +129,7 @@
                   <h3>Comments</h3>
                 </div>
               </div>
-              <div class="row" ng-repeat="c in company.comments">
+              <div class="row" ng-repeat="c in person.comments">
                 <div class="col-xs-1">
                   <div class="thumbnail">
                     <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">

@@ -67,9 +67,10 @@ angular.module('awesomeCRM.companies', [
             try i.alph = i.name[0]
       )
 
-      $scope.delete = (contact, k = -1) ->
-        companiesProvider.delete(contact)
-        $scope.companies.splice(k, 1) if k != -1
+      $scope.delete = (company) ->
+        companiesProvider.delete(company)
+        i = $scope.companies.indexOf(company)
+        $scope.companies.splice(i, 1) if i != -1
 
       $scope.groupMinSortField = (group) ->
         return $filter('min')($filter('map')(group, $scope.filters.sortField ? 'id'));

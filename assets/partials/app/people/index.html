@@ -1,7 +1,7 @@
 <div ui-view>
   <div class="page-title">
     <div class="title">
-      <h3>Companies</h3>
+      <h3>People</h3>
     </div>
   </div>
   <div class="clearfix"></div>
@@ -19,26 +19,18 @@
             <fieldset class="form-inline">
               <fs-input as="text" name="search" placeholder="Search" label=""></fs-input>
 
-              <fs-row label="">
-                <div fs-select required="" ng-model="filters.type" items="companyTypesFilter">
-                  <span ng-show="item">{{item.label}}</span>
-                  <span ng-hide="item">All Types</span>
-                </div>
-              </fs-row>
-
-              <fs-row label="">
-                <div fs-select required="" ng-model="filters.groupField" items="[{key: 'alph', label: 'Alphabetic'}, {key: 'country', label:'By Country'}]">
-                  <span ng-show="item">{{item.label}}</span>
-                  <span ng-hide="item">No Grouping</span>
-                </div>
-              </fs-row>
+              <div class="checkbox">
+                <label>
+                  <input name="reverseName" ng-model="filters.reverseName" type="checkbox">
+                  Reverse Name
+                </label>
+              </div>
             </fieldset>
           </form>
         </div>
       </div>
     </div>
   </div>
-
 
   <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -48,19 +40,19 @@
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Country</th>
+                <th>Phone</th>
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody ng-repeat="(k,group) in companies | filter:customFilter | filter:filters.search | groupBy:(filters.groupField.key ? filters.groupField.key : 'id') | toArray:true | orderBy:groupMinSortField">
+            <tbody ng-repeat="(k,group) in people | filter:filters.search | groupBy:'alph' | toArray:true | orderBy:groupMinSortField">
               <tr class="active" ng-if="filters.groupField.key">
                 <td colspan="3">
                   <a href ng-click="groupHidden[k] = !groupHidden[k]"><b>{{ group.$key }}</b></a>
                 </td>
               </tr>
               <tr ng-hide="!!groupHidden[k]" ng-repeat="i in group">
-                <td><a ui-sref="companies.edit({id: i.id})">{{i.name}}</a></td>
-                <td>{{i.country}}</td>
+                <td><a ui-sref="people.edit({id: i.id})">{{i.firstName}} {{i.lastName}}</a></td>
+                <td><a href="tel:{{i.phone}}">{{i.phone}}</a></td>
                 <td>
                   <div class="btn-group">
                     <a class="btn btn-danger btn-xs" href ng-click="delete(i)">Delete</a>
@@ -79,7 +71,7 @@
       <div class="x_panel">
         <div class="x_content">
           <div class="pull-right">
-            <a class="btn btn-default" ui-sref="companies.create">Create New Company</a>
+            <a class="btn btn-default" ui-sref="people.create">Create New Person</a>
           </div>
         </div>
       </div>
