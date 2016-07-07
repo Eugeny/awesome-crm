@@ -29,9 +29,10 @@ module.exports =
     comments:
       collection: 'Comment'
       via: 'company'
-    pets: 
+    people:
       collection: 'Person'
       via: 'company'
+
 
 # Country / selection
 # Type / selection: (End Customer, Partner, Potential Partner, Supplier, Marketing, Other)

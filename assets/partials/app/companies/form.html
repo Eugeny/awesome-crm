@@ -112,6 +112,32 @@
     </div>
   </div>
 
+  <div >
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+          <div class="x_content">
+              <div class="row">
+                <div class="col-xs-12">
+                  <h3>People</h3>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <table class="table table-bordered">
+                    <tr ng-repeat="p in company.people">
+                      <td>
+                        <a ui-sref="people.edit({id: p.id})">{{p.firstName}} {{p.lastName}}</a>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   <div ng-if="person.id">
     <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12">
