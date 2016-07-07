@@ -52,12 +52,9 @@ angular.module('awesomeCRM.people', [
   $stateProvider.state('people.create',
     url: '/create'
     templateUrl: '/partials/app/people/form.html'
-    resolve:
-      companies: (companiesProvider) -> companiesProvider.query()
-    controller: ($scope, $state, peopleProvider, countriesProvider, companies) ->
+    controller: ($scope, $state, peopleProvider, countriesProvider) ->
       $scope.person = {}
       $scope.countries = countriesProvider.countryNames
-      $scope.companies = companies
 
       $scope.save = () ->
         peopleProvider.save(
@@ -80,12 +77,10 @@ angular.module('awesomeCRM.people', [
     templateUrl: '/partials/app/people/form.html'
     resolve:
       person: (peopleProvider, $stateParams) -> peopleProvider.get(id: $stateParams.id)
-      companies: (companiesProvider) -> companiesProvider.query()
 
-    controller: ($scope, $state, person, peopleProvider, commentsProvider, Upload, companies, countriesProvider) ->
+    controller: ($scope, $state, person, peopleProvider, commentsProvider, Upload, countriesProvider) ->
       $scope.person = person
       $scope.comment = {}
-      $scope.companies = companies
       $scope.countries = countriesProvider.countryNames
 
       $scope.addComment = () ->

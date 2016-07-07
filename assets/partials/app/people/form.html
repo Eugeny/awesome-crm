@@ -20,17 +20,7 @@
                   <fs-input as="text" name="firstName" label="First Name"></fs-input>
                   <fs-input as="text" name="lastName" label="Last Name"></fs-input>
 
-                  <fs-row label="Company">
-                    <div fs-select items="companies" ng-model="person.company">
-                      <span ng-show="item">
-                        {{item.name}}
-                      </span>
-                      <span ng-hide="item"> No Company </span>
-                      <a ui-sref="companies.edit({id:item.id})" aria-hidden="true" ng-show="item && $index*1 != $index" class="btn btn-default">
-                        <i class="fa fa-external-link"></i>
-                      </a>
-                    </div>
-                  </fs-row>
+                  <div company-select label="Company" model="person.company"></div>
 
                   <fs-input as="text" name="position" label="Position"></fs-input>
 
@@ -122,7 +112,7 @@
               <div class="form-group">
                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                   <a ui-sref="contacts" class="btn btn-primary">Cancel</a>
-                  <button type="submit" class="btn btn-success">Submit</button>
+                  <button type="submit" class="btn btn-success">Save</button>
                   <a ng-if="person.id" href ng-click="delete(person.id)" class="btn btn-danger">Delete</a>
                 </div>
               </div>
@@ -201,7 +191,7 @@
                 <div class="form-group">
                   <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                     <a class="btn" ngf-select="uploadFiles($files)" multiple="multiple">Attach Files</a>
-                    <button type="submit" class="btn btn-success">Submit</button>
+                    <button type="submit" class="btn btn-success">Save</button>
                   </div>
                 </div>
               </fieldset>

@@ -1,0 +1,36 @@
+<div class="">
+  <div class="page-title">
+    <div class="title">
+      <h3 ng-if="part.id">Edit Part Type {{part.name}}</h3>
+      <h3 ng-if="!part.id">Create New Part Type</h3>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_content">
+          <pre ng-if="errors">{{errors}}</pre>
+          <form fs-form-for name="partForm" model="part" ng-submit="save()">
+            <fieldset class="form-horizontal">
+              <fs-input as="text" name="barcode" label="Barcode"></fs-input>
+              <fs-input as="textarea" name="location" label="Location"></fs-input>
+
+              <div part-type-select label="Type" model="part.type"></div>
+
+              <div class="ln_solid"></div>
+              <div class="form-group">
+                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                  <a ui-sref="parts" class="btn btn-primary">Cancel</a>
+                  <button type="submit" class="btn btn-success">Save</button>
+                  <a ng-if="part.id" href ng-click="delete(part.id)" class="btn btn-danger">Delete</a>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

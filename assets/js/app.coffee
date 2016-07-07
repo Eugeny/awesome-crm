@@ -10,8 +10,9 @@ angular.module('awesomeCRM', [
   'ngCookies'
   'awesomeCRM.services'
   'awesomeCRM.people'
-  'awesomeCRM.contacts'
   'awesomeCRM.companies'
+  'awesomeCRM.partTypes'
+  'awesomeCRM.parts'
   'awesomeCRM.auth'
   'awesomeCRM.index'
 ]).config(($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) ->
