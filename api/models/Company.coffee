@@ -26,6 +26,8 @@ module.exports =
       type: 'string'
     website:
       type: 'string'
+    vatId:
+      type: 'string'
     comments:
       collection: 'Comment'
       via: 'company'

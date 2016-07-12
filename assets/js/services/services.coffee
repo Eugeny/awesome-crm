@@ -49,3 +49,4 @@ angular.module('awesomeCRM.services', [
       scope.noneSelectedLabel ?= 'No Type'
   }
 ])
+

@@ -21,6 +21,7 @@
                   <fs-input as="text" name="address" label="Address"></fs-input>
                   <fs-input as="text" name="zip" label="Zip"></fs-input>
                   <fs-input as="text" name="city" label="City"></fs-input>
+                  <fs-input as="text" name="vatId" label="VAT ID"></fs-input>
 
                   <fs-row label="Country">
                     <div fs-select items="countries" ng-model="company.country" freetext="true" >
@@ -30,14 +31,14 @@
                       <span ng-hide="item"> No country </span>
                     </div>
                   </fs-row>
+                </div>
+                <div class="col-xs-6">
                   <fs-row label="Type">
                     <div fs-select freetext="true" ng-model="company.type" items="companyTypes">
                       <span ng-show="item">{{item}}</span>
                       <span ng-hide="item">No Type</span>
                     </div>
                   </fs-row>
-                </div>
-                <div class="col-xs-6">
 
                   <fs-row label="Subtype">
                     <div fs-select freetext="true" ng-model="company.subtype" items="['Broadcast', 'Postproduction']">

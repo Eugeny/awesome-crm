@@ -24,21 +24,45 @@ angular.module('awesomeCRM.parts', [
   $stateProvider.state('parts.create',
     url: '/create'
     templateUrl: '/partials/app/parts/form.html'
-    controller: ($scope, $state, partsProvider, countriesProvider) ->
+    controller: ($scope, $state, partsProvider, countriesProvider, $q) ->
       $scope.part = {}
 
       $scope.save = () ->
-        partsProvider.save(
-          $scope.part,
-          () -> $state.go('parts', null, {reload: true})
+        promises = []
+
+        barcodes = $scope.part.barcode.split(' ')
+
+        for i in barcodes
+          part = angular.copy($scope.part)
+          part.barcode = i
+          do (part) ->
+            promises.push($q((resolve, reject) ->
+              partsProvider.save(part, resolve, (res) ->
+                reject({part: part, res: res})
+              )
+            ))
+
+        $q.allSettled(promises).then(
           (res) ->
-            $scope.errors = res.data.details
-            $scope.partForm.$setPristine()
-            $scope.partForm.$setUntouched()
-            for k,i of res.data.invalidAttributes
-              $scope.partForm[k].$setDirty(true);
-              for j in i
-                $scope.partForm[k].$setValidity(j.rule, false);
+            rejected = res.filter((x) -> x.state == 'rejected').map((x) -> x.reason)
+            if rejected.length
+              $scope.partForm.$setPristine()
+              $scope.partForm.$setUntouched()
+              errorBarcodes = []
+              $scope.errors = ''
+
+              for i in rejected
+                errorBarcodes.push(i.part.barcode)
+                data = i.res.data
+                $scope.errors += data.details + "\n"
+                for k,i of data.invalidAttributes
+                  $scope.partForm[k].$setDirty(true);
+                  for j in i
+                    $scope.partForm[k].$setValidity(j.rule, false);
+
+              $scope.part.barcode = errorBarcodes.join(' ')
+            else
+              $state.go('parts', null, {reload: true})
         )
   )
 
