@@ -7,12 +7,28 @@ angular.module('awesomeCRM.parts', [
   $stateProvider.state('parts',
     url: '/parts'
     templateUrl: '/partials/app/parts/index.html'
-    resolve:
-      parts: (partsProvider) -> partsProvider.query()
+    controller: ($scope, $state, partsProvider) ->
+      $scope.filters = {
+        types:[]
+      }
 
-    controller: ($scope, $state, parts, partsProvider) ->
-      $scope.parts = parts
-      $scope.filters = {}
+      updatePartList = () ->
+        console.log($scope.filters)
+        criteria = {}
+
+        if $scope.filters.barcode
+          criteria.barcode =
+            contains: $scope.filters.barcode
+
+        if $scope.filters.types and $scope.filters.types.length
+          criteria.type = $scope.filters.types.map((x) -> x.id)
+
+        $scope.parts = partsProvider.query(where: criteria, limit: 100)
+
+      $scope.$watch(
+        () -> JSON.stringify($scope.filters)
+        updatePartList
+      )
 
       $scope.delete = (part) ->
         partsProvider.delete(part)

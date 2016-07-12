@@ -1,11 +1,17 @@
 <div class="form-group">
-  <label class="col-xs-2 control-label">{{label}}</label>
-  <div class="col-xs-10">
-    <div fs-select items="items" ng-model="model">
-      <span ng-show="item">
-        {{item.name}}
-      </span>
+  <label ng-if="label" class="col-xs-2 control-label">{{label}}</label>
+  <div ng-class="{'col-xs-10': label}" ng-if="!!multiple">
+    <div fs-multiselect items="items" ng-model="select.value">
+      <span ng-show="item">{{item.name}}</span>
       <span ng-hide="item">{{$parent.noneSelectedLabel}}</span>
+    </div>
+  </div>
+
+  <div ng-class="{'col-xs-10': label}" ng-if="!multiple">
+    <div fs-select items="items" ng-model="model">
+      <span ng-show="item">{{item.name}}</span>
+      <span ng-hide="item">{{$parent.noneSelectedLabel}}</span>
+
       <a href ng-click="$parent.edit({id:item.id})" aria-hidden="true" ng-show="item && $index*1 != $index"
          class="btn btn-default">
         <i class="fa fa-external-link"></i>

@@ -33,11 +33,12 @@ angular.module('awesomeCRM.services', [
       scope.noneSelectedLabel ?= 'No Company'
 
   }
-]).directive('partTypeSelect', ['$state', 'partTypesProvider', ($state, partTypesProvider) ->
+]).directive('partTypeSelect', ['$state', 'partTypesProvider', '$timeout', ($state, partTypesProvider, $timeout) ->
   return {
     scope:
       label: '@'
       model: '='
+      multiple: '@'
     templateUrl: '/partials/app/misc/dynamicSelect.html'
     link: (scope, element, attrs) ->
       partTypesProvider.query((partTypes) ->
@@ -47,6 +48,20 @@ angular.module('awesomeCRM.services', [
         $state.go('partTypes.edit', params)
 
       scope.noneSelectedLabel ?= 'No Type'
+
+      scope.select = {value: null}
+      scope.$watch(
+        () -> JSON.stringify(scope.select)
+        () ->
+          scope.model = scope.select.value
+          console.log(scope.select)
+      )
+
+      # dirty-dirty fix because formstamp hardcodes placeholder - TODO submit a PR
+      $timeout(
+        () -> $(element).find('input').attr('placeholder', scope.multiple)
+        100
+      )
   }
 ])
 

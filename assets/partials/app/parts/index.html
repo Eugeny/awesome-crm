@@ -17,7 +17,10 @@
         <div class="x_content">
           <form fs-form-for model="filters" id="filters">
             <fieldset class="form-inline">
-              <fs-input as="text" name="search" placeholder="Search" label=""></fs-input>
+              <fs-input as="text" name="barcode" placeholder="Barcode" label=""></fs-input>
+
+              <span part-type-select label="" model="filters.types" multiple="Select Types"></span>
+
             </fieldset>
           </form>
         </div>
