@@ -23,14 +23,14 @@
                 </div>
                 <div class="col-xs-6">
                   <fs-row label="Type">
-                    <div fs-select freetext="true" ng-model="company.type" items="companyTypes">
+                    <div fs-select freetext="true" ng-model="partType.type" items="types">
                       <span ng-show="item">{{item}}</span>
                       <span ng-hide="item">No Type</span>
                     </div>
                   </fs-row>
 
                   <fs-row label="Subtype">
-                    <div fs-select freetext="true" ng-model="company.subtype" items="['Broadcast', 'Postproduction']">
+                    <div fs-select freetext="true" ng-model="partType.subtype" items="subtypes">
                       <span ng-show="item">{{item}}</span>
                       <span ng-hide="item">No Subtype</span>
                     </div>

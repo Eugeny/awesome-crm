@@ -5,6 +5,5 @@ angular.module('awesomeCRM.index', [
     url: '/'
     templateUrl: '/partials/app/index/index.html'
     controller: ($scope) ->
-      console.log('index')
   )
 );

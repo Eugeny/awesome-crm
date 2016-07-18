@@ -27,7 +27,6 @@ angular.module('awesomeCRM.services', [
         scope.items = companies
       )
       scope.edit = (params) ->
-        console.log(params)
         $state.go('companies.edit', params)
 
       scope.noneSelectedLabel ?= 'No Company'
@@ -49,12 +48,10 @@ angular.module('awesomeCRM.services', [
 
       scope.noneSelectedLabel ?= 'No Type'
 
-      scope.select = {value: null}
+      scope.select = {value: scope.model}
       scope.$watch(
         () -> JSON.stringify(scope.select)
-        () ->
-          scope.model = scope.select.value
-          console.log(scope.select)
+        (newValue, oldValue) -> scope.model = scope.select.value if newValue != oldValue
       )
 
       # dirty-dirty fix because formstamp hardcodes placeholder - TODO submit a PR

@@ -105,7 +105,6 @@ angular.module('awesomeCRM.people', [
             $scope.uploadingProgress = -1
             $scope.comment.files ?= []
             $scope.comment.files = $scope.comment.files.concat(response.data)
-            console.log(response.data, $scope.comment)
           ,
           (response) ->
             if response.status > 0

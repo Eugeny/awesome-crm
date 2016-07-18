@@ -8,7 +8,7 @@
   </div>
 
   <div ng-class="{'col-xs-10': label}" ng-if="!multiple">
-    <div fs-select items="items" ng-model="model">
+    <div fs-select items="items" ng-model="select.value">
       <span ng-show="item">{{item.name}}</span>
       <span ng-hide="item">{{$parent.noneSelectedLabel}}</span>
 
