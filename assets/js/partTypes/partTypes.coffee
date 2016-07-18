@@ -24,22 +24,9 @@ angular.module('awesomeCRM.partTypes', [
   $stateProvider.state('partTypes.create',
     url: '/create'
     templateUrl: '/partials/app/partTypes/form.html'
-    controller: ($scope, $state, partTypesProvider, countriesProvider) ->
-      $scope.partType = {}
-
-      $scope.save = () ->
-        partTypesProvider.save(
-          $scope.partType,
-          () -> $state.go('partTypes', null, {reload: true})
-          (res) ->
-            $scope.errors = res.data.details
-            $scope.partTypeForm.$setPristine()
-            $scope.partTypeForm.$setUntouched()
-            for k,i of res.data.invalidAttributes
-              $scope.partTypeForm[k].$setDirty(true);
-              for j in i
-                $scope.partTypeForm[k].$setValidity(j.rule, false);
-        )
+    resolve:
+      partType: () -> {}
+    controller: 'awesomeCRM.partTypes.formController'
   )
 
   # Update page
@@ -48,11 +35,31 @@ angular.module('awesomeCRM.partTypes', [
     templateUrl: '/partials/app/partTypes/form.html'
     resolve:
       partType: (partTypesProvider, $stateParams) -> partTypesProvider.get(id: $stateParams.id)
-
-    controller: ($scope, $state, partType, partTypesProvider) ->
-      $scope.partType = partType
-
-      $scope.save = () ->
-        partTypesProvider.update($scope.partType, () -> $state.go('partTypes', null, {reload: true}))
+    controller: 'awesomeCRM.partTypes.formController'
   )
-);
+).controller('awesomeCRM.partTypes.formController', ($scope, $state, partTypesProvider, partType) ->
+  $scope.partType = partType
+
+  $scope.types = []
+  $scope.subtypes = []
+  partTypesProvider.query().$promise.then((partTypes) ->
+    for i in partTypes
+      $scope.types.push(i.type) if i.type
+      $scope.subtypes.push(i.subtype) if i.subtype
+  )
+
+  $scope.save = () ->
+    action = if partType.id then 'update' else 'save'
+    partTypesProvider[action](
+      $scope.partType,
+      () -> $state.go('partTypes', null, {reload: true})
+      (res) ->
+        $scope.errors = res.data.details
+        $scope.partTypeForm.$setPristine()
+        $scope.partTypeForm.$setUntouched()
+        for k,i of res.data.invalidAttributes
+          $scope.partTypeForm[k].$setDirty(true);
+          for j in i
+            $scope.partTypeForm[k].$setValidity(j.rule, false);
+    )
+)
