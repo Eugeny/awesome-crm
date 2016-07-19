@@ -4,5 +4,26 @@
  # @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
 
 module.exports =
+  attributes:
+    sale:
+      model: 'Sale'
+    name:
+      type: 'string'
+      required: true
+    description:
+      type: 'text'
+    type:
+      type: 'string'
+    price:
+      type: 'float'
+    currency:
+      type: 'string'
+    amount:
+      type: 'float'
+    state:
+      type: 'string'
+    offers:
+      collection: 'Offer'
+      via: 'products'
 
-  attributes: {}
+# State / selection (New, Production, Ready, Delivery, Delivered). Default: New

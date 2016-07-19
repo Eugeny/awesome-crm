@@ -50,7 +50,7 @@ angular.module('awesomeCRM.sales', [
       $uibModalInstance: () -> null
     controller: 'awesomeCRM.sales.formController'
   )
-).controller('awesomeCRM.sales.formController', ($scope, $state, salesProvider, sale, $uibModalInstance) ->
+).controller('awesomeCRM.sales.formController', ($scope, $state, salesProvider, sale, $uibModalInstance, offersProvider) ->
   sale.state ?= 'Offer'
   $scope.sale = sale
 
@@ -62,6 +62,8 @@ angular.module('awesomeCRM.sales', [
 
   $scope.save = () ->
     action = if sale.id then 'update' else 'save'
+    $scope.sale.offers = [{active: true}] if !$scope.sale.offers
+
     salesProvider[action](
       $scope.sale,
       () -> $scope.close()

@@ -16,3 +16,6 @@ module.exports =
       model: 'Person'
     state:
       type: 'string'
+    offers:
+      collection: 'Offer'
+      via: 'sale'
