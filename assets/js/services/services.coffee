@@ -15,7 +15,7 @@ angular.module('awesomeCRM.services', [
     }
     templateUrl: '/partials/app/misc/file.html'
   }
-).factory('dynamicSelect', ['$state', 'partTypesProvider', '$timeout', ($state, partTypesProvider, $timeout) ->
+).factory('dynamicSelect', ['$state', '$timeout', ($state, $timeout) ->
   return (provider, editModule = null, defaultScope = {}) -> {
     scope:
       label: '@'
@@ -27,7 +27,7 @@ angular.module('awesomeCRM.services', [
       provider.query((items) ->
         i.name = defaultScope.labelFn(i) for i in items if defaultScope.labelFn
         scope.items = items
-      )
+      ) if provider
 
       if editModule
         scope.edit = (params) -> $state.go("#{editModule}.edit", params)
@@ -57,11 +57,55 @@ angular.module('awesomeCRM.services', [
         100
       )
   }
+]).factory('staticSelect', ['$state', '$timeout', ($state, $timeout) ->
+  return (defaultScope = {}) -> {
+    scope:
+      label: '@'
+      noneSelectedLabel: '@'
+      model: '='
+      multiple: '@'
+    templateUrl: '/partials/app/misc/staticSelect.html'
+    link: (scope, element, attrs) ->
+      scope[k] ?= i for k,i of defaultScope
+
+      scope.select = {value: scope.model}
+      scope.$watch(
+        () -> JSON.stringify(scope.select)
+        (newValue, oldValue) ->
+          if newValue != oldValue
+            scope.model = scope.select.value
+      )
+      scope.$watch(
+        () -> JSON.stringify(scope.model)
+        (newValue, oldValue) ->
+          if newValue != oldValue
+            scope.select.value = scope.model
+      )
+
+      # dirty-dirty fix because formstamp hardcodes placeholder - TODO submit a PR
+      $timeout(
+        () -> $(element).find('input').attr('placeholder', scope.multiple)
+        100
+      )
+  }
 ]).directive('companySelect', ['companiesProvider', 'dynamicSelect', (companiesProvider, dynamicSelect) ->
   return dynamicSelect(companiesProvider, 'companies', {noneSelectedLabel: 'No Company'})
 ]).directive('personSelect', ['peopleProvider', 'dynamicSelect', (peopleProvider, dynamicSelect) ->
   return dynamicSelect(peopleProvider, 'people', {noneSelectedLabel: 'No Person', labelFn: (p) -> "#{p.firstName} #{p.lastName}"})
 ]).directive('partTypeSelect', ['partTypesProvider', 'dynamicSelect', (partTypesProvider, dynamicSelect) ->
   return dynamicSelect(partTypesProvider, 'partTypes', {noneSelectedLabel: 'No Type'})
-])
+]).directive('productTypeSelect', ['staticSelect', (staticSelect) ->
+  return staticSelect({noneSelectedLabel: 'No Type', items: ['Product', 'Work']})
+]).directive('currencySelect', ['staticSelect', (staticSelect) ->
+  return staticSelect({noneSelectedLabel: 'No Type', items: ['€', 'USD']})
+]).factory('debounce', ($timeout) ->
+  (interval, callback) ->
+    timeout = null
+    return () ->
+      args = arguments
+      $timeout.cancel(timeout)
+      timeout = $timeout((->
+        callback.apply(this, args)
+      ), interval)
+)
 

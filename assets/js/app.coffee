@@ -15,6 +15,7 @@ angular.module('awesomeCRM', [
   'awesomeCRM.productTemplates'
   'awesomeCRM.sales'
   'awesomeCRM.offers'
+  'awesomeCRM.saleItems'
   'awesomeCRM.parts'
   'awesomeCRM.auth'
   'awesomeCRM.index'

@@ -1,29 +1,10 @@
-<div ui-view>
+<div ng-controller="awesomeCRM.offers.indexController">
   <div class="page-title">
     <div class="title">
-      <h3>Entities</h3>
+      <h3>Offers</h3>
     </div>
   </div>
   <div class="clearfix"></div>
-
-  <div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-      <div class="x_panel">
-        <div class="x_title">
-          <h2>Filters and grouping</h2>
-          <div class="clearfix"></div>
-        </div>
-
-        <div class="x_content">
-          <form fs-form-for model="filters" id="filters">
-            <fieldset class="form-inline">
-              <fs-input as="text" name="search" placeholder="Search" label=""></fs-input>
-            </fieldset>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -32,35 +13,30 @@
           <table class="table">
             <thead>
               <tr>
-                <th>Name</th>
+                <th>ID</th>
+                <th>Comment</th>
+                <th>Active</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="i in offers | filter:filters.search">
-                <td><a ui-sref="offers.edit({id: i.id})">{{i.name}}</a></td>
+                <td><a href ng-click="edit(i)">{{i.id}}</a></td>
+                <td>{{i.comment}}</td>
+                <td><span class="label" ng-class="{'label-success': i.active, 'label-danger': !i.active, }">{{i.active ? 'Yes' : 'No'}}</span></td>
                 <td>
                   <div class="btn-group">
-                    <a class="btn btn-danger btn-xs" href ng-click="delete(i)">Delete</a>
                   </div>
                 </td>
               </tr>
             </tbody>
           </table>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-      <div class="x_panel">
-        <div class="x_content">
           <div class="pull-right">
-            <a class="btn btn-default" ui-sref="offers.create">Create New Entity</a>
+            <a class="btn btn-default" href ng-click="add()">Create New Offer</a>
           </div>
         </div>
       </div>
     </div>
   </div>
+
 </div>

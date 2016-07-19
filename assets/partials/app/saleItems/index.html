@@ -1,0 +1,62 @@
+<div ng-controller="awesomeCRM.saleItems.indexController">
+  <div class="page-title">
+    <div class="title">
+      <h3>Products</h3>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_content">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Price</th>
+                <th>Currency</th>
+                <th>Amount</th>
+                <th>State</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="i in saleItems">
+                <td>{{i.id}}</td>
+                <td><input class="form-control" type="text" ng-model="i.name"></td>
+                <td><textarea class="form-control" type="text" ng-model="i.description"></textarea></td>
+                <td><div product-type-select model="i.type"></div></td>
+                <td><input class="form-control" type="text" ng-model="i.price"></td>
+                <td><div currency-select model="i.currency"></div></td>
+                <td><input class="form-control" type="text" ng-model="i.amount"></td>
+                <td>{{i.state}}</td>
+                <td>
+                  <div class="btn-group">
+                    <a ng-if="!i.id" class="btn btn-success btn-xs" href ng-click="add(i)">Add</a>
+                    <a ng-if="i.id" class="btn btn-danger btn-xs" href ng-click="delete(i)">Delete</a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{sum}}</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

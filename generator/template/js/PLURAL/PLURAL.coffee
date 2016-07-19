@@ -21,7 +21,6 @@ angular.module('awesomeCRM.PLURAL', [
 
       $scope.add = () ->
         $uibModal.open(
-          animation: $scope.animationsEnabled
           templateUrl: '/partials/app/PLURAL/form.html'
           controller: 'awesomeCRM.PLURAL.formController'
           resolve:

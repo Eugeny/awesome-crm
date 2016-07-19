@@ -21,7 +21,6 @@ angular.module('awesomeCRM.sales', [
 
       $scope.add = () ->
         $uibModal.open(
-          animation: $scope.animationsEnabled
           templateUrl: '/partials/app/sales/form.html'
           controller: 'awesomeCRM.sales.formController'
           resolve:
@@ -76,4 +75,8 @@ angular.module('awesomeCRM.sales', [
           for j in i
             $scope.saleForm[k].$setValidity(j.rule, false);
     )
+
+  $scope.delete = (sale) ->
+    salesProvider.delete(sale)
+    $scope.close()
 )

@@ -23,11 +23,16 @@
                 </div>
                 <div class="col-xs-6">
                   <div person-select label="Local Contact" model="sale.localContact"></div>
+                  <!--
                   <fs-row label="State">
                     <div fs-select ng-model="sale.state" items="['Offer', 'Ordered', 'Closed', 'Cancelled']">
                       <span ng-show="item">{{item}}</span>
                       <span ng-hide="item">No State</span>
                     </div>
+                  </fs-row>
+                  -->
+                  <fs-row label="State">
+                    <span>{{sale.state}}</span>
                   </fs-row>
                 </div>
               </div>
@@ -37,7 +42,7 @@
                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                   <a href ng-click="close()" class="btn btn-primary">Cancel</a>
                   <button type="submit" class="btn btn-success">Save</button>
-                  <a ng-if="sale.id" href ng-click="delete(sale.id)" class="btn btn-danger">Delete</a>
+                  <a ng-if="sale.id" href ng-click="delete(sale)" class="btn btn-danger">Delete</a>
                 </div>
               </div>
             </fieldset>
@@ -45,5 +50,9 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <div ng-if="sale.id">
+    <div offers-table sale="sale"></div>
   </div>
 </div>

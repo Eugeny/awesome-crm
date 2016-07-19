@@ -36,7 +36,6 @@ angular.module('awesomeCRM.parts', [
 
       $scope.add = () ->
         $uibModal.open(
-          animation: $scope.animationsEnabled
           templateUrl: '/partials/app/parts/form.html'
           controller: 'awesomeCRM.parts.formController'
           resolve:

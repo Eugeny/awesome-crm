@@ -21,7 +21,6 @@ angular.module('awesomeCRM.productTemplates', [
 
       $scope.add = () ->
         $uibModal.open(
-          animation: $scope.animationsEnabled
           templateUrl: '/partials/app/productTemplates/form.html'
           controller: 'awesomeCRM.productTemplates.formController'
         )

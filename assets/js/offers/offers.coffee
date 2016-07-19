@@ -3,59 +3,13 @@ angular.module('awesomeCRM.offers', [
   'awesomeCRM.offers.provider'
   'awesomeCRM.countries.provider'
   'awesomeCRM.comments.provider'
-]).config(($stateProvider, $urlRouterProvider) ->
-  $stateProvider.state('offers',
-    url: '/offers'
-    templateUrl: '/partials/app/offers/index.html'
-    resolve:
-      offers: (offersProvider) -> offersProvider.query()
-
-    controller: ($scope, $state, offers, offersProvider, $uibModal) ->
-      $scope.offers = offers
-      $scope.filters = {}
-
-      $scope.delete = (offer) ->
-        offersProvider.delete(offer)
-        i = $scope.offers.indexOf(offer)
-        $scope.offers.splice(i, 1) if i != -1
-
-      $scope.add = () ->
-        $uibModal.open(
-          animation: $scope.animationsEnabled
-          templateUrl: '/partials/app/offers/form.html'
-          controller: 'awesomeCRM.offers.formController'
-          resolve:
-            offer: {}
-        ).result.then((offer) ->
-          $scope.offers.push(offer)
-        )
-  )
-
-  # Create page
-  $stateProvider.state('offers.create',
-    url: '/create'
-    templateUrl: '/partials/app/offers/form.html'
-    resolve:
-      offer: () -> {}
-      $uibModalInstance: () -> null
-    controller: 'awesomeCRM.offers.formController'
-  )
-
-  # Update page
-  $stateProvider.state('offers.edit',
-    url: '/edit/{id}'
-    templateUrl: '/partials/app/offers/form.html'
-    resolve:
-      offer: (offersProvider, $stateParams) -> offersProvider.get(id: $stateParams.id)
-      $uibModalInstance: () -> null
-    controller: 'awesomeCRM.offers.formController'
-  )
-).controller('awesomeCRM.offers.formController', ($scope, $state, offersProvider, offer, $uibModalInstance) ->
+]).controller('awesomeCRM.offers.formController', ($scope, $state, offersProvider, offer, sale, $uibModalInstance) ->
   $scope.offer = offer
+  $scope.sale = sale
 
-  $scope.close = () ->
+  $scope.close = (offer) ->
     if $uibModalInstance
-      $uibModalInstance.close($scope.offer)
+      $uibModalInstance.close(offer)
     else
       $state.go('offers', null, {reload: true})
 
@@ -63,7 +17,7 @@ angular.module('awesomeCRM.offers', [
     action = if offer.id then 'update' else 'save'
     offersProvider[action](
       $scope.offer,
-      () -> $scope.close()
+      (offer) -> $scope.close(offer)
       (res) ->
         $scope.errors = res.data.details
         $scope.offerForm.$setPristine()
@@ -73,4 +27,47 @@ angular.module('awesomeCRM.offers', [
           for j in i
             $scope.offerForm[k].$setValidity(j.rule, false);
     )
+).controller('awesomeCRM.offers.indexController', ($scope, $state, offersProvider, $uibModal) ->
+  sale = $scope.sale
+  offersProvider.query({sale: sale.id}, (offers) -> $scope.offers = offers)
+
+  $scope.add = () ->
+    offer = angular.copy($scope.offers.find((o) -> o.active)) ? {}
+    delete offer.id
+    offer.active = true
+    offer.sale = sale
+
+    $uibModal.open(
+      templateUrl: '/partials/app/offers/form.html'
+      controller: 'awesomeCRM.offers.formController'
+      size: 'lg'
+      resolve:
+        offer: offer
+        sale: sale
+
+    ).result.then((offer) ->
+      for i in $scope.offers
+        continue if !i.active
+        i.active = false
+        offersProvider.update(i)
+      $scope.offers.push(offer)
+    )
+
+  $scope.edit = (offer) ->
+    $uibModal.open(
+      templateUrl: '/partials/app/offers/form.html'
+      controller: 'awesomeCRM.offers.formController'
+      size: 'lg'
+      resolve:
+        offer: offer
+        sale: sale
+    )
+
+).directive('offersTable', () ->
+  return {
+    scope:{
+      sale: '='
+    }
+    templateUrl: '/partials/app/offers/index.html'
+  }
 )

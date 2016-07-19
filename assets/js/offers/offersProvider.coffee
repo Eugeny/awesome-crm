@@ -5,5 +5,12 @@ angular.module('awesomeCRM.offers.provider', [])
   return $resource('/offer/:id', {id: '@id'} , {
     update:
       method: 'PUT'
+
+    addProduct:
+      method: 'POST'
+      url: '/offer/:id/products/:productId'
+      params:
+        id: '@id'
+        productId: '@productId'
   })
 )
