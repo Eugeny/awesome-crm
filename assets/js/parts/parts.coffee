@@ -63,7 +63,7 @@ angular.module('awesomeCRM.parts', [
   )
 ).controller('awesomeCRM.parts.formController', ($scope, $state, partsProvider, countriesProvider, $q, $uibModalInstance, part) ->
   $scope.part = part
-  console.log(part)
+
   $scope.close = () ->
     if $uibModalInstance
       $uibModalInstance.close()

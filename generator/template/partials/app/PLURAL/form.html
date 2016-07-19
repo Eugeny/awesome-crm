@@ -1,0 +1,47 @@
+<div class="">
+  <div class="page-title">
+    <div class="title">
+      <h3 ng-if="SINGULAR.id">Edit Entity {{SINGULAR.name}}</h3>
+      <h3 ng-if="!SINGULAR.id">Create New Entity</h3>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_content">
+          <pre ng-if="errors">{{errors}}</pre>
+
+          <form fs-form-for name="SINGULARForm" model="SINGULAR" ng-submit="save()">
+            <fieldset class="form-horizontal">
+              <div class="row">
+                <div class="col-xs-6">
+                  <fs-input as="text" name="name" label="Text Field"></fs-input>
+                  <fs-input as="textarea" name="description" label="TextArea Field"></fs-input>
+                </div>
+                <div class="col-xs-6">
+                  <fs-row label="Select">
+                    <div fs-select freetext="true" ng-model="SINGULAR.select" items="selectItems">
+                      <span ng-show="item">{{item}}</span>
+                      <span ng-hide="item">No Type</span>
+                    </div>
+                  </fs-row>
+                </div>
+              </div>
+
+              <div class="ln_solid"></div>
+              <div class="form-group">
+                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                  <a href ng-click="close()" class="btn btn-primary">Cancel</a>
+                  <button type="submit" class="btn btn-success">Save</button>
+                  <a ng-if="SINGULAR.id" href ng-click="delete(SINGULAR.id)" class="btn btn-danger">Delete</a>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
