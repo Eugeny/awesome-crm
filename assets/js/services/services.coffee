@@ -64,6 +64,7 @@ angular.module('awesomeCRM.services', [
       noneSelectedLabel: '@'
       model: '='
       multiple: '@'
+      ngDisabled: '@'
     templateUrl: '/partials/app/misc/staticSelect.html'
     link: (scope, element, attrs) ->
       scope[k] ?= i for k,i of defaultScope

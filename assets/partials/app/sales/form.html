@@ -43,6 +43,7 @@
                   <a href ng-click="close()" class="btn btn-primary">Cancel</a>
                   <button type="submit" class="btn btn-success">Save</button>
                   <a ng-if="sale.id" href ng-click="delete(sale)" class="btn btn-danger">Delete</a>
+                  <a ng-if="sale.id" href ng-click="setState('Ordered')" class="btn btn-warning">Mark Ordered</a>
                 </div>
               </div>
             </fieldset>

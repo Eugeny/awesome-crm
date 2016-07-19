@@ -26,7 +26,7 @@ angular.module('awesomeCRM.saleItems', [
   offersProvider.get({id: offer.id}, (offer) ->
     $scope.saleItems = offer.products
     watch(i) for i in $scope.saleItems
-    $scope.saleItems.push({})
+    $scope.saleItems.push({}) if offer.active and sale.state == 'Offer'
   )
 
   $scope.delete = (saleItem) ->

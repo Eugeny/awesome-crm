@@ -32,7 +32,7 @@
             </tbody>
           </table>
           <div class="pull-right">
-            <a class="btn btn-default" href ng-click="add()">Create New Offer</a>
+            <a ng-if="sale.state == 'Offer'" class="btn btn-default" href ng-click="add()">Create New Offer</a>
           </div>
         </div>
       </div>

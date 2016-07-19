@@ -65,7 +65,7 @@ angular.module('awesomeCRM.sales', [
 
     salesProvider[action](
       $scope.sale,
-      () -> $scope.close()
+      () -> $scope.close() if $uibModalInstance
       (res) ->
         $scope.errors = res.data.details
         $scope.saleForm.$setPristine()
@@ -79,4 +79,8 @@ angular.module('awesomeCRM.sales', [
   $scope.delete = (sale) ->
     salesProvider.delete(sale)
     $scope.close()
+
+  $scope.setState = (state) ->
+    $scope.sale.state = state
+    $scope.save()
 )
