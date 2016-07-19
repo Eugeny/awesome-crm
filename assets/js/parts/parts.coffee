@@ -39,7 +39,9 @@ angular.module('awesomeCRM.parts', [
           animation: $scope.animationsEnabled
           templateUrl: '/partials/app/parts/form.html'
           controller: 'awesomeCRM.parts.formController'
-        )
+          resolve:
+            part: {}
+        ).result.then(updatePartList)
   )
 
   # Create page

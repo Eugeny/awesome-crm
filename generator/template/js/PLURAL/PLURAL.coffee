@@ -10,7 +10,7 @@ angular.module('awesomeCRM.PLURAL', [
     resolve:
       PLURAL: (PLURALProvider) -> PLURALProvider.query()
 
-    controller: ($scope, $state, PLURAL, PLURALProvider) ->
+    controller: ($scope, $state, PLURAL, PLURALProvider, $uibModal) ->
       $scope.PLURAL = PLURAL
       $scope.filters = {}
 
@@ -24,6 +24,10 @@ angular.module('awesomeCRM.PLURAL', [
           animation: $scope.animationsEnabled
           templateUrl: '/partials/app/PLURAL/form.html'
           controller: 'awesomeCRM.PLURAL.formController'
+          resolve:
+            SINGULAR: {}
+        ).result.then((SINGULAR) ->
+          $scope.PLURAL.push(SINGULAR)
         )
   )
 
@@ -51,7 +55,7 @@ angular.module('awesomeCRM.PLURAL', [
 
   $scope.close = () ->
     if $uibModalInstance
-      $uibModalInstance.close()
+      $uibModalInstance.close($scope.SINGULAR)
     else
       $state.go('PLURAL', null, {reload: true})
 

@@ -10,7 +10,7 @@ angular.module('awesomeCRM.sales', [
     resolve:
       sales: (salesProvider) -> salesProvider.query()
 
-    controller: ($scope, $state, sales, salesProvider) ->
+    controller: ($scope, $state, sales, salesProvider, $uibModal) ->
       $scope.sales = sales
       $scope.filters = {}
 
@@ -24,6 +24,10 @@ angular.module('awesomeCRM.sales', [
           animation: $scope.animationsEnabled
           templateUrl: '/partials/app/sales/form.html'
           controller: 'awesomeCRM.sales.formController'
+          resolve:
+            sale: {}
+        ).result.then((sale) ->
+          $scope.sales.push(sale)
         )
   )
 
@@ -32,7 +36,7 @@ angular.module('awesomeCRM.sales', [
     url: '/create'
     templateUrl: '/partials/app/sales/form.html'
     resolve:
-      sale: () -> {state: 'Offer'}
+      sale: () -> {}
       $uibModalInstance: () -> null
     controller: 'awesomeCRM.sales.formController'
   )
@@ -47,11 +51,12 @@ angular.module('awesomeCRM.sales', [
     controller: 'awesomeCRM.sales.formController'
   )
 ).controller('awesomeCRM.sales.formController', ($scope, $state, salesProvider, sale, $uibModalInstance) ->
+  sale.state ?= 'Offer'
   $scope.sale = sale
 
   $scope.close = () ->
     if $uibModalInstance
-      $uibModalInstance.close()
+      $uibModalInstance.close($scope.sale)
     else
       $state.go('sales', null, {reload: true})
 

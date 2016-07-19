@@ -33,12 +33,14 @@
             <thead>
               <tr>
                 <th>Name</th>
+                <th>Company</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="i in sales | filter:filters.search">
                 <td><a ui-sref="sales.edit({id: i.id})">{{i.name}}</a></td>
+                <td>{{i.company.name}}</td>
                 <td>
                   <div class="btn-group">
                     <a class="btn btn-danger btn-xs" href ng-click="delete(i)">Delete</a>
@@ -57,7 +59,7 @@
       <div class="x_panel">
         <div class="x_content">
           <div class="pull-right">
-            <a class="btn btn-default" ui-sref="sales.create">Create New Entity</a>
+            <a class="btn btn-default" href ng-click="add()">Create New Entity</a>
           </div>
         </div>
       </div>
