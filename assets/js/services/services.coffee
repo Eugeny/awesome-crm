@@ -15,43 +15,40 @@ angular.module('awesomeCRM.services', [
     }
     templateUrl: '/partials/app/misc/file.html'
   }
-).directive('companySelect', ['$state', 'companiesProvider', ($state, companiesProvider) ->
-  return {
+).factory('dynamicSelect', ['$state', 'partTypesProvider', '$timeout', ($state, partTypesProvider, $timeout) ->
+  return (provider, editModule = null, defaultScope = {}) -> {
     scope:
       label: '@'
       noneSelectedLabel: '@'
       model: '='
-    templateUrl: '/partials/app/misc/dynamicSelect.html'
-    link: (scope, element, attrs) ->
-      companiesProvider.query((companies) ->
-        scope.items = companies
-      )
-      scope.edit = (params) ->
-        $state.go('companies.edit', params)
-
-      scope.noneSelectedLabel ?= 'No Company'
-
-  }
-]).directive('partTypeSelect', ['$state', 'partTypesProvider', '$timeout', ($state, partTypesProvider, $timeout) ->
-  return {
-    scope:
-      label: '@'
-      model: '='
       multiple: '@'
     templateUrl: '/partials/app/misc/dynamicSelect.html'
     link: (scope, element, attrs) ->
-      partTypesProvider.query((partTypes) ->
-        scope.items = partTypes
+      provider.query((items) ->
+        i.name = defaultScope.labelFn(i) for i in items if defaultScope.labelFn
+        scope.items = items
       )
-      scope.edit = (params) ->
-        $state.go('partTypes.edit', params)
 
-      scope.noneSelectedLabel ?= 'No Type'
+      if editModule
+        scope.edit = (params) -> $state.go("#{editModule}.edit", params)
+
+      scope[k] ?= i for k,i of defaultScope
 
       scope.select = {value: scope.model}
       scope.$watch(
         () -> JSON.stringify(scope.select)
-        (newValue, oldValue) -> scope.model = scope.select.value if newValue != oldValue
+        (newValue, oldValue) ->
+          if newValue != oldValue
+            scope.model = scope.select.value
+
+          # for select value to match db value
+          try scope.model.name = defaultScope.labelFn(scope.model)  if defaultScope.labelFn
+      )
+      scope.$watch(
+        () -> JSON.stringify(scope.model)
+        (newValue, oldValue) ->
+          if newValue != oldValue
+            scope.select.value = scope.model
       )
 
       # dirty-dirty fix because formstamp hardcodes placeholder - TODO submit a PR
@@ -60,5 +57,11 @@ angular.module('awesomeCRM.services', [
         100
       )
   }
+]).directive('companySelect', ['companiesProvider', 'dynamicSelect', (companiesProvider, dynamicSelect) ->
+  return dynamicSelect(companiesProvider, 'companies', {noneSelectedLabel: 'No Company'})
+]).directive('personSelect', ['peopleProvider', 'dynamicSelect', (peopleProvider, dynamicSelect) ->
+  return dynamicSelect(peopleProvider, 'people', {noneSelectedLabel: 'No Person', labelFn: (p) -> "#{p.firstName} #{p.lastName}"})
+]).directive('partTypeSelect', ['partTypesProvider', 'dynamicSelect', (partTypesProvider, dynamicSelect) ->
+  return dynamicSelect(partTypesProvider, 'partTypes', {noneSelectedLabel: 'No Type'})
 ])
 

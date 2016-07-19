@@ -1,0 +1,66 @@
+<div ui-view>
+  <div class="page-title">
+    <div class="title">
+      <h3>Entities</h3>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Filters and grouping</h2>
+          <div class="clearfix"></div>
+        </div>
+
+        <div class="x_content">
+          <form fs-form-for model="filters" id="filters">
+            <fieldset class="form-inline">
+              <fs-input as="text" name="search" placeholder="Search" label=""></fs-input>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_content">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="i in sales | filter:filters.search">
+                <td><a ui-sref="sales.edit({id: i.id})">{{i.name}}</a></td>
+                <td>
+                  <div class="btn-group">
+                    <a class="btn btn-danger btn-xs" href ng-click="delete(i)">Delete</a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_content">
+          <div class="pull-right">
+            <a class="btn btn-default" ui-sref="sales.create">Create New Entity</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

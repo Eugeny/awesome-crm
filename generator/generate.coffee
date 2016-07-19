@@ -20,7 +20,7 @@ if !args[2] or !args[3]
 singular = args[2]
 plural = args[3]
 
-processTemplate = (s) -> s.replace(/PLURAL/g, plural).replace(/SINGULAR/g, singular)
+processTemplate = (s) -> ('' + s).replace(/PLURAL/g, plural).replace(/SINGULAR/g, singular)
 
 copy = () ->
   copyRec = (from, to) ->

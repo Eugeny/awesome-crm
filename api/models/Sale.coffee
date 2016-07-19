@@ -4,5 +4,15 @@
  # @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
 
 module.exports =
-
-  attributes: {}
+  attributes:
+    name:
+      type: 'string'
+      required: true
+    company:
+      model: 'Company'
+    companyContact:
+      model: 'Person'
+    localContact:
+      model: 'Person'
+    state:
+      type: 'string'

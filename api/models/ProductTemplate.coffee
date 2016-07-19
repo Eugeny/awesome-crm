@@ -16,6 +16,3 @@ module.exports =
       type: 'float'
     currency:
       type: 'string'
-
-# Type / selection (Product, Work)
-# Currency / string selection (€. USD)
