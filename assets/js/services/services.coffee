@@ -91,6 +91,8 @@ angular.module('awesomeCRM.services', [
   }
 ]).directive('companySelect', ['companiesProvider', 'dynamicSelect', (companiesProvider, dynamicSelect) ->
   return dynamicSelect(companiesProvider, 'companies', {noneSelectedLabel: 'No Company'})
+]).directive('countrySelect', ['countriesProvider', 'staticSelect', (countriesProvider, staticSelect) ->
+  return staticSelect({noneSelectedLabel: 'No Country', items: countriesProvider.countryNames})
 ]).directive('personSelect', ['peopleProvider', 'dynamicSelect', (peopleProvider, dynamicSelect) ->
   return dynamicSelect(peopleProvider, 'people', {noneSelectedLabel: 'No Person', labelFn: (p) -> "#{p.firstName} #{p.lastName}"})
 ]).directive('partTypeSelect', ['partTypesProvider', 'dynamicSelect', (partTypesProvider, dynamicSelect) ->
@@ -106,5 +108,10 @@ angular.module('awesomeCRM.services', [
       timeout = $timeout((->
         callback.apply(this, args)
       ), interval)
+).directive('checkbox', () ->
+  scope:
+    ngModel: '='
+    label: '@'
+  template: '<div class="checkbox"><label><input ng-model="ngModel" type="checkbox">{{label}}</label></div>'
 )
 

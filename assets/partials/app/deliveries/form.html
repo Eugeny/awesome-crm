@@ -1,0 +1,64 @@
+<div ng-if="shown">
+  <div class="page-title">
+    <div class="title">
+      <h3 ng-if="delivery.id">Edit Delivery {{delivery.id}}</h3>
+      <h3 ng-if="!delivery.id">Create New Delivery</h3>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_content">
+          <pre ng-if="errors">{{errors}}</pre>
+
+          <form fs-form-for name="deliveryForm" model="delivery" ng-submit="save()">
+            <fieldset class="form-horizontal">
+
+              <div class="row">
+                <div class="col-xs-6">
+                  <ul class="list-group">
+                    <li ng-repeat="i in delivery.products" class="list-group-item">
+                      {{i.name}}
+                    </li>
+                  </ul>
+
+                </div>
+                <div class="col-xs-6">
+                  <fs-input as="text" name="address" label="Address"></fs-input>
+                  <fs-input as="text" name="zip" label="Zip"></fs-input>
+                  <fs-input as="text" name="city" label="City"></fs-input>
+                  <div country-select label="Country" model="delivery.country"></div>
+                  <div delivery-state-select label="State" model="delivery.state"></div>
+
+                  <fs-row label="Start Date">
+                    <div fs-datetime="" ng-model="delivery.startDate" ng-disabled="disabled"></div>
+                  </fs-row>
+                  <fs-row label="Start Date">
+                    <div fs-datetime="" ng-model="delivery.endDate" ng-disabled="disabled"></div>
+                  </fs-row>
+
+                  <fs-input as="text" name="tracking" label="Tracking"></fs-input>
+
+                </div>
+              </div>
+
+              <div class="ln_solid"></div>
+              <div class="form-group">
+                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                  <a href ng-click="close()" class="btn btn-primary">Cancel</a>
+                  <button type="submit" class="btn btn-success">Save</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-if="delivery.id">
+    <div products-table delivery="delivery" sale="sale"></div>
+  </div>
+</div>

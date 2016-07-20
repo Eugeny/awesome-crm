@@ -7,6 +7,7 @@ module.exports =
   findone: (req, res) ->
     Order.findOne(id: req.param('id'))
     .populate('products')
+    .populate('sale')
     .then((offer) ->
       res.json(offer)
     ).catch((err) ->

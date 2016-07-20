@@ -22,3 +22,9 @@ module.exports =
     orders:
       collection: 'Order'
       via: 'sale'
+    orders:
+      collection: 'Order'
+      via: 'sale'
+    deliveries:
+      collection: 'Delivery'
+      via: 'sale'

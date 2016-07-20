@@ -1,7 +1,7 @@
 angular.module('awesomeCRM.saleItems', [
   'ui.router'
   'awesomeCRM.saleItems.provider'
-]).controller('awesomeCRM.saleItems.indexController', ($scope, saleItemsProvider, offersProvider, ordersProvider, debounce) ->
+]).controller('awesomeCRM.saleItems.indexController', ($scope, saleItemsProvider, offersProvider, ordersProvider, deliveriesProvider, debounce) ->
   offer = null
   order = null
   if $scope.offer
@@ -12,8 +12,12 @@ angular.module('awesomeCRM.saleItems', [
     order = parentEntity = $scope.order
     parentProvider = ordersProvider
     $scope.stateEditable = true
+  else if $scope.delivery
+    delivery = parentEntity = $scope.delivery
+    parentProvider = deliveriesProvider
+    $scope.stateEditable = true
   else
-    throw 'saleItems indexController requires offer or order to be set in the scope'
+    throw 'saleItems indexController requires offer, delivery or order to be set in the scope'
   sale = $scope.sale
 
   $scope.sum = 0
@@ -48,8 +52,9 @@ angular.module('awesomeCRM.saleItems', [
     $scope.saleItems.splice(i, 1) if i != -1
 
   $scope.add = (saleItem) ->
-    saleItem.offer = [offer] if offer
-    saleItem.order = [order] if order
+    saleItem.offers = [offer] if offer
+    saleItem.orders = [order] if order
+    saleItem.deliveriws = [delivery] if delivery
     saleItem.sale = sale
     saleItem.state = 'New'
     saleItemsProvider.save(saleItem, (newSaleItem) ->
@@ -59,10 +64,15 @@ angular.module('awesomeCRM.saleItems', [
       parentProvider.addProduct(id: parentEntity.id, productId: saleItem.id)
     )
 
+  $scope.selected = {}
+  $scope.createDelivery = () ->
+    $scope.selectedProducts = $scope.saleItems.filter((x) -> $scope.selected[x.id])
+
 ).directive('productsTable', () ->
   return {
     scope:{
       offer: '='
+      delivery: '='
       order: '='
       sale: '='
     }

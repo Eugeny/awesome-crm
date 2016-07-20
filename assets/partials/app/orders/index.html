@@ -20,7 +20,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="i in sale.orders | filter:filters.search">
+            <tr ng-repeat="i in sale.orders">
               <td><a href ng-click="edit(i)">{{i.id}}</a></td>
               <td>{{i.comment}}</td>
               <td><span class="label" ng-class="{'label-success': i.active, 'label-danger': !i.active, }">{{i.active ? 'Yes' : 'No'}}</span></td>

@@ -12,5 +12,12 @@ angular.module('awesomeCRM.sales.provider', [])
       params:
         id: '@id'
         orderId: '@orderId'
+
+    addDelivery:
+      method: 'POST'
+      url: '/sale/:id/deliveries/:deliveryId'
+      params:
+        id: '@id'
+        deliveryId: '@deliveryId'
   })
 )

@@ -11,6 +11,7 @@ module.exports =
     .populate('localContact')
     .populate('offers')
     .populate('orders')
+    .populate('deliveries')
     .then((partType) ->
       res.json(partType)
     ).catch((err) ->
@@ -24,6 +25,7 @@ module.exports =
     .populate('localContact')
     .populate('offers')
     .populate('orders')
+    .populate('deliveries')
     .then((partTypes) ->
       res.json(partTypes)
     ).catch((err) ->
