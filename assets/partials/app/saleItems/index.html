@@ -27,15 +27,17 @@
             <tbody>
               <tr ng-repeat="i in saleItems">
                 <td>{{i.id}}</td>
-                <td><input class="form-control" type="text" ng-model="i.name" ng-disabled="!offer.active || sale.state != 'Offer'"></td>
-                <td><textarea class="form-control" type="text" ng-model="i.description" ng-disabled="!offer.active || sale.state != 'Offer'"></textarea></td>
-                <td><div product-type-select model="i.type" ng-disabled="!offer.active || sale.state != 'Offer'"></div></td>
-                <td><input class="form-control" type="text" ng-model="i.price" ng-disabled="!offer.active || sale.state != 'Offer'"></td>
-                <td><div currency-select model="i.currency" ng-disabled="!offer.active || sale.state != 'Offer'"></div></td>
-                <td><input class="form-control" type="text" ng-model="i.amount" ng-disabled="!offer.active || sale.state != 'Offer'"></td>
-                <td>{{i.state}}</td>
+                <td><input class="form-control" type="text" ng-model="i.name" ng-disabled="!editable"></td>
+                <td><textarea class="form-control" type="text" ng-model="i.description" ng-disabled="!editable"></textarea></td>
+                <td><div product-type-select model="i.type" ng-disabled="!editable"></div></td>
+                <td><input class="form-control" type="text" ng-model="i.price" ng-disabled="!editable"></td>
+                <td><div currency-select model="i.currency" ng-disabled="!editable"></div></td>
+                <td><input class="form-control" type="text" ng-model="i.amount" ng-disabled="!editable"></td>
                 <td>
-                  <div class="btn-group" ng-if="offer.active && sale.state == 'Offer'">
+                  <div product-state-select model="i.state" ng-disabled="!stateEditable"></div>
+                </td>
+                <td>
+                  <div class="btn-group" ng-if="editable">
                     <a ng-if="!i.id" class="btn btn-success btn-xs" href ng-click="add(i)">Add</a>
                     <a ng-if="i.id" class="btn btn-danger btn-xs" href ng-click="delete(i)">Delete</a>
                   </div>

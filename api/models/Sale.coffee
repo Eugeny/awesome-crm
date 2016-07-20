@@ -19,3 +19,6 @@ module.exports =
     offers:
       collection: 'Offer'
       via: 'sale'
+    orders:
+      collection: 'Order'
+      via: 'sale'

@@ -9,6 +9,8 @@ module.exports =
     .populate('company')
     .populate('companyContact')
     .populate('localContact')
+    .populate('offers')
+    .populate('orders')
     .then((partType) ->
       res.json(partType)
     ).catch((err) ->
@@ -20,6 +22,8 @@ module.exports =
     .populate('company')
     .populate('companyContact')
     .populate('localContact')
+    .populate('offers')
+    .populate('orders')
     .then((partTypes) ->
       res.json(partTypes)
     ).catch((err) ->

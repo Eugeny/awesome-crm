@@ -3,6 +3,7 @@ angular.module('awesomeCRM.sales', [
   'awesomeCRM.sales.provider'
   'awesomeCRM.countries.provider'
   'awesomeCRM.comments.provider'
+  'awesomeCRM.orders.provider'
 ]).config(($stateProvider, $urlRouterProvider) ->
   $stateProvider.state('sales',
     url: '/sales'
@@ -49,7 +50,7 @@ angular.module('awesomeCRM.sales', [
       $uibModalInstance: () -> null
     controller: 'awesomeCRM.sales.formController'
   )
-).controller('awesomeCRM.sales.formController', ($scope, $state, salesProvider, sale, $uibModalInstance, offersProvider) ->
+).controller('awesomeCRM.sales.formController', ($scope, $state, salesProvider, sale, $uibModalInstance, ordersProvider, offersProvider, saleItemsProvider) ->
   sale.state ?= 'Offer'
   $scope.sale = sale
 
@@ -82,5 +83,20 @@ angular.module('awesomeCRM.sales', [
 
   $scope.setState = (state) ->
     $scope.sale.state = state
+    if state == 'Ordered'
+      offer = $scope.sale.offers.find((x) -> x.active)
+      if offer
+        offersProvider.get(id: offer.id, (offer) ->
+          order = angular.copy(offer)
+
+          delete order.id
+          ordersProvider.save(order, (order) ->
+#            saleItemsProvider.addOrder(id: i.id, orderId: order.id) for i in offer.products
+            salesProvider.addOrder(id: sale.id, orderId: order.id)
+            sale.orders ?= []
+            sale.orders.push(order)
+          )
+        )
+
     $scope.save()
 )

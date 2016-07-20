@@ -1,0 +1,41 @@
+<div>
+  <div class="page-title">
+    <div class="title">
+      <h3 ng-if="order.id">Edit Order {{order.id}}</h3>
+      <h3 ng-if="!order.id">Create New Order</h3>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_content">
+          <pre ng-if="errors">{{errors}}</pre>
+
+          <form fs-form-for name="orderForm" model="order" ng-submit="save()">
+            <fieldset class="form-horizontal">
+              <fs-row label="Active">
+                <td><span class="label" ng-class="{'label-success': order.active, 'label-danger': !order.active, }">{{order.active ? 'Yes' : 'No'}}</span></td>
+              </fs-row>
+
+              <fs-input ng-disabled="!order.active || sale.state != 'Order'" as="textarea" name="comment" label="Comment"></fs-input>
+
+              <div class="ln_solid"></div>
+              <div class="form-group">
+                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                  <a href ng-click="close()" class="btn btn-primary">Cancel</a>
+                  <button type="submit" class="btn btn-success">Save</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-if="order.id">
+    <div products-table order="order" sale="sale"></div>
+  </div>
+</div>

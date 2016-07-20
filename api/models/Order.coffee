@@ -4,5 +4,17 @@
  # @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
 
 module.exports =
-
-  attributes: {}
+  attributes:
+    documentId:
+      type: 'integer'
+#      autoIncrement: true
+    sale:
+      model: 'Sale'
+    products:
+      collection: 'SaleItem'
+      via: 'orders'
+      dominant: true
+    comment:
+      type: 'string'
+    active:
+      type: 'boolean'

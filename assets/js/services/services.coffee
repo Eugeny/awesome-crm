@@ -64,7 +64,7 @@ angular.module('awesomeCRM.services', [
       noneSelectedLabel: '@'
       model: '='
       multiple: '@'
-      ngDisabled: '@'
+      ngDisabled: '='
     templateUrl: '/partials/app/misc/staticSelect.html'
     link: (scope, element, attrs) ->
       scope[k] ?= i for k,i of defaultScope
@@ -95,8 +95,6 @@ angular.module('awesomeCRM.services', [
   return dynamicSelect(peopleProvider, 'people', {noneSelectedLabel: 'No Person', labelFn: (p) -> "#{p.firstName} #{p.lastName}"})
 ]).directive('partTypeSelect', ['partTypesProvider', 'dynamicSelect', (partTypesProvider, dynamicSelect) ->
   return dynamicSelect(partTypesProvider, 'partTypes', {noneSelectedLabel: 'No Type'})
-]).directive('productTypeSelect', ['staticSelect', (staticSelect) ->
-  return staticSelect({noneSelectedLabel: 'No Type', items: ['Product', 'Work']})
 ]).directive('currencySelect', ['staticSelect', (staticSelect) ->
   return staticSelect({noneSelectedLabel: 'No Type', items: ['€', 'USD']})
 ]).factory('debounce', ($timeout) ->

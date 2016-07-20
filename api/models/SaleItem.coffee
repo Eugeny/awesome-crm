@@ -25,5 +25,8 @@ module.exports =
     offers:
       collection: 'Offer'
       via: 'products'
+    orders:
+      collection: 'Order'
+      via: 'products'
 
 # State / selection (New, Production, Ready, Delivery, Delivered). Default: New

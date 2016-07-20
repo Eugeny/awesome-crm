@@ -29,10 +29,9 @@ angular.module('awesomeCRM.offers', [
     )
 ).controller('awesomeCRM.offers.indexController', ($scope, $state, offersProvider, $uibModal) ->
   sale = $scope.sale
-  offersProvider.query({sale: sale.id}, (offers) -> $scope.offers = offers)
 
   $scope.add = () ->
-    offer = angular.copy($scope.offers.find((o) -> o.active)) ? {}
+    offer = angular.copy(sale.offers.find((o) -> o.active)) ? {}
     delete offer.id
     offer.active = true
     offer.sale = sale
@@ -46,11 +45,11 @@ angular.module('awesomeCRM.offers', [
         sale: sale
 
     ).result.then((offer) ->
-      for i in $scope.offers
+      for i in sale.offers
         continue if !i.active
         i.active = false
         offersProvider.update(i)
-      $scope.offers.push(offer)
+      sale.offers.push(offer)
     )
 
   $scope.edit = (offer) ->
