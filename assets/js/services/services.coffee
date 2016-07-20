@@ -22,12 +22,20 @@ angular.module('awesomeCRM.services', [
       noneSelectedLabel: '@'
       model: '='
       multiple: '@'
+      providerOptions: '='
     templateUrl: '/partials/app/misc/dynamicSelect.html'
     link: (scope, element, attrs) ->
-      provider.query((items) ->
-        i.name = defaultScope.labelFn(i) for i in items if defaultScope.labelFn
-        scope.items = items
-      ) if provider
+      update = () ->
+        provider.query(scope.providerOptions, (items) ->
+          i.name = defaultScope.labelFn(i) for i in items if defaultScope.labelFn
+          scope.items = items
+        ) if provider
+      update()
+
+      scope.$watch(
+        () -> JSON.stringify(scope.providerOptions)
+        update
+      )
 
       if editModule
         scope.edit = (params) -> $state.go("#{editModule}.edit", params)

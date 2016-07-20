@@ -31,5 +31,8 @@ module.exports =
     deliveries:
       collection: 'Delivery'
       via: 'products'
+    invoices:
+      collection: 'Invoice'
+      via: 'products'
 
 # State / selection (New, Production, Ready, Delivery, Delivered). Default: New

@@ -27,5 +27,3 @@ module.exports =
       collection: 'SaleItem'
       via: 'deliveries'
       dominant: true
-
-#State / selection (Pending, Delivery / Delivered / Returned / Failed). Default: Pending

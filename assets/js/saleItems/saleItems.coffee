@@ -1,7 +1,7 @@
 angular.module('awesomeCRM.saleItems', [
   'ui.router'
   'awesomeCRM.saleItems.provider'
-]).controller('awesomeCRM.saleItems.indexController', ($scope, saleItemsProvider, offersProvider, ordersProvider, deliveriesProvider, debounce) ->
+]).controller('awesomeCRM.saleItems.indexController', ($scope, saleItemsProvider, offersProvider, ordersProvider, deliveriesProvider, invoicesProvider, debounce) ->
   offer = null
   order = null
   if $scope.offer
@@ -16,8 +16,12 @@ angular.module('awesomeCRM.saleItems', [
     delivery = parentEntity = $scope.delivery
     parentProvider = deliveriesProvider
     $scope.stateEditable = true
+  else if $scope.invoice
+    invoice = parentEntity = $scope.invoice
+    parentProvider = invoicesProvider
+    $scope.stateEditable = true
   else
-    throw 'saleItems indexController requires offer, delivery or order to be set in the scope'
+    throw 'saleItems indexController requires offer, delivery, invoice or order to be set in the scope'
   sale = $scope.sale
 
   $scope.sum = 0
@@ -31,7 +35,7 @@ angular.module('awesomeCRM.saleItems', [
         saleItemsProvider.update(saleItem)
       )
     )
-    $scope.sum += saleItem.amount
+    $scope.sum += saleItem.amount*1
     $scope.$watch(
       () -> saleItem.amount
       (newValue, oldValue) ->
@@ -54,19 +58,20 @@ angular.module('awesomeCRM.saleItems', [
   $scope.add = (saleItem) ->
     saleItem.offers = [offer] if offer
     saleItem.orders = [order] if order
-    saleItem.deliveriws = [delivery] if delivery
+    saleItem.deliveries = [delivery] if delivery
+    saleItem.invoices = [invoice] if invoice
     saleItem.sale = sale
     saleItem.state = 'New'
     saleItemsProvider.save(saleItem, (newSaleItem) ->
       saleItem.id = newSaleItem.id
       watch(saleItem)
       $scope.saleItems.push({})
-      parentProvider.addProduct(id: parentEntity.id, productId: saleItem.id)
+#      parentProvider.addProduct(id: parentEntity.id, productId: saleItem.id)
     )
 
   $scope.selected = {}
-  $scope.createDelivery = () ->
-    $scope.selectedProducts = $scope.saleItems.filter((x) -> $scope.selected[x.id])
+  $scope.createDelivery = () -> $scope.deliveryProducts = $scope.saleItems.filter((x) -> $scope.selected[x.id])
+  $scope.createInvoice = () -> $scope.invoiceProducts = $scope.saleItems.filter((x) -> $scope.selected[x.id])
 
 ).directive('productsTable', () ->
   return {
@@ -74,6 +79,7 @@ angular.module('awesomeCRM.saleItems', [
       offer: '='
       delivery: '='
       order: '='
+      invoice: '='
       sale: '='
     }
     templateUrl: '/partials/app/saleItems/index.html'

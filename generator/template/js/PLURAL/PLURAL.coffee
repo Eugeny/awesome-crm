@@ -26,6 +26,7 @@ angular.module('awesomeCRM.PLURAL', [
           resolve:
             SINGULAR: {}
         ).result.then((SINGULAR) ->
+          return if !SINGULAR
           $scope.PLURAL.push(SINGULAR)
         )
   )

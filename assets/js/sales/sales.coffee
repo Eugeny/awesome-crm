@@ -27,7 +27,7 @@ angular.module('awesomeCRM.sales', [
           resolve:
             sale: {}
         ).result.then((sale) ->
-          $scope.sales.push(sale)
+          $scope.sales.push(sale) if sale
         )
   )
 
@@ -54,9 +54,9 @@ angular.module('awesomeCRM.sales', [
   sale.state ?= 'Offer'
   $scope.sale = sale
 
-  $scope.close = () ->
+  $scope.close = (sale) ->
     if $uibModalInstance
-      $uibModalInstance.close($scope.sale)
+      $uibModalInstance.close(sale)
     else
       $state.go('sales', null, {reload: true})
 
@@ -66,7 +66,9 @@ angular.module('awesomeCRM.sales', [
 
     salesProvider[action](
       $scope.sale,
-      () -> $scope.close() if $uibModalInstance
+      (sale) ->
+        $scope.sale.id = sale.id
+        $scope.close($scope.sale) if $uibModalInstance
       (res) ->
         $scope.errors = res.data.details
         $scope.saleForm.$setPristine()
@@ -83,6 +85,7 @@ angular.module('awesomeCRM.sales', [
 
   $scope.setState = (state) ->
     $scope.sale.state = state
+    salesProvider.update({id: sale.id}, {state: state})
     if state == 'Ordered'
       offer = $scope.sale.offers.find((x) -> x.active)
       if offer
@@ -97,6 +100,4 @@ angular.module('awesomeCRM.sales', [
             sale.orders.push(order)
           )
         )
-
-    $scope.save()
 )

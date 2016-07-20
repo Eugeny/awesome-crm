@@ -27,6 +27,3 @@ module.exports =
     ).catch((err) ->
       res.serverError(err)
     )
-
-
-

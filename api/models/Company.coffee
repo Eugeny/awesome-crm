@@ -34,8 +34,8 @@ module.exports =
     people:
       collection: 'Person'
       via: 'company'
+    contactPerson:
+      model: 'Person'
 
-
-# Country / selection
 # Type / selection: (End Customer, Partner, Potential Partner, Supplier, Marketing, Other)
 # Subtype / selection: (Broadcast, Postproduction, manual input)

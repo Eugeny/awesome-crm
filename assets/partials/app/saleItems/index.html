@@ -68,12 +68,14 @@
             <div class="form-group">
               <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                 <a href ng-click="createDelivery()" class="btn btn-primary">Create Delivery</a>
+                <a href ng-click="createInvoice()" class="btn btn-primary">Create Invoice</a>
               </div>
             </div>
 
             <div class="row">
               <div class="col-xs-12">
-                <div delivery-form sale="sale" products="selectedProducts"></div>
+                <div delivery-form sale="sale" order="order" products="deliveryProducts"></div>
+                <div invoice-form sale="sale" products="invoiceProducts"></div>
               </div>
             </div>
           </div>

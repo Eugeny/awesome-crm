@@ -27,6 +27,7 @@ angular.module('awesomeCRM.orders', [
           for j in i
             $scope.orderForm[k].$setValidity(j.rule, false);
     )
+
 ).controller('awesomeCRM.orders.indexController', ($scope, $state, ordersProvider, $uibModal) ->
   sale = $scope.sale
 

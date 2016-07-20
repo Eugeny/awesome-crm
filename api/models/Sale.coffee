@@ -28,3 +28,6 @@ module.exports =
     deliveries:
       collection: 'Delivery'
       via: 'sale'
+    invoices:
+      collection: 'Invoice'
+      via: 'sale'

@@ -12,6 +12,7 @@ module.exports =
     .populate('offers')
     .populate('orders')
     .populate('deliveries')
+    .populate('invoices')
     .then((partType) ->
       res.json(partType)
     ).catch((err) ->
@@ -26,6 +27,7 @@ module.exports =
     .populate('offers')
     .populate('orders')
     .populate('deliveries')
+    .populate('invoices')
     .then((partTypes) ->
       res.json(partTypes)
     ).catch((err) ->

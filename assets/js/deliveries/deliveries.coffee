@@ -33,7 +33,7 @@ angular.module('awesomeCRM.deliveries', [
   $scope.deliveries = sale.deliveries
 
   $scope.$watch(
-    () -> $scope.sale.deliveries.length
+    () -> try $scope.sale.deliveries.length
     () -> deliveriesProvider.query({sale: sale.id}, (deliveries) -> $scope.deliveries = deliveries)
   )
 
@@ -76,15 +76,18 @@ angular.module('awesomeCRM.deliveries', [
     }
     templateUrl: '/partials/app/deliveries/index.html'
   }
-).directive('deliveryForm', (deliveriesProvider, saleItemsProvider) ->
+).directive('deliveryForm', (deliveriesProvider, saleItemsProvider, ordersProvider, salesProvider, $q) ->
   return {
     scope:{
       products: '='
       sale: '='
+      order: '='
     }
     templateUrl: '/partials/app/deliveries/form.html'
     link: (scope, element, attrs) ->
       sale = scope.sale
+      order = scope.order
+
       scope.delivery = {
         sale: sale
         state: 'Pending'
@@ -98,9 +101,21 @@ angular.module('awesomeCRM.deliveries', [
         deliveriesProvider.save(scope.delivery, (delivery) ->
           scope.shown = false
 #          salesProvider.addDelivery(id: sale.id, deliveryId: delivery.id)
+          updates = []
           for i in scope.delivery.products
-            saleItemsProvider.update({id: i.id}, {state: 'Delivery'})
+            updates.push(saleItemsProvider.update({id: i.id}, {state: 'Delivery'}).$promise)
+            i.state = 'Delivery'
           sale.deliveries.push(delivery)
+
+          $q.all(updates).then(() ->
+            ordersProvider.get({id: order.id}, (order) ->
+              for i in order.products
+                return if i.state != 'Delivery'
+              #all products are in Delivery State
+              sale.state = 'Closed'
+              salesProvider.update({id: sale.id}, {state: 'Closed'})
+            )
+          )
         )
   }
 ).directive('deliveryStateSelect', ['staticSelect', (staticSelect) ->

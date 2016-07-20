@@ -45,10 +45,13 @@ angular.module('awesomeCRM.offers', [
         sale: sale
 
     ).result.then((offer) ->
+      return if !offer
+
       for i in sale.offers
         continue if !i.active
         i.active = false
-        offersProvider.update(i)
+        offersProvider.update({id: i.id}, {active: false})
+
       sale.offers.push(offer)
     )
 
