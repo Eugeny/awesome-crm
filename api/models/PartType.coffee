@@ -18,3 +18,6 @@ module.exports =
       type: 'float'
     supplier:
       model: 'Company'
+    productTemplates:
+      collection: 'ProductTemplate'
+      via: 'partTypes'

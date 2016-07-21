@@ -21,7 +21,7 @@
                   <fs-input as="text" name="address" label="Address"></fs-input>
                   <fs-input as="text" name="zip" label="Zip"></fs-input>
                   <fs-input as="text" name="city" label="City"></fs-input>
-                  <div country-select label="Country" model="company.country"></div>
+                  <div country-select model="company.country"></div>
                   <div person-select label="Contact Person" model="company.contactPerson"></div>
                   <fs-input as="text" name="vatId" label="VAT ID"></fs-input>
                 </div>
@@ -123,8 +123,18 @@
                   <td>
                     <a ui-sref="people.edit({id: p.id})">{{p.firstName}} {{p.lastName}}</a>
                   </td>
+                  <td>
+                    <a href="mailto:{{p.email}}">{{p.email}}</a>
+                  </td>
                 </tr>
               </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="pull-right">
+                <a class="btn btn-default" href ng-click="addPerson()">Add New Person</a>
+              </div>
             </div>
           </div>
         </div>
@@ -132,7 +142,7 @@
     </div>
   </div>
 
-  <div ng-if="person.id">
+  <div ng-if="company.id">
     <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">

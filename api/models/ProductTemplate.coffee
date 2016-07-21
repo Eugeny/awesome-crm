@@ -16,3 +16,7 @@ module.exports =
       type: 'float'
     currency:
       type: 'string'
+    partTypes:
+      collection: 'PartType'
+      via: 'productTemplates'
+      dominant: true

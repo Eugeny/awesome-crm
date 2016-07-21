@@ -1,8 +1,8 @@
 <div class="">
   <div class="page-title">
     <div class="title">
-      <h3 ng-if="sale.id">Edit Entity {{sale.name}}</h3>
-      <h3 ng-if="!sale.id">Create New Entity</h3>
+      <h3 ng-if="sale.id">Edit Sale {{sale.name}}</h3>
+      <h3 ng-if="!sale.id">Create New Sale</h3>
     </div>
   </div>
   <div class="clearfix"></div>
@@ -23,16 +23,11 @@
                 </div>
                 <div class="col-xs-6">
                   <div person-select label="Local Contact" model="sale.localContact"></div>
-                  <!--
                   <fs-row label="State">
                     <div fs-select ng-model="sale.state" items="['Offer', 'Ordered', 'Closed', 'Cancelled']">
                       <span ng-show="item">{{item}}</span>
                       <span ng-hide="item">No State</span>
                     </div>
-                  </fs-row>
-                  -->
-                  <fs-row label="State">
-                    <span>{{sale.state}}</span>
                   </fs-row>
                 </div>
               </div>

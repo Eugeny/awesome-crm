@@ -34,6 +34,7 @@
               <tr>
                 <th>Name</th>
                 <th>Company</th>
+                <th>State</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -41,6 +42,7 @@
               <tr ng-repeat="i in sales | filter:filters.search">
                 <td><a ui-sref="sales.edit({id: i.id})">{{i.name}}</a></td>
                 <td>{{i.company.name}}</td>
+                <td>{{i.state}}</td>
                 <td>
                   <div class="btn-group">
                     <a class="btn btn-danger btn-xs" href ng-click="delete(i)">Delete</a>

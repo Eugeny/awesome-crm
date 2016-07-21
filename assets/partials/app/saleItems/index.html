@@ -1,5 +1,9 @@
 <div ng-controller="awesomeCRM.saleItems.indexController">
   <div class="page-title">
+    <div class="pull-right">
+      <div product-template-select model="selectedTemplate" style="display: inline-block;vertical-align: top;"></div>
+      <a href ng-click="addFromTemplate(selectedTemplate)" class="btn btn-success">Add From Template</a>
+    </div>
     <div class="title">
       <h3>Products</h3>
     </div>
@@ -31,37 +35,35 @@
                   <div checkbox ng-model="selected[i.id]"></div>
                 </td>
                 <td>{{i.id}}</td>
-                <td><input class="form-control" type="text" ng-model="i.name" ng-disabled="!editable"></td>
-                <td><textarea class="form-control" type="text" ng-model="i.description" ng-disabled="!editable"></textarea></td>
-                <td><div product-type-select model="i.type" ng-disabled="!editable"></div></td>
-                <td><input class="form-control" type="text" ng-model="i.price" ng-disabled="!editable"></td>
-                <td><div currency-select model="i.currency" ng-disabled="!editable"></div></td>
-                <td><input class="form-control" type="text" ng-model="i.amount" ng-disabled="!editable"></td>
+                <td><input class="form-control" type="text" ng-model="i.name" ng-disabled="!editable && i.id"></td>
+                <td><textarea class="form-control" type="text" ng-model="i.description" ng-disabled="!editable && i.id"></textarea></td>
+                <td><div product-type-select model="i.type" ng-disabled="!editable && i.id"></div></td>
+                <td><input class="form-control" type="text" ng-model="i.price" ng-disabled="!editable && i.id"></td>
+                <td><div currency-select label="" model="i.currency" ng-disabled="!editable && i.id"></div></td>
+                <td><input class="form-control" type="text" ng-model="i.amount" ng-disabled="!editable && i.id"></td>
                 <td>
                   <div product-state-select model="i.state" ng-disabled="!stateEditable"></div>
                 </td>
                 <td>
-                  <div class="btn-group" ng-if="editable">
+                  <div class="btn-group">
                     <a ng-if="!i.id" class="btn btn-success btn-xs" href ng-click="add(i)">Add</a>
-                    <a ng-if="i.id" class="btn btn-danger btn-xs" href ng-click="delete(i)">Delete</a>
+                    <a ng-if="editable && i.id" class="btn btn-danger btn-xs" href ng-click="delete(i)">Delete</a>
                   </div>
                 </td>
               </tr>
             </tbody>
             <tfoot>
               <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td colspan="5" class="text-right">Total:</td>
+                <td>{{totalPrice}}</td>
                 <td></td>
                 <td>{{sum}}</td>
                 <td></td>
               </tr>
             </tfoot>
           </table>
+
+          <pre ng-if="errors">{{errors}}</pre>
 
           <div ng-if="order">
             <div class="ln_solid"></div>

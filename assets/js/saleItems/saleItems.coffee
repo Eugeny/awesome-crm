@@ -1,31 +1,31 @@
 angular.module('awesomeCRM.saleItems', [
   'ui.router'
   'awesomeCRM.saleItems.provider'
-]).controller('awesomeCRM.saleItems.indexController', ($scope, saleItemsProvider, offersProvider, ordersProvider, deliveriesProvider, invoicesProvider, debounce) ->
+]).controller('awesomeCRM.saleItems.indexController', ($scope, formErrorHandler, saleItemsProvider, offersProvider, ordersProvider, deliveriesProvider, invoicesProvider, debounce) ->
   offer = null
   order = null
+  canAdd = true
+
   if $scope.offer
     offer = parentEntity = $scope.offer
     parentProvider = offersProvider
-    $scope.stateEditable = false
   else if $scope.order
     order = parentEntity = $scope.order
     parentProvider = ordersProvider
-    $scope.stateEditable = true
   else if $scope.delivery
     delivery = parentEntity = $scope.delivery
     parentProvider = deliveriesProvider
-    $scope.stateEditable = true
   else if $scope.invoice
     invoice = parentEntity = $scope.invoice
     parentProvider = invoicesProvider
-    $scope.stateEditable = true
   else
     throw 'saleItems indexController requires offer, delivery, invoice or order to be set in the scope'
   sale = $scope.sale
 
   $scope.sum = 0
-  $scope.editable = offer && offer.active && sale.state == 'Offer'
+  $scope.totalPrice = 0
+  $scope.editable = true
+  $scope.stateEditable = true
 
   watch = (saleItem) ->
     $scope.$watch(
@@ -35,7 +35,10 @@ angular.module('awesomeCRM.saleItems', [
         saleItemsProvider.update(saleItem)
       )
     )
+    saleItem.amount ?= 0
+    saleItem.price ?= 0
     $scope.sum += saleItem.amount*1
+    $scope.totalPrice += saleItem.amount*saleItem.price
     $scope.$watch(
       () -> saleItem.amount
       (newValue, oldValue) ->
@@ -43,11 +46,18 @@ angular.module('awesomeCRM.saleItems', [
         oldValue ?= 0
         $scope.sum += newValue*1 - oldValue*1
     )
+    $scope.$watch(
+      () -> saleItem.amount * saleItem.price
+      (newValue, oldValue) ->
+        newValue ?= 0
+        oldValue ?= 0
+        $scope.totalPrice += newValue*1 - oldValue*1
+    )
 
   parentProvider.get({id: parentEntity.id}, (parentEntity) ->
     $scope.saleItems = parentEntity.products
     watch(i) for i in $scope.saleItems
-    $scope.saleItems.push({}) if parentEntity.active and sale.state == 'Offer'
+    $scope.saleItems.push({}) if canAdd
   )
 
   $scope.delete = (saleItem) ->
@@ -55,19 +65,39 @@ angular.module('awesomeCRM.saleItems', [
     i = $scope.saleItems.indexOf(saleItem)
     $scope.saleItems.splice(i, 1) if i != -1
 
-  $scope.add = (saleItem) ->
+  $scope.add = (saleItem, fromTable = true) ->
     saleItem.offers = [offer] if offer
     saleItem.orders = [order] if order
     saleItem.deliveries = [delivery] if delivery
     saleItem.invoices = [invoice] if invoice
     saleItem.sale = sale
     saleItem.state = 'New'
-    saleItemsProvider.save(saleItem, (newSaleItem) ->
-      saleItem.id = newSaleItem.id
-      watch(saleItem)
-      $scope.saleItems.push({})
-#      parentProvider.addProduct(id: parentEntity.id, productId: saleItem.id)
+    saleItemsProvider.save(
+      saleItem,
+      (newSaleItem) ->
+        $scope.errors = null
+        saleItem.id = newSaleItem.id
+        watch(saleItem)
+        if fromTable
+          $scope.saleItems.push({})
+        else
+          $scope.saleItems.splice($scope.saleItems.length - 1, 0, saleItem)
+
+      (res) ->
+        $scope.errors = res.data.details
     )
+
+  $scope.selectedTemplate = null
+  $scope.addFromTemplate = (template) ->
+    $scope.add({
+      name: template.name
+      description: template.description
+      type: template.type
+      price: template.price
+      currency: template.currency
+      amount: 0
+      productTemplate: template
+    }, false)
 
   $scope.selected = {}
   $scope.createDelivery = () -> $scope.deliveryProducts = $scope.saleItems.filter((x) -> $scope.selected[x.id])
@@ -87,5 +117,5 @@ angular.module('awesomeCRM.saleItems', [
 ).directive('productTypeSelect', ['staticSelect', (staticSelect) ->
   return staticSelect({noneSelectedLabel: 'No Type', items: ['Product', 'Work']})
 ]).directive('productStateSelect', ['staticSelect', (staticSelect) ->
-  return staticSelect({noneSelectedLabel: 'No Type', items: ['New', 'Production', 'Ready', 'Delivery', 'Delivered']})
+  return staticSelect(defaultValue: 'New', noneSelectedLabel: 'No Type', items: ['New', 'Production', 'Ready', 'Delivery', 'Delivered'])
 ])

@@ -118,3 +118,5 @@ nbproject
 .idea
 .node_history
 /uploads/*
+/log
+/pm2.json

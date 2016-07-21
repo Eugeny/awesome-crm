@@ -21,6 +21,7 @@ angular.module('awesomeCRM.productTemplates', [
 
       $scope.add = () ->
         $uibModal.open(
+          size: 'lg'
           templateUrl: '/partials/app/productTemplates/form.html'
           controller: 'awesomeCRM.productTemplates.formController'
         )
@@ -68,4 +69,6 @@ angular.module('awesomeCRM.productTemplates', [
           for j in i
             $scope.productTemplateForm[k].$setValidity(j.rule, false);
     )
-)
+).directive('productTemplateSelect', ['productTemplatesProvider', 'dynamicSelect', (productTemplatesProvider, dynamicSelect) ->
+  return dynamicSelect(productTemplatesProvider, 'productTemplates', {noneSelectedLabel: 'No Product Template'})
+])

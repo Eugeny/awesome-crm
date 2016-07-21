@@ -1,8 +1,6 @@
 angular.module('awesomeCRM.PLURAL', [
   'ui.router'
   'awesomeCRM.PLURAL.provider'
-  'awesomeCRM.countries.provider'
-  'awesomeCRM.comments.provider'
 ]).config(($stateProvider, $urlRouterProvider) ->
   $stateProvider.state('PLURAL',
     url: '/PLURAL'

@@ -19,7 +19,7 @@
                 <td><span class="label" ng-class="{'label-success': offer.active, 'label-danger': !offer.active, }">{{offer.active ? 'Yes' : 'No'}}</span></td>
               </fs-row>
 
-              <fs-input ng-disabled="!offer.active || sale.state != 'Offer'" as="textarea" name="comment" label="Comment"></fs-input>
+              <fs-input as="textarea" name="comment" label="Comment"></fs-input>
 
               <div class="ln_solid"></div>
               <div class="form-group">

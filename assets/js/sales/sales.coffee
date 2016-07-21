@@ -24,6 +24,7 @@ angular.module('awesomeCRM.sales', [
         $uibModal.open(
           templateUrl: '/partials/app/sales/form.html'
           controller: 'awesomeCRM.sales.formController'
+          size: 'lg'
           resolve:
             sale: {}
         ).result.then((sale) ->

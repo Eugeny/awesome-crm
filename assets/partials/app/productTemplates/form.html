@@ -29,13 +29,19 @@
                   </fs-row>
                   <fs-input as="text" name="price" label="Price"></fs-input>
 
-                  <fs-row label="Currency">
-                    <div fs-select freetext="true" ng-model="productTemplate.currency" items="['€', 'USD']">
-                      <span ng-show="item">{{item}}</span>
-                      <span ng-hide="item">No Currency</span>
-                    </div>
-                  </fs-row>
+                  <div currency-select model="productTemplate.currency"></div>
+                </div>
+              </div>
 
+
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="form-group">
+                    <label class="control-label ng-binding ng-scope">Part Types</label>
+                  </div>
+                  <div class="form-group">
+                    <div part-type-select multiple="Part Types" model="productTemplate.partTypes"></div>
+                  </div>
                 </div>
               </div>
 

@@ -38,6 +38,7 @@ angular.module('awesomeCRM.parts', [
         $uibModal.open(
           templateUrl: '/partials/app/parts/form.html'
           controller: 'awesomeCRM.parts.formController'
+          size: 'lg'
           resolve:
             part: {}
         ).result.then(updatePartList)
@@ -62,7 +63,7 @@ angular.module('awesomeCRM.parts', [
       $uibModalInstance: () -> null
     controller: 'awesomeCRM.parts.formController'
   )
-).controller('awesomeCRM.parts.formController', ($scope, $state, partsProvider, countriesProvider, $q, $uibModalInstance, part) ->
+).controller('awesomeCRM.parts.formController', ($scope, $state, partsProvider, $q, $uibModalInstance, part) ->
   $scope.part = part
 
   $scope.close = () ->

@@ -42,6 +42,7 @@ angular.module('awesomeCRM.services', [
 
       scope[k] ?= i for k,i of defaultScope
 
+      scope.model ?= [] if scope.multiple
       scope.select = {value: scope.model}
       scope.$watch(
         () -> JSON.stringify(scope.select)
@@ -77,6 +78,7 @@ angular.module('awesomeCRM.services', [
     link: (scope, element, attrs) ->
       scope[k] ?= i for k,i of defaultScope
 
+      scope.model ?= scope.defaultValue if scope.defaultValue
       scope.select = {value: scope.model}
       scope.$watch(
         () -> JSON.stringify(scope.select)
@@ -100,13 +102,11 @@ angular.module('awesomeCRM.services', [
 ]).directive('companySelect', ['companiesProvider', 'dynamicSelect', (companiesProvider, dynamicSelect) ->
   return dynamicSelect(companiesProvider, 'companies', {noneSelectedLabel: 'No Company'})
 ]).directive('countrySelect', ['countriesProvider', 'staticSelect', (countriesProvider, staticSelect) ->
-  return staticSelect({noneSelectedLabel: 'No Country', items: countriesProvider.countryNames})
-]).directive('personSelect', ['peopleProvider', 'dynamicSelect', (peopleProvider, dynamicSelect) ->
-  return dynamicSelect(peopleProvider, 'people', {noneSelectedLabel: 'No Person', labelFn: (p) -> "#{p.firstName} #{p.lastName}"})
+  return staticSelect({label: 'Country', noneSelectedLabel: 'No Country', items: countriesProvider.countryNames})
 ]).directive('partTypeSelect', ['partTypesProvider', 'dynamicSelect', (partTypesProvider, dynamicSelect) ->
   return dynamicSelect(partTypesProvider, 'partTypes', {noneSelectedLabel: 'No Type'})
 ]).directive('currencySelect', ['staticSelect', (staticSelect) ->
-  return staticSelect({noneSelectedLabel: 'No Type', items: ['€', 'USD']})
+  return staticSelect(label: 'Currency', noneSelectedLabel: 'No Type', items: ['€', 'USD'], defaultValue: '€')
 ]).factory('debounce', ($timeout) ->
   (interval, callback) ->
     timeout = null
@@ -121,5 +121,15 @@ angular.module('awesomeCRM.services', [
     ngModel: '='
     label: '@'
   template: '<div class="checkbox"><label><input ng-model="ngModel" type="checkbox">{{label}}</label></div>'
+).factory('formErrorHandler', () ->
+  (form) ->
+    (res) ->
+      form.errorsText = res.data.details
+      form.$setPristine()
+      form.$setUntouched()
+      for k,i of res.data.invalidAttributes
+        form[k].$setDirty(true);
+        for j in i
+          form[k].$setValidity(j.rule, false);
 )
 

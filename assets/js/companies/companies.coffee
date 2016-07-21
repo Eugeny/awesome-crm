@@ -80,9 +80,8 @@ angular.module('awesomeCRM.companies', [
   $stateProvider.state('companies.create',
     url: '/create'
     templateUrl: '/partials/app/companies/form.html'
-    controller: ($scope, $state, companiesProvider, countriesProvider) ->
+    controller: ($scope, $state, companiesProvider) ->
       $scope.company = {}
-      $scope.countries = countriesProvider.countryNames
       $scope.companyTypes = companyTypes
 
       $scope.save = () ->
@@ -108,11 +107,10 @@ angular.module('awesomeCRM.companies', [
       company: (companiesProvider, $stateParams) ->
         companiesProvider.get(id: $stateParams.id)
 
-    controller: ($scope, $state, company, companiesProvider, commentsProvider, Upload, $timeout, countriesProvider) ->
+    controller: ($scope, $state, company, companiesProvider, commentsProvider, Upload, $timeout, $uibModal) ->
       $scope.company = company
       $scope.comment = {}
       $scope.companyTypes = companyTypes
-      $scope.countries = countriesProvider.countryNames
 
       $scope.addComment = () ->
         $scope.comment.company = company.id
@@ -146,5 +144,20 @@ angular.module('awesomeCRM.companies', [
 
       $scope.save = () ->
         companiesProvider.update($scope.company, () -> $state.go('companies', null, {reload: true}))
+
+      $scope.addPerson = () ->
+        $uibModal.open(
+          size: 'lg'
+          templateUrl: '/partials/app/people/form.html'
+          controller: 'awesomeCRM.people.formController'
+          resolve:
+            person:
+              company: $scope.company
+        ).result.then((person) ->
+          return if !person
+          $scope.company.people ?= []
+          $scope.company.people.push(person)
+        )
+
   )
 );
