@@ -46,8 +46,22 @@ angular.module('awesomeCRM.productTemplates', [
       $uibModalInstance: () -> null
     controller: 'awesomeCRM.productTemplates.formController'
   )
-).controller('awesomeCRM.productTemplates.formController', ($scope, $state, productTemplatesProvider, productTemplate, $uibModalInstance) ->
+).controller('awesomeCRM.productTemplates.formController', ($scope, debounce, $state, partTypeItemsProvider, productTemplatesProvider, productTemplate, $uibModalInstance) ->
   $scope.productTemplate = productTemplate
+
+  watch = (pti) ->
+    $scope.$watch(
+      () -> JSON.stringify(pti)
+      debounce(1000, (newValue, oldValue) ->
+        return if newValue == oldValue
+        partTypeItemsProvider.update(pti)
+      )
+    )
+
+  productTemplate.$promise.then(() ->
+    watch(i) for i in productTemplate.partTypeItems
+    productTemplate.partTypeItems.push(count: 1)
+  )
 
   $scope.close = () ->
     if $uibModalInstance
@@ -69,6 +83,21 @@ angular.module('awesomeCRM.productTemplates', [
           for j in i
             $scope.productTemplateForm[k].$setValidity(j.rule, false);
     )
+
+  $scope.addPartTypeItem = (pti) ->
+    partTypeItemsProvider.save(
+      pti,
+      (newPti) ->
+        $scope.errors = null
+        pti.id = newPti.id
+        watch(pti)
+        productTemplate.partTypeItems.push(count: 1)
+        productTemplatesProvider.addPartTypeItem(id: productTemplate.id, partTypeItemId: pti.id)
+
+      (res) ->
+        $scope.errors = res.data.details
+    )
+
 ).directive('productTemplateSelect', ['productTemplatesProvider', 'dynamicSelect', (productTemplatesProvider, dynamicSelect) ->
   return dynamicSelect(productTemplatesProvider, 'productTemplates', {noneSelectedLabel: 'No Product Template'})
 ])

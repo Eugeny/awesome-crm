@@ -12,6 +12,7 @@ angular.module('awesomeCRM', [
   'awesomeCRM.companies'
   'awesomeCRM.partTypes'
   'awesomeCRM.productTemplates'
+  'awesomeCRM.partTypeItems.provider'
   'awesomeCRM.sales'
   'awesomeCRM.offers'
   'awesomeCRM.orders'

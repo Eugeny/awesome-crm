@@ -6,7 +6,7 @@
 module.exports =
   findone: (req, res) ->
     ProductTemplate.findOne(id: req.param('id'))
-    .populate('partTypes')
+    .populate('partTypeItems')
     .then((productTemplate) ->
       res.json(productTemplate)
     ).catch((err) ->
@@ -15,7 +15,7 @@ module.exports =
 
   find: (req, res) ->
     ProductTemplate.find()
-    .populate('partTypes')
+    .populate('partTypeItems')
     .then((productTemplates) ->
       res.json(productTemplates)
     ).catch((err) ->
