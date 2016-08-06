@@ -65,6 +65,11 @@ angular.module('awesomeCRM.offers', [
         sale: sale
     )
 
+  $scope.delete = (offer) ->
+    offersProvider.delete(id: offer.id)
+    i = $scope.sale.offers.indexOf(offer)
+    $scope.sale.offers.splice(i, 1) if i != -1
+
 ).directive('offersTable', () ->
   return {
     scope:{

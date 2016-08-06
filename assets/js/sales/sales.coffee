@@ -51,7 +51,7 @@ angular.module('awesomeCRM.sales', [
       $uibModalInstance: () -> null
     controller: 'awesomeCRM.sales.formController'
   )
-).controller('awesomeCRM.sales.formController', ($scope, $state, salesProvider, sale, $uibModalInstance, ordersProvider, offersProvider, saleItemsProvider) ->
+).controller('awesomeCRM.sales.formController', ($scope, $state, salesProvider, sale, $uibModalInstance, ordersProvider, offersProvider, $q, $uibModal) ->
   sale.state ?= 'Offer'
   $scope.sale = sale
 
@@ -101,4 +101,34 @@ angular.module('awesomeCRM.sales', [
             sale.orders.push(order)
           )
         )
+
+  $scope.createInvoiceOrDelivery = () ->
+    promises = (ordersProvider.get(id: o.id).$promise for o in sale.orders)
+    $q.allSettled(promises).then((data) ->
+      items = []
+      itemMarked = []
+
+      for i in data
+        continue if i.state != 'fulfilled'
+
+        for p in i.value.products
+          if !itemMarked[p.id]
+            items.push(p)
+            itemMarked[p.id] = true
+
+      $uibModal.open(
+        templateUrl: '/partials/app/sales/deliveryOrInvoiceModal.html'
+        controller: ($scope) ->
+          $scope.saleItems = items
+          $scope.sale = sale
+
+          $scope.selected = {}
+          $scope.createDelivery = () -> $scope.deliveryProducts = $scope.saleItems.filter((x) -> $scope.selected[x.id])
+          $scope.createInvoice = () -> $scope.invoiceProducts = $scope.saleItems.filter((x) -> $scope.selected[x.id])
+
+        size: 'lg'
+#        resolve:
+#          products: items
+      )
+    )
 )

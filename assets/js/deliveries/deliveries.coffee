@@ -69,6 +69,11 @@ angular.module('awesomeCRM.deliveries', [
         sale: sale
     )
 
+  $scope.delete = (delivery) ->
+    deliveriesProvider.delete(id: delivery.id)
+    i = $scope.deliveries.indexOf(delivery)
+    $scope.deliveries.splice(i, 1) if i != -1
+
 ).directive('deliveriesTable', () ->
   return {
     scope:{
@@ -76,22 +81,28 @@ angular.module('awesomeCRM.deliveries', [
     }
     templateUrl: '/partials/app/deliveries/index.html'
   }
-).directive('deliveryForm', (deliveriesProvider, saleItemsProvider, ordersProvider, salesProvider, $q) ->
+).directive('deliveryForm', (deliveriesProvider, saleItemsProvider, ordersProvider, salesProvider, $q, companiesProvider) ->
   return {
     scope:{
       products: '='
       sale: '='
       order: '='
+      orders: '='
     }
     templateUrl: '/partials/app/deliveries/form.html'
     link: (scope, element, attrs) ->
       sale = scope.sale
-      order = scope.order
+      orders = sale.orders
 
       scope.delivery = {
         sale: sale
         state: 'Pending'
       }
+
+      companiesProvider.get({id: sale.company.id}, (company) ->
+        scope.delivery[i] = company[i] for i in ['address', 'city', 'country', 'zip']
+      ) if sale.company
+
       scope.$watch('products', (newValue) ->
         scope.delivery.products = newValue
         scope.shown = !!newValue
@@ -114,7 +125,7 @@ angular.module('awesomeCRM.deliveries', [
               #all products are in Delivery State
               sale.state = 'Closed'
               salesProvider.update({id: sale.id}, {state: 'Closed'})
-            )
+            ) for order in orders
           )
         )
   }

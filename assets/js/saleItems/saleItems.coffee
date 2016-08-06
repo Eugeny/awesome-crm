@@ -6,6 +6,11 @@ angular.module('awesomeCRM.saleItems', [
   order = null
   canAdd = true
 
+  initialProduct =
+    amount: 1
+    price: 0
+    type: 'Product'
+
   if $scope.offer
     offer = parentEntity = $scope.offer
     parentProvider = offersProvider
@@ -22,7 +27,6 @@ angular.module('awesomeCRM.saleItems', [
     throw 'saleItems indexController requires offer, delivery, invoice or order to be set in the scope'
   sale = $scope.sale
 
-  $scope.sum = 0
   $scope.totalPrice = 0
   $scope.editable = true
   $scope.stateEditable = true
@@ -37,15 +41,7 @@ angular.module('awesomeCRM.saleItems', [
     )
     saleItem.amount ?= 0
     saleItem.price ?= 0
-    $scope.sum += saleItem.amount*1
     $scope.totalPrice += saleItem.amount*saleItem.price
-    $scope.$watch(
-      () -> saleItem.amount
-      (newValue, oldValue) ->
-        newValue ?= 0
-        oldValue ?= 0
-        $scope.sum += newValue*1 - oldValue*1
-    )
     $scope.$watch(
       () -> saleItem.amount * saleItem.price
       (newValue, oldValue) ->
@@ -57,7 +53,7 @@ angular.module('awesomeCRM.saleItems', [
   parentProvider.get({id: parentEntity.id}, (parentEntity) ->
     $scope.saleItems = parentEntity.products
     watch(i) for i in $scope.saleItems
-    $scope.saleItems.push({}) if canAdd
+    $scope.saleItems.push(angular.copy(initialProduct)) if canAdd
   )
 
   $scope.delete = (saleItem) ->
@@ -79,7 +75,7 @@ angular.module('awesomeCRM.saleItems', [
         saleItem.id = newSaleItem.id
         watch(saleItem)
         if fromTable
-          $scope.saleItems.push({})
+          $scope.saleItems.push(angular.copy(initialProduct))
         else
           $scope.saleItems.splice($scope.saleItems.length - 1, 0, saleItem)
 
@@ -95,7 +91,7 @@ angular.module('awesomeCRM.saleItems', [
       type: template.type
       price: template.price
       currency: template.currency
-      amount: 0
+      amount: 1
       productTemplate: template
     }, false)
 

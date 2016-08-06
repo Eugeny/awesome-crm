@@ -69,6 +69,11 @@ angular.module('awesomeCRM.invoices', [
         sale: sale
     )
 
+  $scope.delete = (invoice) ->
+    invoicesProvider.delete(id: invoice.id)
+    i = $scope.invoices.indexOf(invoice)
+    $scope.invoices.splice(i, 1) if i != -1
+
 ).directive('invoicesTable', () ->
   return {
     scope:{

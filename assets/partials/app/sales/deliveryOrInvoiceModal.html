@@ -1,0 +1,65 @@
+<div>
+  <div class="page-title">
+    <div class="title">
+      <h3>Create Delivery Or Invoice</h3>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_content">
+          <table class="table">
+            <thead>
+            <tr>
+              <th></th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Type</th>
+              <th>Price</th>
+              <th>Currency</th>
+              <th>Amount</th>
+              <th>State</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="i in saleItems">
+              <td ng-if="!offer">
+                <div checkbox ng-model="selected[i.id]"></div>
+              </td>
+              <td>{{i.id}}</td>
+              <td>{{i.name}}</td>
+              <td>{{i.description}}</td>
+              <td>{{i.type}}</td>
+              <td>{{i.price}}</td>
+              <td>{{i.currency}}</td>
+              <td>{{i.amount}}</td>
+              <td>{{i.state}}</td>
+            </tr>
+            </tbody>
+          </table>
+
+          <div>
+            <div class="ln_solid"></div>
+            <div class="form-group">
+              <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                <a href ng-click="createDelivery()" class="btn btn-primary">Create Delivery</a>
+                <a href ng-click="createInvoice()" class="btn btn-primary">Create Invoice</a>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12">
+                <div delivery-form sale="sale" products="deliveryProducts"></div>
+                <div invoice-form sale="sale" products="invoiceProducts"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -40,6 +40,7 @@ angular.module('awesomeCRM.services', [
       if editModule
         scope.edit = (params) -> $state.go("#{editModule}.edit", params)
 
+
       scope[k] ?= i for k,i of defaultScope
 
       scope.model ?= [] if scope.multiple

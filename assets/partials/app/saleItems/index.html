@@ -17,7 +17,7 @@
           <table class="table">
             <thead>
               <tr>
-                <th></th>
+                <th ng-if="!offer"></th>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Description</th>
@@ -31,7 +31,7 @@
             </thead>
             <tbody>
               <tr ng-repeat="i in saleItems">
-                <td>
+                <td ng-if="!offer">
                   <div checkbox ng-model="selected[i.id]"></div>
                 </td>
                 <td>{{i.id}}</td>
@@ -56,9 +56,7 @@
               <tr>
                 <td colspan="5" class="text-right">Total:</td>
                 <td>{{totalPrice}}</td>
-                <td></td>
-                <td>{{sum}}</td>
-                <td></td>
+                <td colspan="3"></td>
               </tr>
             </tfoot>
           </table>
@@ -76,7 +74,7 @@
 
             <div class="row">
               <div class="col-xs-12">
-                <div delivery-form sale="sale" order="order" products="deliveryProducts"></div>
+                <div delivery-form sale="sale" products="deliveryProducts"></div>
                 <div invoice-form sale="sale" products="invoiceProducts"></div>
               </div>
             </div>

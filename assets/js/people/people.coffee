@@ -63,12 +63,13 @@ angular.module('awesomeCRM.people', [
     templateUrl: '/partials/app/people/form.html'
     resolve:
       person: (peopleProvider, $stateParams) -> peopleProvider.get(id: $stateParams.id)
-      $uibModalInstance: null
+      $uibModalInstance: () -> null
     controller: 'awesomeCRM.people.formController'
   )
 ).controller('awesomeCRM.people.formController', ($scope, $state, person, peopleProvider, commentsProvider, Upload, $uibModalInstance) ->
   $scope.person = person
   $scope.comment = {}
+  console.log('asd')
 
   $scope.close = (person) ->
     if $uibModalInstance
