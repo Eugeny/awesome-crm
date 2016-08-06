@@ -87,7 +87,7 @@ angular.module('awesomeCRM.companies', [
       $scope.save = () ->
         companiesProvider.save(
           $scope.company,
-          () -> $state.go('companies', null, {reload: true})
+          (company) -> $state.go('companies.edit', {id: company.id}, {reload: true})
           (res) ->
             $scope.errors = res.data.details
             $scope.companyForm.$setPristine()

@@ -38,20 +38,20 @@
                 <th>SubType</th>
                 <th>Price</th>
                 <th>Supplier</th>
-                <th>Actions</th>
+                <th class="actions">Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="i in partTypes | filter:filters.search">
-                <td><a ui-sref="partTypes.edit({id: i.id})">{{i.name}}</a></td>
+              <tr class="clickable" ui-sref="partTypes.edit({id: i.id})" ng-repeat="i in partTypes | filter:filters.search">
+                <td>{{i.name}}</td>
                 <td>{{i.description}}</td>
                 <td>{{i.type}}</td>
                 <td>{{i.subtype}}</td>
                 <td>{{i.price}}</td>
                 <td>{{i.supplier.name}}</td>
-                <td>
+                <td class="actions">
                   <div class="btn-group">
-                    <a class="btn btn-danger btn-xs" href ng-click="delete(i)">Delete</a>
+                    <a class="btn btn-danger" href ng-click="delete(i)">Delete</a>
                   </div>
                 </td>
               </tr>

@@ -18,7 +18,7 @@
             <thead>
               <tr>
                 <th ng-if="!offer"></th>
-                <th>ID</th>
+                <th>#</th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Type</th>
@@ -26,15 +26,15 @@
                 <th>Currency</th>
                 <th>Amount</th>
                 <th>State</th>
-                <th>Actions</th>
+                <th class="actions">Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="i in saleItems">
+              <tr ng-repeat="(k,i) in saleItems">
                 <td ng-if="!offer">
                   <div checkbox ng-model="selected[i.id]"></div>
                 </td>
-                <td>{{i.id}}</td>
+                <td>{{k + 1}}</td>
                 <td><input class="form-control" type="text" ng-model="i.name" ng-disabled="!editable && i.id"></td>
                 <td><textarea class="form-control" type="text" ng-model="i.description" ng-disabled="!editable && i.id"></textarea></td>
                 <td><div product-type-select model="i.type" ng-disabled="!editable && i.id"></div></td>
@@ -44,10 +44,10 @@
                 <td>
                   <div product-state-select model="i.state" ng-disabled="!stateEditable"></div>
                 </td>
-                <td>
+                <td class="text-right">
                   <div class="btn-group">
-                    <a ng-if="!i.id" class="btn btn-success btn-xs" href ng-click="add(i)">Add</a>
-                    <a ng-if="editable && i.id" class="btn btn-danger btn-xs" href ng-click="delete(i)">Delete</a>
+                    <a ng-if="!i.id" class="btn btn-success" href ng-click="add(i)">Add</a>
+                    <a ng-if="editable && i.id" class="btn btn-danger" href ng-click="delete(i)">Delete</a>
                   </div>
                 </td>
               </tr>

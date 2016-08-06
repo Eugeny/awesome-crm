@@ -1,0 +1,33 @@
+table.table{
+  border-collapse: collapse;
+  border-radius: 4px;
+  border-style: hidden; /* hide standard table (collapsed) border */
+  box-shadow: 0 0 0 1px #ddd; /* this draws the table border  */
+
+  & > thead > tr > th {
+    border-width: 1px;
+  }
+
+  tr.clickable td{
+    cursor: pointer;
+  }
+
+  td.actions{
+    text-align: right;
+    .btn-group{
+      .btn{
+        border-radius: 0;
+      }
+      height:100%
+    }
+    padding: 0;
+  }
+
+  th.actions{
+    text-align: right;
+  }
+
+  tbody:last-of-type tr:last-of-type td:last-of-type.actions .btn{
+    border-bottom-right-radius: 4px;
+  }
+}

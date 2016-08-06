@@ -41,7 +41,7 @@
               <tr>
                 <th>Name</th>
                 <th>Phone</th>
-                <th>Actions</th>
+                <th class="actions">Actions</th>
               </tr>
             </thead>
             <tbody ng-repeat="(k,group) in people | filter:filters.search | groupBy:'alph' | toArray:true | orderBy:groupMinSortField">
@@ -50,12 +50,12 @@
                   <a href ng-click="groupHidden[k] = !groupHidden[k]"><b>{{ group.$key }}</b></a>
                 </td>
               </tr>
-              <tr ng-hide="!!groupHidden[k]" ng-repeat="i in group">
-                <td><a ui-sref="people.edit({id: i.id})">{{i.firstName}} {{i.lastName}}</a></td>
+              <tr class="clickable" ui-sref="people.edit({id: i.id})" ng-hide="!!groupHidden[k]" ng-repeat="i in group">
+                <td>{{i.firstName}} {{i.lastName}}</td>
                 <td><a href="tel:{{i.phone}}">{{i.phone}}</a></td>
-                <td>
+                <td class="actions">
                   <div class="btn-group">
-                    <a class="btn btn-danger btn-xs" href ng-click="delete(i)">Delete</a>
+                    <a class="btn btn-danger" href ng-click="delete(i)">Delete</a>
                   </div>
                 </td>
               </tr>

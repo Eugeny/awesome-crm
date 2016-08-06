@@ -25,7 +25,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="i in saleItems">
+            <tr class="clickable" ng-click="selected[i.id] = !selected[i.id]" ng-repeat="i in saleItems">
               <td ng-if="!offer">
                 <div checkbox ng-model="selected[i.id]"></div>
               </td>

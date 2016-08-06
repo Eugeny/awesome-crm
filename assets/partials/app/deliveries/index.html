@@ -19,12 +19,12 @@
               <th>End Date</th>
               <th>Tracking</th>
               <th>State</th>
-              <th>Actions</th>
+              <th class="actions">Actions</th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="i in deliveries">
-              <td><a href ng-click="edit(i)">{{i.id}}</a></td>
+            <tr class="clickable" ng-click="edit(i)" ng-repeat="i in deliveries">
+              <td>{{i.id}}</td>
               <td>
                 <ul class="list-group">
                   <li ng-repeat="i in i.products" class="list-group-item">
@@ -36,9 +36,9 @@
               <td>{{i.endDate | amDateFormat:'ddd, MMM Do YYYY, h:mm a'}}</td>
               <td>{{i.tracking}}</td>
               <td>{{i.state}}</td>
-              <td>
+              <td class="text-right">
                 <div class="btn-group">
-                  <a ng-if="i.id" class="btn btn-danger btn-xs" href ng-click="delete(i)">Delete</a>
+                  <a ng-if="i.id" class="btn btn-danger" href ng-click="delete(i)">Delete</a>
                 </div>
               </td>
             </tr>

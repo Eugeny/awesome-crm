@@ -101,6 +101,7 @@ angular.module('awesomeCRM.deliveries', [
 
       companiesProvider.get({id: sale.company.id}, (company) ->
         scope.delivery[i] = company[i] for i in ['address', 'city', 'country', 'zip']
+        scope.delivery.vatEligible = !!company.vatId
       ) if sale.company
 
       scope.$watch('products', (newValue) ->
