@@ -2,7 +2,7 @@
   <div class="page-title">
     <div class="title">
       <h3 ng-if="productTemplate.id">Edit Entity {{productTemplate.name}}</h3>
-      <h3 ng-if="!productTemplate.id">Create New Entity</h3>
+      <h3 ng-if="!productTemplate.id">Create New Product Template</h3>
     </div>
   </div>
   <div class="clearfix"></div>
@@ -39,7 +39,7 @@
                   <div class="form-group">
                     <label class="control-label ng-binding ng-scope">Part Types</label>
                   </div>
-                  <table class="table">
+                  <table class="table table-entity-edit">
                     <thead>
                     <tr>
                       <th>#</th>
@@ -49,8 +49,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="(k,i) in productTemplate.partTypeItems">
-                      <td>{{k + 1}}</td>
+                    <tr ng-repeat="(k,i) in productTemplate.partTypeItems" ng-class="{'new-item': !i.id}">
+                      <td>{{i.id ? k + 1 : 'new'}}</td>
                       <td>
                         <div part-type-select model="i.partTypes"></div>
                       </td>

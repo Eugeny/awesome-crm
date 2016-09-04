@@ -61,7 +61,7 @@ angular.module('awesomeCRM.productTemplates', [
   productTemplate.$promise.then(() ->
     watch(i) for i in productTemplate.partTypeItems
     productTemplate.partTypeItems.push(count: 1)
-  )
+  ) if productTemplate and productTemplate.$promise
 
   $scope.close = () ->
     if $uibModalInstance
@@ -73,7 +73,11 @@ angular.module('awesomeCRM.productTemplates', [
     action = if productTemplate.id then 'update' else 'save'
     productTemplatesProvider[action](
       $scope.productTemplate,
-      () -> $scope.close()
+      (productTemplate) ->
+        if action == 'save' and !$uibModalInstance
+          $state.go('productTemplates.edit', {id: productTemplate.id}, {reload: true})
+        else
+          $scope.close()
       (res) ->
         $scope.errors = res.data.details
         $scope.productTemplateForm.$setPristine()

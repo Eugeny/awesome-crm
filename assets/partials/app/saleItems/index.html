@@ -14,7 +14,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
       <div class="x_panel">
         <div class="x_content">
-          <table class="table">
+          <table class="table table-entity-edit">
             <thead>
               <tr>
                 <th ng-if="!offer"></th>
@@ -30,11 +30,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="(k,i) in saleItems">
+              <tr ng-repeat="(k,i) in saleItems" ng-class="{'new-item': !i.id}">
                 <td ng-if="!offer">
                   <div checkbox ng-model="selected[i.id]"></div>
                 </td>
-                <td>{{k + 1}}</td>
+                <td>{{i.id ? k + 1 : 'new'}}</td>
                 <td><input class="form-control" type="text" ng-model="i.name" ng-disabled="!editable && i.id"></td>
                 <td><textarea class="form-control" type="text" ng-model="i.description" ng-disabled="!editable && i.id"></textarea></td>
                 <td><div product-type-select model="i.type" ng-disabled="!editable && i.id"></div></td>
