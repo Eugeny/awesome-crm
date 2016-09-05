@@ -102,6 +102,11 @@ angular.module('awesomeCRM.productTemplates', [
         $scope.errors = res.data.details
     )
 
+  $scope.deletePartTypeItem = (pti) ->
+    partTypeItemsProvider.delete(pti)
+    i = productTemplate.partTypeItems.indexOf(pti)
+    productTemplate.partTypeItems.splice(i, 1) if i != -1
+
 ).directive('productTemplateSelect', ['productTemplatesProvider', 'dynamicSelect', (productTemplatesProvider, dynamicSelect) ->
   return dynamicSelect(productTemplatesProvider, 'productTemplates', {noneSelectedLabel: 'No Product Template'})
 ])

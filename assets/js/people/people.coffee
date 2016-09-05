@@ -54,7 +54,7 @@ angular.module('awesomeCRM.people', [
     controller: 'awesomeCRM.people.formController'
     resolve:
       person: () -> {}
-      $uibModalInstance: null
+      $uibModalInstance: () -> null
   )
 
   # Update page
@@ -69,7 +69,6 @@ angular.module('awesomeCRM.people', [
 ).controller('awesomeCRM.people.formController', ($scope, $state, person, peopleProvider, commentsProvider, Upload, $uibModalInstance) ->
   $scope.person = person
   $scope.comment = {}
-  console.log('asd')
 
   $scope.close = (person) ->
     if $uibModalInstance
