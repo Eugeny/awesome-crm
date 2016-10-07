@@ -9,6 +9,7 @@ angular.module('awesomeCRM.saleItems', [
   initialProduct =
     amount: 1
     price: 0
+    discount: 0
     type: 'Product'
 
   if $scope.offer
@@ -41,9 +42,9 @@ angular.module('awesomeCRM.saleItems', [
     )
     saleItem.amount ?= 0
     saleItem.price ?= 0
-    $scope.totalPrice += saleItem.amount*saleItem.price
+    $scope.totalPrice += saleItem.amount*saleItem.price*(100 - parseFloat(saleItem.discount))/100
     $scope.$watch(
-      () -> saleItem.amount * saleItem.price
+      () -> saleItem.amount * saleItem.price * (100 - parseFloat(saleItem.discount))/100
       (newValue, oldValue) ->
         newValue ?= 0
         oldValue ?= 0
@@ -52,7 +53,9 @@ angular.module('awesomeCRM.saleItems', [
 
   parentProvider.get({id: parentEntity.id}, (parentEntity) ->
     $scope.saleItems = parentEntity.products
-    watch(i) for i in $scope.saleItems
+    for i in $scope.saleItems
+      i.discount ?= 0
+      watch(i)
     $scope.saleItems.push(angular.copy(initialProduct)) if canAdd
   )
 
@@ -90,6 +93,7 @@ angular.module('awesomeCRM.saleItems', [
       description: template.description
       type: template.type
       price: template.price
+      discount: 0
       currency: template.currency
       amount: 1
       productTemplate: template

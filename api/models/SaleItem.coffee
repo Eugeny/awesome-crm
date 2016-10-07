@@ -20,6 +20,8 @@ module.exports =
       type: 'string'
     amount:
       type: 'float'
+    discount:
+      type: 'float'
     state:
       type: 'string'
     offers:

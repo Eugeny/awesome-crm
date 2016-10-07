@@ -23,6 +23,7 @@
                 <th>Description</th>
                 <th>Type</th>
                 <th>Price</th>
+                <th>Discount</th>
                 <th>Currency</th>
                 <th>Amount</th>
                 <th>State</th>
@@ -39,6 +40,7 @@
                 <td><textarea class="form-control" type="text" ng-model="i.description" ng-disabled="!editable && i.id"></textarea></td>
                 <td><div product-type-select model="i.type" ng-disabled="!editable && i.id"></div></td>
                 <td><input class="form-control" type="text" ng-model="i.price" ng-disabled="!editable && i.id"></td>
+                <td><input class="form-control" type="text" ng-model="i.discount" ng-disabled="!editable && i.id"></td>
                 <td><div currency-select label="" model="i.currency" ng-disabled="!editable && i.id"></div></td>
                 <td><input class="form-control" type="text" ng-model="i.amount" ng-disabled="!editable && i.id"></td>
                 <td>

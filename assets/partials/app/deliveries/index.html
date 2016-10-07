@@ -37,8 +37,9 @@
               <td>{{i.tracking}}</td>
               <td>{{i.state}}</td>
               <td class="text-right">
-                <div class="btn-group">
-                  <a ng-if="i.id" class="btn btn-danger" href ng-click="delete(i)">Delete</a>
+                <div class="list-group">
+                  <a ng-if="i.id" class="list-group-item list-group-item-info" ng-click="$event.stopPropagation()" href="/export/delivery/{{i.id}}" target="_blank">Export to PDF</a>
+                  <a ng-if="i.id" class="list-group-item list-group-item-danger" href ng-click="delete(i)">Delete</a>
                 </div>
               </td>
             </tr>
