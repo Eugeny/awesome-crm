@@ -38,6 +38,7 @@
                 <th>Barcode</th>
                 <th>Type</th>
                 <th>Location</th>
+                <th>Availability</th>
                 <th class="actions">Actions</th>
               </tr>
             </thead>
@@ -46,6 +47,7 @@
                 <td>{{i.barcode}}</td>
                 <td>{{i.type.name}}</td>
                 <td>{{i.location}}</td>
+                <td><span class="label" ng-class="{'label-success': i.isAvailable, 'label-danger': !i.isAvailable, }">{{i.isAvailable ? 'Yes' : 'No'}}</span></td>
                 <td class="actions">
                   <div class="btn-group">
                     <a class="btn btn-danger" href ng-click="delete(i)">Delete</a>

@@ -18,7 +18,7 @@ module.exports =
     )
 
   find: (req, res) ->
-    populate(PartReservation.find())
+    populate(PartReservation.find(machine: req.param('machine')))
     .then((partTypes) ->
       res.json(partTypes)
     ).catch((err) ->

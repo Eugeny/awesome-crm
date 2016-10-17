@@ -9,6 +9,5 @@ module.exports =
       type: 'integer'
     partType:
       model: 'PartType'
-    productTemplates:
-      collection: 'ProductTemplate'
-      via: 'partTypeItems'
+    productTemplate:
+      model: 'ProductTemplate'

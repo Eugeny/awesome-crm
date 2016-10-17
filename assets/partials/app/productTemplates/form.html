@@ -34,7 +34,7 @@
               </div>
 
 
-              <div class="row">
+              <div class="row" ng-if="productTemplate.id">
                 <div class="col-xs-12">
                   <div class="form-group">
                     <label class="control-label ng-binding ng-scope">Part Types</label>
@@ -52,13 +52,25 @@
                     <tr ng-repeat="(k,i) in productTemplate.partTypeItems" ng-class="{'new-item': !i.id}">
                       <td>{{i.id ? k + 1 : 'new'}}</td>
                       <td>
-                        <div part-type-select model="i.partTypes"></div>
+                        <div part-type-select model="i.partType"></div>
                       </td>
                       <td><input class="form-control" type="number" ng-model="i.count"></td>
                       <td class="text-right">
                         <div class="btn-group">
                           <a ng-if="!i.id" class="btn btn-success" href ng-click="addPartTypeItem(i)">Add</a>
                           <a ng-if="i.id" class="btn btn-danger" href ng-click="deletePartTypeItem(i)">Delete</a>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="new-item">
+                      <td>new</td>
+                      <td>
+                        <div part-type-select model="newPti.partType"></div>
+                      </td>
+                      <td><input class="form-control" type="number" ng-model="newPti.count"></td>
+                      <td class="text-right">
+                        <div class="btn-group">
+                          <a class="btn btn-success" href ng-click="addPartTypeItem(newPti)">Add</a>
                         </div>
                       </td>
                     </tr>

@@ -13,9 +13,9 @@
           <table class="table table-entity-edit">
             <thead>
             <tr>
-              <th ng-if="!offer"></th>
               <th>#</th>
-              <th>Name</th>
+              <th>Part Type</th>
+              <th>Part Barcode</th>
               <th class="actions">Actions</th>
             </tr>
             </thead>
@@ -26,9 +26,9 @@
               <td>{{i.part.barcode}}</td>
               <td class="text-right">
                 <div class="list-group">
-                  <a class="list-group-item list-group-item-success" href>Reserve By Code</a>
-                  <a class="list-group-item list-group-item-success" href>Reserve Any</a>
-                  <a class="list-group-item list-group-item-success" href>Delete</a>
+                  <a class="list-group-item list-group-item-success" ng-click="reserveByCode(i)">Reserve By Code</a>
+                  <a class="list-group-item list-group-item-success" ng-click="reserveAny(i)">Reserve Any</a>
+                  <a class="list-group-item list-group-item-danger" ng-click="delete(i)">Delete</a>
                 </div>
               </td>
             </tr>
@@ -39,12 +39,14 @@
           <form fs-form-for name="partReservationForm" model="partReservation" ng-submit="addPartReservation()">
             <fieldset class="form-horizontal">
               <div class="row">
-                <div class="col-sm-9">
-                  <div part-type-select label="Part Type" model="partReservation.type"></div>
+                <div class="col-sm-7">
+                  <div part-type-select label="Part Type" model="partReservation.partType"></div>
                 </div>
                 <div class="col-sm-3 col-xs-12">
-                  <!--<a href ng-click="close()" class="btn btn-primary">Cancel</a>-->
                   <button type="submit" class="btn btn-success" style="width: 100%">Add Part Reservation</button>
+                </div>
+                <div class="col-sm-2 col-xs-12">
+                  <a href ng-click="reserveAll()" style="width: 100%" class="btn btn-info">Reserve All</a>
                 </div>
               </div>
             </fieldset>

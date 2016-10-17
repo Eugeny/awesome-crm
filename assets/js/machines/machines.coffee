@@ -13,7 +13,7 @@ angular.module('awesomeCRM.machines', [
       $scope.filters = {}
 
       $scope.delete = (machine) ->
-        machinesProvider.delete(machine)
+        machinesProvider.delete(id: machine.id)
         i = $scope.machines.indexOf(machine)
         $scope.machines.splice(i, 1) if i != -1
 
@@ -56,6 +56,13 @@ angular.module('awesomeCRM.machines', [
       $uibModalInstance.close($scope.machine)
     else
       $state.go('machines', null, {reload: true})
+
+
+  $scope.delete = (machine) ->
+    machinesProvider.delete(id: machine.id)
+    i = $scope.machines.indexOf(machine)
+    $scope.machines.splice(i, 1) if i != -1
+    $scope.close()
 
   $scope.save = () ->
     action = if machine.id then 'update' else 'save'

@@ -10,16 +10,16 @@ populate = (x) ->
 module.exports =
   findone: (req, res) ->
     populate(Machine.findOne(id: req.param('id')))
-    .then((partType) ->
-      res.json(partType)
+    .then((machine) ->
+      res.json(machine)
     ).catch((err) ->
       res.serverError(err)
     )
 
   find: (req, res) ->
     populate(Machine.find())
-    .then((partTypes) ->
-      res.json(partTypes)
+    .then((machines) ->
+      res.json(machines)
     ).catch((err) ->
       res.serverError(err)
     )

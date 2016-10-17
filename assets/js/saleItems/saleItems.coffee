@@ -1,7 +1,7 @@
 angular.module('awesomeCRM.saleItems', [
   'ui.router'
   'awesomeCRM.saleItems.provider'
-]).controller('awesomeCRM.saleItems.indexController', ($scope, formErrorHandler, saleItemsProvider, offersProvider, ordersProvider, deliveriesProvider, invoicesProvider, debounce, machinesProvider) ->
+]).controller('awesomeCRM.saleItems.indexController', ($scope, formErrorHandler, saleItemsProvider, offersProvider, ordersProvider, deliveriesProvider, invoicesProvider, debounce, machinesProvider, partTypeItemsProvider, partReservationsProvider) ->
   offer = null
   order = null
   canAdd = true
@@ -105,7 +105,14 @@ angular.module('awesomeCRM.saleItems', [
 
   $scope.createMachine = (saleItem) ->
     machinesProvider.save({name: "#{saleItem.name} Machine", sale: sale}, (machine) ->
-      saleItemsProvider.update(saleItem, {machine: machine})
+      saleItemsProvider.update({id: saleItem.id}, {machine: machine})
+
+      # create part reservations for template parts
+      if saleItem.productTemplate
+        partTypeItemsProvider.query(productTemplate: saleItem.productTemplate.id, (partTypeItems) ->
+          for i in partTypeItems
+            partReservationsProvider.save({machine: machine.id, partType: i.partType.id})
+        )
     )
 
 
