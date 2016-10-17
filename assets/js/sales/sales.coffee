@@ -131,4 +131,7 @@ angular.module('awesomeCRM.sales', [
 #          products: items
       )
     )
-)
+).directive('saleSelect', ['salesProvider', 'dynamicSelect', (salesProvider, dynamicSelect) ->
+  return dynamicSelect(salesProvider, 'sales', {noneSelectedLabel: 'No Sale', label: 'Sale'})
+])
+

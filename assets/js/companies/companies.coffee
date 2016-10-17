@@ -160,4 +160,6 @@ angular.module('awesomeCRM.companies', [
         )
 
   )
-);
+).directive('companySelect', ['companiesProvider', 'dynamicSelect', (companiesProvider, dynamicSelect) ->
+  return dynamicSelect(companiesProvider, 'companies', {noneSelectedLabel: 'No Company', label: 'Company'})
+])

@@ -4,6 +4,8 @@ angular.module('awesomeCRM.parts', [
   'awesomeCRM.countries.provider'
   'awesomeCRM.comments.provider'
 ]).config(($stateProvider, $urlRouterProvider) ->
+  newPart = {isAvailable: true}
+
   $stateProvider.state('parts',
     url: '/parts'
     templateUrl: '/partials/app/parts/index.html'
@@ -40,18 +42,8 @@ angular.module('awesomeCRM.parts', [
           controller: 'awesomeCRM.parts.formController'
           size: 'lg'
           resolve:
-            part: {}
+            part: newPart
         ).result.then(updatePartList)
-  )
-
-  # Create page
-  $stateProvider.state('parts.create',
-    url: '/create'
-    templateUrl: '/partials/app/parts/form.html'
-    controller: 'awesomeCRM.parts.formController'
-    resolve:
-      part: () -> {}
-      $uibModalInstance: () -> null
   )
 
   # Update page

@@ -18,5 +18,4 @@ module.exports =
       type: 'string'
     partTypeItems:
       collection: 'PartTypeItem'
-      via: 'productTemplates'
-      dominant: true
+      via: 'productTemplate'

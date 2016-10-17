@@ -1,7 +1,7 @@
 <div ui-view>
   <div class="page-title">
     <div class="title">
-      <h3>Entities</h3>
+      <h3>PLURAL</h3>
     </div>
   </div>
   <div class="clearfix"></div>
@@ -33,15 +33,15 @@
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Actions</th>
+                <th class="actions">Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="i in PLURAL | filter:filters.search">
+              <tr class="clickable" ui-sref="PLURAL.edit({id: i.id})" ng-repeat="i in PLURAL | filter:filters.search">
                 <td><a ui-sref="PLURAL.edit({id: i.id})">{{i.name}}</a></td>
-                <td>
+                <td class="actions">
                   <div class="btn-group">
-                    <a class="btn btn-danger btn-xs" href ng-click="delete(i)">Delete</a>
+                    <a class="btn btn-danger" href ng-click="delete(i)">Delete</a>
                   </div>
                 </td>
               </tr>
@@ -57,7 +57,7 @@
       <div class="x_panel">
         <div class="x_content">
           <div class="pull-right">
-            <a class="btn btn-default" ui-sref="PLURAL.create">Create New Entity</a>
+            <a class="btn btn-default" ui-sref="PLURAL.create">Create New SINGULAR</a>
           </div>
         </div>
       </div>

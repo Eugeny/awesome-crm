@@ -38,5 +38,7 @@ module.exports =
       via: 'products'
     productTemplate:
       model: 'ProductTemplate'
+    machine:
+      model: 'Machine'
 
 # State / selection (New, Production, Ready, Delivery, Delivered). Default: New

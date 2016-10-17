@@ -23,6 +23,8 @@ angular.module('awesomeCRM', [
   'awesomeCRM.auth'
   'awesomeCRM.index'
   'awesomeCRM.documents'
+  'awesomeCRM.machines'
+  'awesomeCRM.partReservations'
 ]).config(($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) ->
   "ngInject"
 

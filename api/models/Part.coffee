@@ -13,3 +13,5 @@ module.exports =
       required: true
     location:
       type: 'string'
+    isAvailable:
+      type: 'boolean'

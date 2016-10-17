@@ -100,12 +100,8 @@ angular.module('awesomeCRM.services', [
         100
       )
   }
-]).directive('companySelect', ['companiesProvider', 'dynamicSelect', (companiesProvider, dynamicSelect) ->
-  return dynamicSelect(companiesProvider, 'companies', {noneSelectedLabel: 'No Company'})
 ]).directive('countrySelect', ['countriesProvider', 'staticSelect', (countriesProvider, staticSelect) ->
   return staticSelect({label: 'Country', noneSelectedLabel: 'No Country', items: countriesProvider.countryNames})
-]).directive('partTypeSelect', ['partTypesProvider', 'dynamicSelect', (partTypesProvider, dynamicSelect) ->
-  return dynamicSelect(partTypesProvider, 'partTypes', {noneSelectedLabel: 'No Type'})
 ]).directive('currencySelect', ['staticSelect', (staticSelect) ->
   return staticSelect(label: 'Currency', noneSelectedLabel: 'No Type', items: ['€', 'USD'], defaultValue: '€')
 ]).factory('debounce', ($timeout) ->

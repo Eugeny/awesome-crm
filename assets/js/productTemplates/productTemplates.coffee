@@ -58,9 +58,10 @@ angular.module('awesomeCRM.productTemplates', [
       )
     )
 
+  $scope.newPti = count: 1
+
   productTemplate.$promise.then(() ->
     watch(i) for i in productTemplate.partTypeItems
-    productTemplate.partTypeItems.push(count: 1)
   ) if productTemplate and productTemplate.$promise
 
   $scope.close = () ->
@@ -93,11 +94,9 @@ angular.module('awesomeCRM.productTemplates', [
       pti,
       (newPti) ->
         $scope.errors = null
-        pti.id = newPti.id
-        watch(pti)
-        productTemplate.partTypeItems.push(count: 1)
-        productTemplatesProvider.addPartTypeItem(id: productTemplate.id, partTypeItemId: pti.id)
-
+        newPti.partType = pti.partType
+        productTemplate.partTypeItems.push(newPti)
+        watch(newPti)
       (res) ->
         $scope.errors = res.data.details
     )

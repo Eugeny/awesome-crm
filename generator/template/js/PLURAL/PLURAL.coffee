@@ -71,4 +71,6 @@ angular.module('awesomeCRM.PLURAL', [
           for j in i
             $scope.SINGULARForm[k].$setValidity(j.rule, false);
     )
-)
+).directive('SINGULARTypeSelect', ['staticSelect', (staticSelect) ->
+  return staticSelect({noneSelectedLabel: 'No Type', items: ['type 1', 'type 2']})
+])
