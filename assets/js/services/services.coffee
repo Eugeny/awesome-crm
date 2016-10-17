@@ -128,5 +128,23 @@ angular.module('awesomeCRM.services', [
         form[k].$setDirty(true);
         for j in i
           form[k].$setValidity(j.rule, false);
-)
+).directive('bsActiveLink', ($location) ->
+  restrict: 'A'
+  replace: false
+  link: (scope, elem) ->
+    scope.$on('$stateChangeSuccess', ->
+      hrefs = [
+        '/#' + $location.path()
+        '#' + $location.path()
+        $location.path()
+      ]
 
+      angular.forEach(elem.find('a'), (a) ->
+        a = angular.element(a)
+        if -1 != hrefs.indexOf(a.attr('href'))
+          a.parent().addClass('current-page')
+        else
+          a.parent().removeClass('current-page')
+      )
+    )
+)
