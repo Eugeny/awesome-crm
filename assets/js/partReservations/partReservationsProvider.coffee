@@ -1,8 +1,8 @@
-angular.module('awesomeCRM.PLURAL.provider', [])
-.factory('PLURALProvider', ($resource) ->
+angular.module('awesomeCRM.partReservations.provider', [])
+.factory('partReservationsProvider', ($resource) ->
   "ngInject"
 
-  return $resource('/SINGULAR/:id', {id: '@id'} , {
+  return $resource('/partReservation/:id', {id: '@id'} , {
     update:
       method: 'PUT'
     query:

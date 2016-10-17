@@ -62,4 +62,6 @@ angular.module('awesomeCRM.partTypes', [
           for j in i
             $scope.partTypeForm[k].$setValidity(j.rule, false);
     )
-)
+).directive('partTypeSelect', ['partTypesProvider', 'dynamicSelect', (partTypesProvider, dynamicSelect) ->
+  return dynamicSelect(partTypesProvider, 'partTypes', {noneSelectedLabel: 'No Type'})
+])

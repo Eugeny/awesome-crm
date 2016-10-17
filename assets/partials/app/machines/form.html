@@ -1,0 +1,66 @@
+<div class="">
+  <div class="page-title">
+    <div class="title">
+      <h3 ng-if="machine.id">Edit machine {{machine.name}}</h3>
+      <h3 ng-if="!machine.id">Create New machine</h3>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_content">
+          <pre ng-if="errors">{{errors}}</pre>
+
+          <form fs-form-for name="machineForm" model="machine" ng-submit="save()">
+            <fieldset class="form-horizontal">
+              <div class="row">
+                <div class="col-xs-6">
+                  <fs-input as="text" name="name" label="Name"></fs-input>
+                  <div machine-state-select model="machine.state"></div>
+                  <fs-input as="text" name="serialNumber" label="Serial Number"></fs-input>
+                  <div machine-type-select model="machine.type"></div>
+                  <fs-input as="text" name="config" label="Config"></fs-input>
+                  <div company-select model="machine.company"></div>
+                  <div sale-select model="machine.sale"></div>
+                  <fs-row label="Manufactured On">
+                    <div fs-date ng-model="machine.manufacturedOn"></div>
+                  </fs-row>
+                  <fs-row label="Maintenance Start">
+                    <div fs-date ng-model="machine.maintenanceStart"></div>
+                  </fs-row>
+                  <fs-row label="Maintenance End">
+                    <div fs-date ng-model="machine.maintenanceEnd"></div>
+                  </fs-row>
+                </div>
+                <div class="col-xs-6">
+                  <div machine-service-level-select model="machine.serviceLevel"></div>
+                  <fs-input as="text" name="softwareRelease" label="Software Release"></fs-input>
+                  <fs-input as="text" name="chassis" label="Chassis"></fs-input>
+                  <fs-input as="text" name="backplane" label="Backplane"></fs-input>
+                  <fs-input as="textarea" name="stornextLicense" label="Stornext License"></fs-input>
+                  <fs-input as="text" name="stornextSN" label="Stornext SN"></fs-input>
+                  <fs-input as="text" name="cvfsID" label="CVFS ID"></fs-input>
+                </div>
+              </div>
+
+              <div class="ln_solid"></div>
+              <div class="form-group">
+                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                  <a href ng-click="close()" class="btn btn-primary">Cancel</a>
+                  <button type="submit" class="btn btn-success">Save</button>
+                  <a ng-if="machine.id" href ng-click="delete(machine.id)" class="btn btn-danger">Delete</a>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-if="machine.id">
+    <div part-reservations-table machine="machine"></div>
+  </div>
+</div>
