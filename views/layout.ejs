@@ -64,6 +64,17 @@
               <li><a ui-sref="parts" ui-sref-opts="{reload: true}"><i class="fa fa-question"></i> Part</a></li>
               <li><a ui-sref="productTemplates" ui-sref-opts="{reload: true}"><i class="fa fa-question"></i> Product Templates</a></li>
               <li><a ui-sref="sales" ui-sref-opts="{reload: true}"><i class="fa fa-question"></i> Sales</a></li>
+              <li>
+                <a href id="documents-menu" data-toggle="collapse" data-target="#documents-submenu" aria-expanded="false">
+                  <i class="fa fa-caret-down"></i> Documents
+                </a>
+                <ul class="nav collapse" id="documents-submenu" role="menu" aria-labelledby="documents-menu">
+                  <li><a ui-sref="documents({type:'offer'})" ui-sref-opts="{reload: true}"><i class="fa fa-question"></i> Offers</a></li>
+                  <li><a ui-sref="documents({type:'order'})" ui-sref-opts="{reload: true}"><i class="fa fa-question"></i> Orders</a></li>
+                  <li><a ui-sref="documents({type:'invoice'})" ui-sref-opts="{reload: true}"><i class="fa fa-question"></i> Invoices</a></li>
+                  <li><a ui-sref="documents({type:'delivery'})" ui-sref-opts="{reload: true}"><i class="fa fa-question"></i> Deliveris</a></li>
+                </ul>
+              </li>
             </ul>
           </div>
         </div>
@@ -132,6 +143,8 @@
 <script src="/js/countries/countriesProvider.js"></script>
 <script src="/js/deliveries/deliveries.js"></script>
 <script src="/js/deliveries/deliveriesProvider.js"></script>
+<script src="/js/documents/documents.js"></script>
+<script src="/js/documents/documentsProvider.js"></script>
 <script src="/js/index/index.js"></script>
 <script src="/js/invoices/invoices.js"></script>
 <script src="/js/invoices/invoicesProvider.js"></script>

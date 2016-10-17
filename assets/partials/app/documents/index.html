@@ -1,7 +1,7 @@
-<div>
+<div ui-view>
   <div class="page-title">
     <div class="title">
-      <h3>Documents</h3>
+      <h3>{{title}}</h3>
     </div>
   </div>
   <div class="clearfix"></div>
@@ -19,23 +19,23 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="i in items">
-              <td>{{i.value.id}}</td>
+            <tr ng-repeat="i in documents">
+              <td>{{i.id}}</td>
               <td>
-                <span ng-if="i.value.active != undefined" class="label" ng-class="{'label-success': i.value.active, 'label-danger': !i.value.active, }">{{i.value.active ? 'Active' : 'Inactive'}}</span>
-                <span ng-if="i.value.state != undefined">{{i.value.state}}</span>
+                <span ng-if="i.active != undefined" class="label" ng-class="{'label-success': i.active, 'label-danger': !i.active, }">{{i.active ? 'Active' : 'Inactive'}}</span>
+                <span ng-if="i.state != undefined">{{i.state}}</span>
               </td>
               <td class="actions">
                 <div class="btn-group">
-                  <a class="btn btn-success" href="/export/{{i.type}}/{{i.value.id}}" target="_blank">Export To PDF</a>
+                  <a class="btn btn-success" href="/export/{{type}}/{{i.id}}" target="_blank">Export To PDF</a>
                 </div>
               </td>
             </tr>
             </tbody>
           </table>
-
         </div>
       </div>
     </div>
   </div>
+
 </div>

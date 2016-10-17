@@ -131,27 +131,4 @@ angular.module('awesomeCRM.sales', [
 #          products: items
       )
     )
-
-  $scope.viewDocuments = () ->
-    promises = []
-    items = []
-    promises.push(offersProvider.get(id: o.id, (x) -> items.push(type: 'offer', value: x)).$promise) for o in sale.offers
-    promises.push(ordersProvider.get(id: o.id, (x) -> items.push(type: 'order', value: x)).$promise) for o in sale.orders
-    promises.push(deliveriesProvider.get(id: o.id, (x) -> items.push(type: 'delivery', value: x)).$promise) for o in sale.deliveries
-    promises.push(invoicesProvider.get(id: o.id, (x) -> items.push(type: 'invoice', value: x)).$promise) for o in sale.invoices
-
-    $q.allSettled(promises).then((data) ->
-      $uibModal.open(
-        templateUrl: '/partials/app/sales/documentsModal.html'
-        controller: ($scope) ->
-          $scope.items = items
-          $scope.export = (x) ->
-            $scope.exportInvoice = x.value;
-
-
-        size: 'lg'
-      )
-    )
-
-    return
 )

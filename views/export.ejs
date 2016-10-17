@@ -73,9 +73,11 @@
   </DIV>
 
   <DIV class="page-head">
-    <P class="p0 ft0"><b><%= object.sale.company.name %></b></P>
-    <P class="p0 ft0"><NOBR><%= object.sale.company.address %></NOBR></P>
-    <P class="p0 ft0"><%= object.sale.company.city %></P>
+    <% if (object.sale.company){%>
+      <P class="p0 ft0"><b><%= object.sale.company.name %></b></P>
+      <P class="p0 ft0"><NOBR><%= object.sale.company.address %></NOBR></P>
+      <P class="p0 ft0"><%= object.sale.company.city %></P>
+    <% } %>
   </DIV>
   <DIV class="page-body">
     <DIV class="products">
@@ -144,7 +146,8 @@
       <p>&nbsp;</p>
       <P><b><%= type %> <NOBR><%= object.id %></NOBR></b></P>
       <P><%= type %>sdatum: <%= moment().format('DD.MM.YYYY') %></P>
-      <P>Ihre <NOBR>Kunden-Nr.</NOBR> <%= object.sale.company.id %></P>
+      <% if(object.sale.company) { %><P>Ihre <NOBR>Kunden-Nr.</NOBR> <%= object.sale.company.id %></P><% } %>
+
       <% if (object.sale.localContact){ %>
       <p>&nbsp;</p>
       <P><b>Ansprechpartner:</b></P>
