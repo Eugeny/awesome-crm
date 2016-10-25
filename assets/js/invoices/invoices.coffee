@@ -3,9 +3,9 @@ angular.module('awesomeCRM.invoices', [
   'awesomeCRM.invoices.provider'
   'awesomeCRM.countries.provider'
   'awesomeCRM.comments.provider'
-]).controller('awesomeCRM.invoices.formController', ($scope, $state, invoicesProvider, invoice, sale, $uibModalInstance) ->
+]).controller('awesomeCRM.invoices.formController', ($scope, $state, invoicesProvider, invoice, $uibModalInstance) ->
   $scope.invoice = invoice
-  $scope.sale = sale
+  $scope.sale = invoice.sale
   $scope.shown = true
 
   $scope.close = (invoice) ->
@@ -28,7 +28,7 @@ angular.module('awesomeCRM.invoices', [
           for j in i
             $scope.invoiceForm[k].$setValidity(j.rule, false);
     )
-).controller('awesomeCRM.invoices.indexController', ($scope, $state, invoicesProvider, $uibModal) ->
+).controller('awesomeCRM.invoices.indexController', ($scope, $state, invoicesProvider, invoiceModal) ->
   sale = $scope.sale
   $scope.invoices = sale.invoices
 
@@ -43,15 +43,7 @@ angular.module('awesomeCRM.invoices', [
     invoice.active = true
     invoice.sale = sale
 
-    $uibModal.open(
-      templateUrl: '/partials/app/invoices/form.html'
-      controller: 'awesomeCRM.invoices.formController'
-      size: 'lg'
-      resolve:
-        invoice: invoice
-        sale: sale
-
-    ).result.then((invoice) ->
+    invoiceModal().result.then((invoice) ->
       for i in sale.invoices
         continue if !i.active
         i.active = false
@@ -59,15 +51,7 @@ angular.module('awesomeCRM.invoices', [
       sale.invoices.push(invoice)
     )
 
-  $scope.edit = (invoice) ->
-    $uibModal.open(
-      templateUrl: '/partials/app/invoices/form.html'
-      controller: 'awesomeCRM.invoices.formController'
-      size: 'lg'
-      resolve:
-        invoice: invoice
-        sale: sale
-    )
+  $scope.edit = invoiceModal
 
   $scope.delete = (invoice) ->
     invoicesProvider.delete(id: invoice.id)
@@ -117,4 +101,13 @@ angular.module('awesomeCRM.invoices', [
   }
 ).directive('invoiceStateSelect', ['staticSelect', (staticSelect) ->
   return staticSelect({noneSelectedLabel: 'No State', items: ['Pending', 'Paid', 'Rejected']})
+]).factory('invoiceModal', ['$uibModal', ($uibModal) ->
+  return (invoice) ->
+    $uibModal.open(
+      templateUrl: '/partials/app/invoices/form.html'
+      controller: 'awesomeCRM.invoices.formController'
+      size: 'lg'
+      resolve:
+        invoice: invoice
+    )
 ])

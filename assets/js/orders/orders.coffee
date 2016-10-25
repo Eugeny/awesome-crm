@@ -3,9 +3,9 @@ angular.module('awesomeCRM.orders', [
   'awesomeCRM.orders.provider'
   'awesomeCRM.countries.provider'
   'awesomeCRM.comments.provider'
-]).controller('awesomeCRM.orders.formController', ($scope, $state, ordersProvider, order, sale, $uibModalInstance) ->
+]).controller('awesomeCRM.orders.formController', ($scope, $state, ordersProvider, order, $uibModalInstance) ->
   $scope.order = order
-  $scope.sale = sale
+  $scope.sale = order.sale
 
   $scope.close = (order) ->
     if $uibModalInstance
@@ -28,7 +28,7 @@ angular.module('awesomeCRM.orders', [
             $scope.orderForm[k].$setValidity(j.rule, false);
     )
 
-).controller('awesomeCRM.orders.indexController', ($scope, $state, ordersProvider, $uibModal) ->
+).controller('awesomeCRM.orders.indexController', ($scope, $state, ordersProvider, orderModal) ->
   sale = $scope.sale
 
   $scope.add = () ->
@@ -37,15 +37,7 @@ angular.module('awesomeCRM.orders', [
     order.active = true
     order.sale = sale
 
-    $uibModal.open(
-      templateUrl: '/partials/app/orders/form.html'
-      controller: 'awesomeCRM.orders.formController'
-      size: 'lg'
-      resolve:
-        order: order
-        sale: sale
-
-    ).result.then((order) ->
+    orderModal().result.then((order) ->
       for i in sale.orders
         continue if !i.active
         i.active = false
@@ -53,15 +45,7 @@ angular.module('awesomeCRM.orders', [
       sale.orders.push(order)
     )
 
-  $scope.edit = (order) ->
-    $uibModal.open(
-      templateUrl: '/partials/app/orders/form.html'
-      controller: 'awesomeCRM.orders.formController'
-      size: 'lg'
-      resolve:
-        order: order
-        sale: sale
-    )
+  $scope.edit = orderModal
 
   $scope.delete = (order) ->
     ordersProvider.delete(id: order.id)
@@ -75,4 +59,14 @@ angular.module('awesomeCRM.orders', [
     }
     templateUrl: '/partials/app/orders/index.html'
   }
-)
+).factory('orderModal', ['$uibModal', ($uibModal) ->
+  return (order) ->
+    $uibModal.open(
+      templateUrl: '/partials/app/orders/form.html'
+      controller: 'awesomeCRM.orders.formController'
+      size: 'lg'
+      resolve:
+        order: order
+    )
+])
+

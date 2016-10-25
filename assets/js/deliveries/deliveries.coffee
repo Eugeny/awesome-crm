@@ -3,9 +3,9 @@ angular.module('awesomeCRM.deliveries', [
   'awesomeCRM.deliveries.provider'
   'awesomeCRM.countries.provider'
   'awesomeCRM.comments.provider'
-]).controller('awesomeCRM.deliveries.formController', ($scope, $state, deliveriesProvider, delivery, sale, $uibModalInstance) ->
+]).controller('awesomeCRM.deliveries.formController', ($scope, $state, deliveriesProvider, delivery, $uibModalInstance) ->
   $scope.delivery = delivery
-  $scope.sale = sale
+  $scope.sale = delivery.sale
   $scope.shown = true
 
   $scope.close = (delivery) ->
@@ -28,7 +28,7 @@ angular.module('awesomeCRM.deliveries', [
           for j in i
             $scope.deliveryForm[k].$setValidity(j.rule, false);
     )
-).controller('awesomeCRM.deliveries.indexController', ($scope, $state, deliveriesProvider, $uibModal) ->
+).controller('awesomeCRM.deliveries.indexController', ($scope, $state, deliveriesProvider, deliveryModal) ->
   sale = $scope.sale
   $scope.deliveries = sale.deliveries
 
@@ -43,15 +43,7 @@ angular.module('awesomeCRM.deliveries', [
     delivery.active = true
     delivery.sale = sale
 
-    $uibModal.open(
-      templateUrl: '/partials/app/deliveries/form.html'
-      controller: 'awesomeCRM.deliveries.formController'
-      size: 'lg'
-      resolve:
-        delivery: delivery
-        sale: sale
-
-    ).result.then((delivery) ->
+    deliveryModal().result.then((delivery) ->
       for i in sale.deliveries
         continue if !i.active
         i.active = false
@@ -59,15 +51,7 @@ angular.module('awesomeCRM.deliveries', [
       sale.deliveries.push(delivery)
     )
 
-  $scope.edit = (delivery) ->
-    $uibModal.open(
-      templateUrl: '/partials/app/deliveries/form.html'
-      controller: 'awesomeCRM.deliveries.formController'
-      size: 'lg'
-      resolve:
-        delivery: delivery
-        sale: sale
-    )
+  $scope.edit = deliveryModal
 
   $scope.delete = (delivery) ->
     deliveriesProvider.delete(id: delivery.id)
@@ -132,4 +116,14 @@ angular.module('awesomeCRM.deliveries', [
   }
 ).directive('deliveryStateSelect', ['staticSelect', (staticSelect) ->
   return staticSelect({noneSelectedLabel: 'No State', items: ['Pending', 'Delivery', 'Delivered', 'Returned', 'Failed']})
+]).factory('deliveryModal', ['$uibModal', ($uibModal) ->
+  return (delivery) ->
+    $uibModal.open(
+      templateUrl: '/partials/app/deliveries/form.html'
+      controller: 'awesomeCRM.deliveries.formController'
+      size: 'lg'
+      resolve:
+        delivery: delivery
+    )
 ])
+

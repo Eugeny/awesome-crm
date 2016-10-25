@@ -3,9 +3,9 @@ angular.module('awesomeCRM.offers', [
   'awesomeCRM.offers.provider'
   'awesomeCRM.countries.provider'
   'awesomeCRM.comments.provider'
-]).controller('awesomeCRM.offers.formController', ($scope, $state, offersProvider, offer, sale, $uibModalInstance) ->
+]).controller('awesomeCRM.offers.formController', ($scope, $state, offersProvider, offer, $uibModalInstance) ->
   $scope.offer = offer
-  $scope.sale = sale
+  $scope.sale = offer.sale
 
   $scope.close = (offer) ->
     if $uibModalInstance
@@ -27,7 +27,7 @@ angular.module('awesomeCRM.offers', [
           for j in i
             $scope.offerForm[k].$setValidity(j.rule, false);
     )
-).controller('awesomeCRM.offers.indexController', ($scope, $state, offersProvider, $uibModal) ->
+).controller('awesomeCRM.offers.indexController', ($scope, $state, offersProvider, offerModal) ->
   sale = $scope.sale
 
   $scope.add = () ->
@@ -36,15 +36,7 @@ angular.module('awesomeCRM.offers', [
     offer.active = true
     offer.sale = sale
 
-    $uibModal.open(
-      templateUrl: '/partials/app/offers/form.html'
-      controller: 'awesomeCRM.offers.formController'
-      size: 'lg'
-      resolve:
-        offer: offer
-        sale: sale
-
-    ).result.then((offer) ->
+    offerModal().result.then((offer) ->
       return if !offer
 
       for i in sale.offers
@@ -55,15 +47,7 @@ angular.module('awesomeCRM.offers', [
       sale.offers.push(offer)
     )
 
-  $scope.edit = (offer) ->
-    $uibModal.open(
-      templateUrl: '/partials/app/offers/form.html'
-      controller: 'awesomeCRM.offers.formController'
-      size: 'lg'
-      resolve:
-        offer: offer
-        sale: sale
-    )
+  $scope.edit = offerModal
 
   $scope.delete = (offer) ->
     offersProvider.delete(id: offer.id)
@@ -77,4 +61,14 @@ angular.module('awesomeCRM.offers', [
     }
     templateUrl: '/partials/app/offers/index.html'
   }
-)
+).factory('offerModal', ['$uibModal', ($uibModal) ->
+  return (offer) ->
+    $uibModal.open(
+      templateUrl: '/partials/app/offers/form.html'
+      controller: 'awesomeCRM.offers.formController'
+      size: 'lg'
+      resolve:
+        offer: offer
+    )
+])
+

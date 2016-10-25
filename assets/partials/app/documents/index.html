@@ -19,7 +19,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="i in documents">
+            <tr ng-repeat="i in documents" ng-click="go(i)">
               <td>{{i.id}}</td>
               <td>
                 <span ng-if="i.active != undefined" class="label" ng-class="{'label-success': i.active, 'label-danger': !i.active, }">{{i.active ? 'Active' : 'Inactive'}}</span>
