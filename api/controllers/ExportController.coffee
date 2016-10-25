@@ -51,6 +51,7 @@ module.exports = {
         outputExport(res, {
           object: x
           type: 'Rechnung'
+          typeDate: 'Rechnungsdatum'
           showPrices: true
         }, typeof req.query['html'] == 'undefined')
       )
@@ -63,7 +64,8 @@ module.exports = {
       injectSale(x, (x) ->
         outputExport(res, {
           object: x
-          type: 'Order'
+          type: 'Bestellung'
+          typeDate: 'Bestellungsdatum'
           showPrices: true
         }, typeof req.query['html'] == 'undefined')
       )
@@ -76,7 +78,8 @@ module.exports = {
       injectSale(x, (x) ->
         outputExport(res, {
           object: x
-          type: 'Offer'
+          type: 'Angebot'
+          typeDate: 'Angebotsdatum'
           showPrices: true
         }, typeof req.query['html'] == 'undefined')
       )
@@ -90,6 +93,7 @@ module.exports = {
         outputExport(res, {
           object: x
           type: 'Lieferschein'
+          typeDate: 'Lieferscheindatum'
           showPrices: false
         }, typeof req.query['html'] == 'undefined')
       )
