@@ -52,7 +52,7 @@ angular.module('awesomeCRM.partTypes', [
     action = if partType.id then 'update' else 'save'
     partTypesProvider[action](
       $scope.partType,
-      () -> $state.go('partTypes', null, {reload: true})
+      (partType) -> $state.go('partTypes.edit', {id: partType.id}, {reload: true})
       (res) ->
         $scope.errors = res.data.details
         $scope.partTypeForm.$setPristine()

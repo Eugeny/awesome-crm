@@ -59,7 +59,10 @@ angular.module('awesomeCRM.sales', [
     if $uibModalInstance
       $uibModalInstance.close(sale)
     else
-      $state.go('sales', null, {reload: true})
+      if sale
+        $state.go('sales.edit', {id: sale.id}, {reload: true})
+      else
+        $state.go('sales', null, {reload: true})
 
   $scope.save = () ->
     action = if sale.id then 'update' else 'save'

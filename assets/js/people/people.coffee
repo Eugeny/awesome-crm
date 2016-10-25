@@ -74,7 +74,10 @@ angular.module('awesomeCRM.people', [
     if $uibModalInstance
       $uibModalInstance.close(person)
     else
-      $state.go('people', null, {reload: true})
+      if person
+        $state.go('people.edit', {id: person.id}, {reload: true})
+      else
+        $state.go('people', null, {reload: true})
 
   $scope.addComment = () ->
     $scope.comment.person = person.id
