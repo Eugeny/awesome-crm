@@ -26,8 +26,9 @@
               <td>{{i.part.barcode}}</td>
               <td class="text-right">
                 <div class="list-group">
-                  <a class="list-group-item list-group-item-success" ng-click="reserveByCode(i)">Reserve By Code</a>
-                  <a class="list-group-item list-group-item-success" ng-click="reserveAny(i)">Reserve Any</a>
+                  <a class="list-group-item list-group-item-success" ng-if="!i.part" ng-click="reserveByCode(i)">Reserve By Code</a>
+                  <a class="list-group-item list-group-item-success" ng-if="!i.part" ng-click="reserveAny(i)">Reserve Any</a>
+                  <a class="list-group-item list-group-item-warning" ng-if="i.part" ng-click="cancelReservation(i)">Cancel Reservation</a>
                   <a class="list-group-item list-group-item-danger" ng-click="delete(i)">Delete</a>
                 </div>
               </td>

@@ -72,7 +72,15 @@ angular.module('awesomeCRM.partReservations', [
     partReservationsProvider.delete(id: partReservation.id)
     i = $scope.partReservations.indexOf(partReservation)
     $scope.partReservations.splice(i, 1) if i != -1
-    partsProvider.update({id: partReservation.part.id}, {isAvailable: 0}) id partReservation.part
+    partsProvider.update({id: partReservation.part.id}, {isAvailable: 0}) if partReservation.part
+
+  $scope.cancelReservation = (partReservation) ->
+    part = partReservation.part
+    partReservation.part = null
+    part.isAvailable = true
+
+    partReservationsProvider.update({id: partReservation.id}, {part: null})
+    partsProvider.update({id: part.id}, {isAvailable: 1})
 
 ).directive('partReservationsTable', () ->
   return {
