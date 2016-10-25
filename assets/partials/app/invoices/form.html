@@ -32,9 +32,12 @@
                   <fs-input as="text" name="city" label="City"></fs-input>
                   <div country-select label="Country" model="invoice.country"></div>
                   <fs-input as="text" name="comment" label="Comment"></fs-input>
-                  <fs-input as="text" name="discount" label="Discount"></fs-input>
-                  <div checkbox ng-model="invoice.vatEligible" label="VAT Eligible">
-                    <div invoice-state-select label="State" model="invoice.state"></div>
+                  <div invoice-state-select label="State" model="invoice.state"></div>
+
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <div checkbox ng-model="invoice.vatEligible" label="VAT Eligible"></div>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -91,28 +91,29 @@
           <Th class="td4"><p>Gesamtpreis</p></Th>
           <% } %>
         </Tr>
-        <% var sum = 0; %>
         <% for(var i = 0; i < object.products.length; i++){ %>
         <% var p = object.products[i]; %>
-        <% sum += p.amount * p.price * (100 - parseFloat(p.discount)) / 100 %>
+        <% var price = p.price ? p.price : 0; %>
+        <% var amount = p.amount ? p.amount : 0; %>
+        <% var discount = p.discount ? p.discount : 0; %>
         <TR class="product">
           <TD class="td0"><p><%= i + 1 %></p></TD>
           <TD class="td1"><p><%= p.name %></p></TD>
-          <TD class="td2"><p><%= numeral(p.amount).format('0,0.[00]') %> Stk</p></TD>
+          <TD class="td2"><p><%= numeral(amount).format('0,0.[00]') %> Stk</p></TD>
           <% if(showPrices) {%>
           <TD class="td3">
             <p>
-              <%= numeral(p.price).format('0,0.00') %> €/Stk.
-              <% if(p.discount){ %><br>-<%= p.discount %>% Discount<% } %>
+              <%= numeral(price).format('0,0.00') %> €/Stk.
+              <% if(discount){ %><br>-<%= discount %>% Discount<% } %>
             </p>
           </TD>
-          <TD class="td4"><p><%= numeral(p.amount * p.price * (100 - parseFloat(p.discount)) / 100).format('0,0.00') %> €</p></TD>
+          <TD class="td4"><p><%= numeral(amount * price * (100 - discount) / 100).format('0,0.00') %> €</p></TD>
           <% } %>
         </TR>
         <TR>
           <TD class="td0"></TD>
           <TD class="td1" colspan="4">
-            <pre class="ft0"><%= p.description %></pre>
+            <pre class="ft0"><%= p.description ? p.description : '' %></pre>
           </TD>
         </TR>
         <% } %>
@@ -120,11 +121,11 @@
           <TR class="total">
             <TD></TD>
             <TD colspan="3"><P class="p1 ft0">Zwischensumme</P></TD>
-            <TD><P class="p10 ft0"><%= numeral(sum).format('0,0.00') %>€</P></TD>
+            <TD><P class="p10 ft0"><%= numeral(object.netPrice).format('0,0.00') %>€</P></TD>
           </TR>
           <% var vat = 0 %>
-          <% if(object.sale.vatEligible){ %>
-          <% vat = Math.round(sum * 19) / 100 %>
+          <% if(object.vatEligible){ %>
+          <% vat = Math.round(object.netPrice * 19) / 100 %>
             <TR>
               <TD></TD>
               <TD colspan="3"><P class="p1 ft0">zuzüglich 19% MwSt.</P></TD>
@@ -134,7 +135,7 @@
           <TR>
             <TD></TD>
             <TD colspan="3"><P class="p1 ft0"><b>Gesamtsumme</b></P></TD>
-            <TD><P class="p10 ft0"><b><%= numeral(sum + vat).format('0,0.00')%>€</b></P></TD>
+            <TD><P class="p10 ft0"><b><%= numeral(object.totalPrice).format('0,0.00')%>€</b></P></TD>
           </TR>
         <% } %>
       </TABLE>

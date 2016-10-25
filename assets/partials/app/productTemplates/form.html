@@ -28,6 +28,7 @@
                     </div>
                   </fs-row>
                   <fs-input as="text" name="price" label="Price"></fs-input>
+                  <fs-input as="text" name="purchasePrice" label="Purchase Price"></fs-input>
 
                   <div currency-select model="productTemplate.currency"></div>
                 </div>
@@ -44,6 +45,7 @@
                     <tr>
                       <th>#</th>
                       <th>Part Type</th>
+                      <th>Price</th>
                       <th>Count</th>
                       <th class="actions">Actions</th>
                     </tr>
@@ -54,6 +56,7 @@
                       <td>
                         <div part-type-select model="i.partType"></div>
                       </td>
+                      <td>{{i.partType.price}}</td>
                       <td><input class="form-control" type="number" ng-model="i.count"></td>
                       <td class="text-right">
                         <div class="btn-group">
@@ -67,6 +70,7 @@
                       <td>
                         <div part-type-select model="newPti.partType"></div>
                       </td>
+                      <td></td>
                       <td><input class="form-control" type="number" ng-model="newPti.count"></td>
                       <td class="text-right">
                         <div class="btn-group">

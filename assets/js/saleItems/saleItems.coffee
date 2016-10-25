@@ -9,6 +9,7 @@ angular.module('awesomeCRM.saleItems', [
   initialProduct =
     amount: 1
     price: 0
+    purchasePrice: 0
     discount: 0
     type: 'Product'
 
@@ -28,7 +29,7 @@ angular.module('awesomeCRM.saleItems', [
     throw 'saleItems indexController requires offer, delivery, invoice or order to be set in the scope'
   sale = $scope.sale
 
-  $scope.totalPrice = 0
+  $scope.parentEntity = parentEntity
   $scope.editable = true
   $scope.stateEditable = true
 
@@ -42,14 +43,43 @@ angular.module('awesomeCRM.saleItems', [
     )
     saleItem.amount ?= 0
     saleItem.price ?= 0
-    $scope.totalPrice += saleItem.amount*saleItem.price*(100 - parseFloat(saleItem.discount))/100
-    $scope.$watch(
-      () -> saleItem.amount * saleItem.price * (100 - parseFloat(saleItem.discount))/100
-      (newValue, oldValue) ->
-        newValue ?= 0
-        oldValue ?= 0
-        $scope.totalPrice += newValue*1 - oldValue*1
-    )
+    saleItem.purchasePrice ?= 0
+    saleItem.discount ?= 0
+
+  saleItemsWatchLoaded = false
+  $scope.$watch(
+    () ->
+      if $scope.saleItems
+        return $scope.saleItems.map((saleItem) ->
+          price = if saleItem.price then saleItem.price else 0
+          amount = if saleItem.amount then saleItem.amount else 0
+          purchasePrice = if saleItem.purchasePrice then saleItem.purchasePrice else 0
+          discount = if saleItem.discount then saleItem.discount else 0
+          vatEligible = parentEntity.vatEligible
+
+          netPrice = amount * price
+          return {
+            netPrice: netPrice
+            totalPrice: netPrice * (1.0 - discount / 100) * (1 + (if vatEligible then 0.19 else 0))
+            purchasePrice: amount * purchasePrice
+          }
+        ).reduce((carry, x) ->
+          carry ?= {}
+          for k,i of x
+            carry[k] ?= 0
+            carry[k] += i
+          return carry
+        )
+      else
+        null
+    (newValue, oldValue) ->
+      return if !newValue
+      for k,i of newValue
+        parentEntity[k] = i if !parentEntity[k] or (saleItemsWatchLoaded and oldValue[k] != i)
+      if not saleItemsWatchLoaded
+        saleItemsWatchLoaded = true
+    true
+  )
 
   parentProvider.get({id: parentEntity.id}, (parentEntity) ->
     $scope.saleItems = parentEntity.products
@@ -88,11 +118,17 @@ angular.module('awesomeCRM.saleItems', [
 
   $scope.selectedTemplate = null
   $scope.addFromTemplate = (template) ->
+    if(!template)
+      $scope.noTemplateError = true
+      return
+    $scope.noTemplateError = false
+
     $scope.add({
       name: template.name
       description: template.description
       type: template.type
       price: template.price
+      purchasePrice: template.purchasePrice
       discount: 0
       currency: template.currency
       amount: 1

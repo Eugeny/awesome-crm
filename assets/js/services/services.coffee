@@ -139,12 +139,19 @@ angular.module('awesomeCRM.services', [
         $location.path()
       ]
 
+      angular.element(document.getElementById('sidebar-menu')).find('li').removeClass('active')
+      activeSubmenus = [];
+
       angular.forEach(elem.find('a'), (a) ->
         a = angular.element(a)
         if -1 != hrefs.indexOf(a.attr('href'))
           a.parent().addClass('current-page')
+          pp = a.parent().parent()
+          activeSubmenus.push(pp.parent()) if pp.hasClass('nav')
         else
           a.parent().removeClass('current-page')
       )
+
+      i.addClass('active') for i in activeSubmenus
     )
 )

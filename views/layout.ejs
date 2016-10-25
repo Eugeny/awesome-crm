@@ -59,20 +59,20 @@
             <h3>General</h3>
             <ul class="nav side-menu" bs-active-link>
               <li>
-                <a href id="contacts-menu" data-toggle="collapse" data-target="#contacts-submenu">
+                <a href id="contacts-menu">
                   <i class="fa fa-caret-down"></i> Contacts
                 </a>
-                <ul class="nav collapse" id="contacts-submenu">
+                <ul class="nav nav-submenu">
                   <li><a ui-sref="companies" ui-sref-opts="{reload: true}"><i class="fa fa-building"></i> Companies</a></li>
                   <li><a ui-sref="people" ui-sref-opts="{reload: true}"><i class="fa fa-users"></i> People</a></li>
                 </ul>
               </li>
 
               <li>
-                <a href id="products-menu" data-toggle="collapse" data-target="#products-submenu" aria-expanded="false">
+                <a href id="products-menu">
                   <i class="fa fa-caret-down"></i> Products
                 </a>
-                <ul class="nav collapse" id="products-submenu" role="menu" aria-labelledby="products-menu">
+                <ul class="nav nav-submenu">
                   <li><a ui-sref="parts" ui-sref-opts="{reload: true}"><i class="fa fa-barcode"></i> Warehouse</a></li>
                   <li><a ui-sref="productTemplates" ui-sref-opts="{reload: true}"><i class="fa fa-gear"></i> Products</a></li>
                   <li><a ui-sref="partTypes" ui-sref-opts="{reload: true}"><i class="fa fa-gears"></i> Part Types</a></li>
@@ -80,10 +80,10 @@
               </li>
 
               <li>
-                <a href id="sales-menu" data-toggle="collapse" data-target="#sales-submenu" aria-expanded="false">
+                <a href id="sales-menu" >
                   <i class="fa fa-caret-down"></i> Sales
                 </a>
-                <ul class="nav collapse" id="sales-submenu" role="menu" aria-labelledby="sales-menu">
+                <ul class="nav nav-submenu">
                   <li><a ui-sref="sales" ui-sref-opts="{reload: true}"><i class="fa fa-shopping-bag"></i> Sales</a></li>
                   <li><a ui-sref="documents({type:'offer'})" ui-sref-opts="{reload: true}"><i class="fa fa-suitcase"></i> Offers</a></li>
                   <li><a ui-sref="documents({type:'order'})" ui-sref-opts="{reload: true}"><i class="fa fa-cart-plus"></i> Orders</a></li>
@@ -144,7 +144,6 @@
 <script src="/bower_components/angular-resource/angular-resource.min.js"></script>
 <script src="/bower_components/gentelella/vendors/jquery/dist/jquery.min.js"></script>
 <script src="/bower_components/gentelella/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="/bower_components/gentelella/build/js/custom.min.js"></script>
 <script src="/bower_components/angular-formstamp/formstamp.js"></script>
 <script src="/bower_components/moment/min/moment.min.js"></script>
 <script src="/bower_components/angular-moment/angular-moment.min.js"></script>

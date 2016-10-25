@@ -40,5 +40,7 @@ module.exports =
       model: 'ProductTemplate'
     machine:
       model: 'Machine'
+    purchasePrice:
+      type: 'float'
 
 # State / selection (New, Production, Ready, Delivery, Delivered). Default: New

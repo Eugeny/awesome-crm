@@ -51,6 +51,7 @@ module.exports = {
         outputExport(res, {
           object: x
           type: 'Rechnung'
+          showPrices: true
         }, typeof req.query['html'] == 'undefined')
       )
     )
@@ -63,6 +64,7 @@ module.exports = {
         outputExport(res, {
           object: x
           type: 'Order'
+          showPrices: true
         }, typeof req.query['html'] == 'undefined')
       )
     )
@@ -75,6 +77,7 @@ module.exports = {
         outputExport(res, {
           object: x
           type: 'Offer'
+          showPrices: true
         }, typeof req.query['html'] == 'undefined')
       )
     )

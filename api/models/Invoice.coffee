@@ -26,9 +26,14 @@ module.exports =
       dominant: true
     comment:
       type: 'string'
-    discount:
-      type: 'float'
     vatEligible:
       type: 'boolean'
     state:
       type: 'string'
+
+    totalPrice:
+      type: 'float'
+    netPrice:
+      type: 'float'
+    purchasePrice:
+      type: 'float'

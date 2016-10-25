@@ -80,3 +80,36 @@ table.table-entity-edit tr.new-item td{
   border-top-width: 2px;
   border-top-color: #bbb;
 }
+
+#sidebar-menu{
+  .nav {
+    .nav li{padding-left: 6px;}
+    &.side-menu li {
+      &.active {
+        background: #304456;
+        //border: 1px solid #223344;
+
+        a {
+          background: transparent;
+          box-shadow: none;
+        }
+      }
+
+      a {
+        margin-bottom: 0;
+      }
+    }
+
+    a{
+      cursor: pointer;
+      &:hover{
+        color: #E7E7E7;
+        background: #304456;
+      }
+    }
+
+  }
+
+}
+
+.border-error{border: 1px solid red;}

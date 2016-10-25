@@ -53,7 +53,7 @@ angular.module('awesomeCRM.productTemplates', [
     $scope.$watch(
       () -> JSON.stringify(pti)
       debounce(1000, (newValue, oldValue) ->
-        return if newValue == oldValue
+        return if newValue == oldValue or typeof oldValue == 'undefined'
         partTypeItemsProvider.update(pti)
       )
     )
@@ -100,6 +100,15 @@ angular.module('awesomeCRM.productTemplates', [
       (res) ->
         $scope.errors = res.data.details
     )
+
+  $scope.$watch(
+    () -> JSON.stringify(productTemplate.partTypeItems)
+    (cur, prev) ->
+      if typeof prev != 'undefined'
+        productTemplate.purchasePrice = 0
+        for i in productTemplate.partTypeItems
+          productTemplate.purchasePrice += i.partType.price * i.count
+  )
 
   $scope.deletePartTypeItem = (pti) ->
     partTypeItemsProvider.delete(pti)

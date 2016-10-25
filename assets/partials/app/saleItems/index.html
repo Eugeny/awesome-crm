@@ -1,7 +1,7 @@
 <div ng-controller="awesomeCRM.saleItems.indexController">
   <div class="page-title">
-    <div class="pull-right">
-      <div product-template-select model="selectedTemplate" style="display: inline-block;vertical-align: top;"></div>
+    <div class="pull-right" style="padding: 10px 10px 0 10px;" ng-class="{'border-error': noTemplateError && !selectedTemplate}">
+      <div product-template-select model="selectedTemplate" style="display: inline-block;vertical-align: top;" ></div>
       <a href ng-click="addFromTemplate(selectedTemplate)" class="btn btn-success">Add From Template</a>
     </div>
     <div class="title">
@@ -23,6 +23,7 @@
                 <th>Description</th>
                 <th>Type</th>
                 <th>Price</th>
+                <th>Purchase Price</th>
                 <th>Discount</th>
                 <th>Currency</th>
                 <th>Amount</th>
@@ -40,6 +41,7 @@
                 <td><textarea class="form-control" type="text" ng-model="i.description" ng-disabled="!editable && i.id"></textarea></td>
                 <td><div product-type-select model="i.type" ng-disabled="!editable && i.id"></div></td>
                 <td><input class="form-control" type="text" ng-model="i.price" ng-disabled="!editable && i.id"></td>
+                <td><input class="form-control" type="text" ng-model="i.purchasePrice" ng-disabled="!editable && i.id"></td>
                 <td><input class="form-control" type="text" ng-model="i.discount" ng-disabled="!editable && i.id"></td>
                 <td><div currency-select label="" model="i.currency" ng-disabled="!editable && i.id"></div></td>
                 <td><input class="form-control" type="text" ng-model="i.amount" ng-disabled="!editable && i.id"></td>
@@ -55,11 +57,19 @@
                 </td>
               </tr>
             </tbody>
-            <tfoot>
+            <tfoot ng-if="!delivery">
               <tr>
-                <td colspan="5" class="text-right">Total:</td>
-                <td>{{totalPrice}}</td>
-                <td colspan="3"></td>
+                <td colspan="4"></td>
+
+                <td class="text-right">Net Price:</td>
+                <td><input class="form-control" type="text" ng-model="parentEntity.netPrice"></td>
+
+                <td class="text-right">Total Price:</td>
+                <td><input class="form-control" type="text" ng-model="parentEntity.totalPrice"></td>
+
+                <td class="text-right">Purchase Price:</td>
+                <td><input class="form-control" type="text" ng-model="parentEntity.purchasePrice"></td>
+                <td></td>
               </tr>
             </tfoot>
           </table>

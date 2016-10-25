@@ -21,7 +21,6 @@ var cssFilesToInject = [
   'bower_components/gentelella/vendors/font-awesome/css/font-awesome.min.css',
   'bower_components/gentelella/vendors/iCheck/skins/flat/green.css',
   'bower_components/gentelella/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css',
-  // 'bower_components/gentelella/production/css/maps/jquery-jvectormap-2.0.3.css',
   'bower_components/gentelella/build/css/custom.min.css',
   'bower_components/gentelella/vendors/font-awesome/fonts/fontawesome-webfont.woff2',
   'bower_components/gentelella/vendors/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2',
@@ -48,7 +47,6 @@ var jsFilesToInject = [
 
   'bower_components/gentelella/vendors/jquery/dist/jquery.min.js',
   'bower_components/gentelella/vendors/bootstrap/dist/js/bootstrap.min.js',
-  'bower_components/gentelella/build/js/custom.min.js',
 
   'bower_components/angular-formstamp/formstamp.js',
   'bower_components/moment/min/moment.min.js',

@@ -18,3 +18,12 @@ module.exports =
       type: 'string'
     active:
       type: 'boolean'
+    vatEligible:
+      type: 'boolean'
+
+    totalPrice:
+      type: 'float'
+    netPrice:
+      type: 'float'
+    purchasePrice:
+      type: 'float'

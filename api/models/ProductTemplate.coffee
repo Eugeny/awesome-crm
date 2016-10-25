@@ -19,3 +19,5 @@ module.exports =
     partTypeItems:
       collection: 'PartTypeItem'
       via: 'productTemplate'
+    purchasePrice:
+      type: 'float'
