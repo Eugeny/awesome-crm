@@ -81,7 +81,14 @@ angular.module('awesomeCRM.machines', [
 ).directive('machineStateSelect', ['staticSelect', (staticSelect) ->
   return staticSelect({noneSelectedLabel: 'No State', label: 'State', items: ['building', 'built', 'shipped']})
 ]).directive('machineTypeSelect', ['staticSelect', (staticSelect) ->
-  return staticSelect({noneSelectedLabel: 'No Type', label: 'Type', items: ['type 1', 'type 2', 'type 3']})
+  return staticSelect({noneSelectedLabel: 'No Type', label: 'Type', items: [
+    'ELEMENTS ONE'
+    'ELEMENTS NAS'
+    'ELEMENTS SAN'
+    'ELEMENTS ARCHIVE'
+    'ELEMENTS GRID'
+    'ELEMENTS CUBE'
+  ]})
 ]).directive('machineServiceLevelSelect', ['staticSelect', (staticSelect) ->
   return staticSelect({noneSelectedLabel: 'No Service Level', label: 'Service Level', items: ['serviceLevel 1', 'serviceLevel 2', 'serviceLevel 3']})
 ]).directive('machineSelect', ['machineProvider', 'dynamicSelect', (machineProvider, dynamicSelect) ->
