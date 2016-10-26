@@ -4,6 +4,7 @@
 # @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
 
 wkhtmltopdf = require('wkhtmltopdf');
+wkhtmltopdf.command = sails.config.wkhtmltopdfCommand if sails.config.wkhtmltopdfCommand
 
 injectSale = (x, callback) ->
   Sale.findOne(id: x.sale)
