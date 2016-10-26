@@ -58,6 +58,7 @@ angular.module('awesomeCRM.sales', [
   $scope.close = (sale) ->
     if $uibModalInstance
       $uibModalInstance.close(sale)
+      $state.go('sales.edit', {id: sale.id}, {reload: true}) if sale
     else
       if sale
         $state.go('sales.edit', {id: sale.id}, {reload: true})
@@ -72,7 +73,7 @@ angular.module('awesomeCRM.sales', [
       $scope.sale,
       (sale) ->
         $scope.sale.id = sale.id
-        $scope.close($scope.sale) if $uibModalInstance
+        $scope.close(sale)
       (res) ->
         $scope.errors = res.data.details
         $scope.saleForm.$setPristine()
