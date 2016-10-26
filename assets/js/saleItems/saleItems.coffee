@@ -149,11 +149,15 @@ angular.module('awesomeCRM.saleItems', [
 
       # create part reservations for template parts
       if saleItem.productTemplate
-        promises.push(partTypeItemsProvider.query(productTemplate: saleItem.productTemplate.id, (partTypeItems) ->
+        partTypeItemsProvider.query({productTemplate: saleItem.productTemplate.id ? saleItem.productTemplate}, (partTypeItems) ->
           for i in partTypeItems
-            promises.push(partReservationsProvider.save({machine: machine.id, partType: i.partType.id}).$promise)
+            try
+              j = i.count
+              while j--
+                console.log(j)
+                promises.push(partReservationsProvider.save({machine: machine.id, partType: i.partType.id}).$promise)
           onPromisesAdded()
-        ).$promise)
+        )
       else
         onPromisesAdded()
     )
