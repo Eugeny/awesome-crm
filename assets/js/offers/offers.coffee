@@ -27,6 +27,18 @@ angular.module('awesomeCRM.offers', [
           for j in i
             $scope.offerForm[k].$setValidity(j.rule, false);
     )
+
+  $scope.onMachineCreated = (machine) ->
+    offersProvider.update($scope.offer)
+    redirect = () -> $state.go('machines.edit', {id: machine.id}, {reload: true})
+
+    if $uibModalInstance
+      $uibModalInstance.close(offer)
+      $uibModalInstance.result.then(redirect)
+    else
+      redirect()
+
+
 ).controller('awesomeCRM.offers.indexController', ($scope, $state, offersProvider, offerModal) ->
   sale = $scope.sale
 

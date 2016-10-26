@@ -1,7 +1,7 @@
 angular.module('awesomeCRM.saleItems', [
   'ui.router'
   'awesomeCRM.saleItems.provider'
-]).controller('awesomeCRM.saleItems.indexController', ($scope, formErrorHandler, saleItemsProvider, offersProvider, ordersProvider, deliveriesProvider, invoicesProvider, debounce, machinesProvider, partTypeItemsProvider, partReservationsProvider) ->
+]).controller('awesomeCRM.saleItems.indexController', ($q, $scope, formErrorHandler, saleItemsProvider, offersProvider, ordersProvider, deliveriesProvider, invoicesProvider, debounce, machinesProvider, partTypeItemsProvider, partReservationsProvider) ->
   offer = null
   order = null
   canAdd = true
@@ -141,14 +141,21 @@ angular.module('awesomeCRM.saleItems', [
 
   $scope.createMachine = (saleItem) ->
     machinesProvider.save({name: "#{saleItem.name} Machine", sale: sale}, (machine) ->
-      saleItemsProvider.update({id: saleItem.id}, {machine: machine})
+      promises = []
+      onPromisesAdded = () ->
+        $q.all(promises).then(() -> $scope.onMachineCreated(machine) if $scope.onMachineCreated)
+
+      promises.push(saleItemsProvider.update({id: saleItem.id}, {machine: machine}).$promise)
 
       # create part reservations for template parts
       if saleItem.productTemplate
-        partTypeItemsProvider.query(productTemplate: saleItem.productTemplate.id, (partTypeItems) ->
+        promises.push(partTypeItemsProvider.query(productTemplate: saleItem.productTemplate.id, (partTypeItems) ->
           for i in partTypeItems
-            partReservationsProvider.save({machine: machine.id, partType: i.partType.id})
-        )
+            promises.push(partReservationsProvider.save({machine: machine.id, partType: i.partType.id}).$promise)
+          onPromisesAdded()
+        ).$promise)
+      else
+        onPromisesAdded()
     )
 
 
@@ -160,6 +167,7 @@ angular.module('awesomeCRM.saleItems', [
       order: '='
       invoice: '='
       sale: '='
+      onMachineCreated: '='
     }
     templateUrl: '/partials/app/saleItems/index.html'
   }
