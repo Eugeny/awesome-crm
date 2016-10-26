@@ -31,6 +31,6 @@ angular.module('awesomeCRM.documents', [
 
       $scope.title = title
       $scope.go = (entity) ->
-        editModal(entity)
+        editModal(entity, entity.sale)
   )
 )

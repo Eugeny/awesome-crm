@@ -17,7 +17,10 @@ module.exports =
     )
 
   find: (req, res) ->
-    populate(Machine.find())
+    criteria = {}
+    criteria.sale = req.param('sale') if req.param('sale')
+
+    populate(Machine.find(where: criteria))
     .then((machines) ->
       res.json(machines)
     ).catch((err) ->

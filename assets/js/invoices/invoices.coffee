@@ -3,9 +3,9 @@ angular.module('awesomeCRM.invoices', [
   'awesomeCRM.invoices.provider'
   'awesomeCRM.countries.provider'
   'awesomeCRM.comments.provider'
-]).controller('awesomeCRM.invoices.formController', ($scope, $state, invoicesProvider, invoice, $uibModalInstance) ->
+]).controller('awesomeCRM.invoices.formController', ($scope, $state, invoicesProvider, invoice, sale, $uibModalInstance) ->
   $scope.invoice = invoice
-  $scope.sale = invoice.sale
+  $scope.sale = sale
   $scope.shown = true
 
   $scope.close = (invoice) ->
@@ -43,7 +43,7 @@ angular.module('awesomeCRM.invoices', [
     invoice.active = true
     invoice.sale = sale
 
-    invoiceModal().result.then((invoice) ->
+    invoiceModal(invoice, sale).result.then((invoice) ->
       for i in sale.invoices
         continue if !i.active
         i.active = false
@@ -51,7 +51,7 @@ angular.module('awesomeCRM.invoices', [
       sale.invoices.push(invoice)
     )
 
-  $scope.edit = invoiceModal
+  $scope.edit = (invoice) -> invoiceModal(invoice, sale)
 
   $scope.delete = (invoice) ->
     invoicesProvider.delete(id: invoice.id)
@@ -102,12 +102,13 @@ angular.module('awesomeCRM.invoices', [
 ).directive('invoiceStateSelect', ['staticSelect', (staticSelect) ->
   return staticSelect({noneSelectedLabel: 'No State', items: ['Pending', 'Paid', 'Rejected']})
 ]).factory('invoiceModal', ['$uibModal', ($uibModal) ->
-  return (invoice) ->
+  return (invoice, sale) ->
     $uibModal.open(
       templateUrl: '/partials/app/invoices/form.html'
       controller: 'awesomeCRM.invoices.formController'
       size: 'lg'
       resolve:
         invoice: invoice
+        sale: sale
     )
 ])

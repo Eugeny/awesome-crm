@@ -28,6 +28,7 @@ angular.module('awesomeCRM.saleItems', [
   else
     throw 'saleItems indexController requires offer, delivery, invoice or order to be set in the scope'
   sale = $scope.sale
+  console.log(sale)
 
   $scope.parentEntity = parentEntity
   $scope.editable = true

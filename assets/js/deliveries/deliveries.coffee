@@ -3,9 +3,9 @@ angular.module('awesomeCRM.deliveries', [
   'awesomeCRM.deliveries.provider'
   'awesomeCRM.countries.provider'
   'awesomeCRM.comments.provider'
-]).controller('awesomeCRM.deliveries.formController', ($scope, $state, deliveriesProvider, delivery, $uibModalInstance) ->
+]).controller('awesomeCRM.deliveries.formController', ($scope, $state, deliveriesProvider, delivery, sale, $uibModalInstance) ->
   $scope.delivery = delivery
-  $scope.sale = delivery.sale
+  $scope.sale = sale
   $scope.shown = true
 
   $scope.close = (delivery) ->
@@ -43,7 +43,7 @@ angular.module('awesomeCRM.deliveries', [
     delivery.active = true
     delivery.sale = sale
 
-    deliveryModal().result.then((delivery) ->
+    deliveryModal(delivery, sale).result.then((delivery) ->
       for i in sale.deliveries
         continue if !i.active
         i.active = false
@@ -51,7 +51,7 @@ angular.module('awesomeCRM.deliveries', [
       sale.deliveries.push(delivery)
     )
 
-  $scope.edit = deliveryModal
+  $scope.edit = (delivery) -> deliveryModal(delivery, sale)
 
   $scope.delete = (delivery) ->
     deliveriesProvider.delete(id: delivery.id)
@@ -117,13 +117,14 @@ angular.module('awesomeCRM.deliveries', [
 ).directive('deliveryStateSelect', ['staticSelect', (staticSelect) ->
   return staticSelect({noneSelectedLabel: 'No State', items: ['Pending', 'Delivery', 'Delivered', 'Returned', 'Failed']})
 ]).factory('deliveryModal', ['$uibModal', ($uibModal) ->
-  return (delivery) ->
+  return (delivery, sale) ->
     $uibModal.open(
       templateUrl: '/partials/app/deliveries/form.html'
       controller: 'awesomeCRM.deliveries.formController'
       size: 'lg'
       resolve:
         delivery: delivery
+        sale: sale
     )
 ])
 

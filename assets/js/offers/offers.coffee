@@ -3,9 +3,9 @@ angular.module('awesomeCRM.offers', [
   'awesomeCRM.offers.provider'
   'awesomeCRM.countries.provider'
   'awesomeCRM.comments.provider'
-]).controller('awesomeCRM.offers.formController', ($scope, $state, offersProvider, offer, $uibModalInstance) ->
+]).controller('awesomeCRM.offers.formController', ($scope, $state, offersProvider, offer, sale, $uibModalInstance) ->
   $scope.offer = offer
-  $scope.sale = offer.sale
+  $scope.sale = sale
 
   $scope.close = (offer) ->
     if $uibModalInstance
@@ -48,7 +48,7 @@ angular.module('awesomeCRM.offers', [
     offer.active = true
     offer.sale = sale
 
-    offerModal().result.then((offer) ->
+    offerModal(offer, sale).result.then((offer) ->
       return if !offer
 
       for i in sale.offers
@@ -59,7 +59,7 @@ angular.module('awesomeCRM.offers', [
       sale.offers.push(offer)
     )
 
-  $scope.edit = offerModal
+  $scope.edit = (offer) -> offerModal(offer, sale)
 
   $scope.delete = (offer) ->
     offersProvider.delete(id: offer.id)
@@ -74,13 +74,14 @@ angular.module('awesomeCRM.offers', [
     templateUrl: '/partials/app/offers/index.html'
   }
 ).factory('offerModal', ['$uibModal', ($uibModal) ->
-  return (offer) ->
+  return (offer, sale) ->
     $uibModal.open(
       templateUrl: '/partials/app/offers/form.html'
       controller: 'awesomeCRM.offers.formController'
       size: 'lg'
       resolve:
         offer: offer
+        sale: sale
     )
 ])
 

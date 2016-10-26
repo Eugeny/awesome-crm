@@ -5,28 +5,7 @@ angular.module('awesomeCRM.machines', [
   $stateProvider.state('machines',
     url: '/machines'
     templateUrl: '/partials/app/machines/index.html'
-    resolve:
-      machines: (machinesProvider) -> machinesProvider.query()
-
-    controller: ($scope, $state, machines, machinesProvider, $uibModal) ->
-      $scope.machines = machines
-      $scope.filters = {}
-
-      $scope.delete = (machine) ->
-        machinesProvider.delete(id: machine.id)
-        i = $scope.machines.indexOf(machine)
-        $scope.machines.splice(i, 1) if i != -1
-
-      $scope.add = () ->
-        $uibModal.open(
-          templateUrl: '/partials/app/machines/form.html'
-          controller: 'awesomeCRM.machines.formController'
-          resolve:
-            machine: {}
-        ).result.then((machine) ->
-          return if !machine
-          $scope.machines.push(machine)
-        )
+    controller: 'awesomeCRM.machines.indexController'
   )
 
   # Create page
@@ -48,6 +27,28 @@ angular.module('awesomeCRM.machines', [
       $uibModalInstance: () -> null
     controller: 'awesomeCRM.machines.formController'
   )
+).controller('awesomeCRM.machines.indexController', ($scope, $state, machinesProvider, $uibModal) ->
+  criteria = {}
+  criteria.sale = $scope.sale.id ? $scope.sale if $scope.sale
+  machinesProvider.query(criteria, (machines) -> $scope.machines = machines)
+
+  $scope.filters = {}
+
+  $scope.delete = (machine) ->
+    machinesProvider.delete(id: machine.id)
+    i = $scope.machines.indexOf(machine)
+    $scope.machines.splice(i, 1) if i != -1
+
+  $scope.add = () ->
+    $uibModal.open(
+      templateUrl: '/partials/app/machines/form.html'
+      controller: 'awesomeCRM.machines.formController'
+      resolve:
+        machine: {}
+    ).result.then((machine) ->
+      return if !machine
+      $scope.machines.push(machine)
+    )
 ).controller('awesomeCRM.machines.formController', ($scope, $state, machinesProvider, machine, $uibModalInstance) ->
   $scope.machine = machine
 
@@ -91,6 +92,16 @@ angular.module('awesomeCRM.machines', [
   ]})
 ]).directive('machineServiceLevelSelect', ['staticSelect', (staticSelect) ->
   return staticSelect({noneSelectedLabel: 'No Service Level', label: 'Service Level', items: ['serviceLevel 1', 'serviceLevel 2', 'serviceLevel 3']})
-]).directive('machineSelect', ['machineProvider', 'dynamicSelect', (machineProvider, dynamicSelect) ->
-  return dynamicSelect(machineProvider, 'machines', {noneSelectedLabel: 'No Machine', label: 'Machine'})
-])
+]).directive('machineSelect', ['machinesProvider', 'dynamicSelect', (machinesProvider, dynamicSelect) ->
+  return dynamicSelect(machinesProvider, 'machines', {noneSelectedLabel: 'No Machine', label: 'Machine'})
+]).directive('machinesTable', () ->
+  return {
+    scope:{
+      sale: '='
+    }
+    link: (scope, elements, attrs) ->
+      scope.hideFilters = 'true'
+    controller: 'awesomeCRM.machines.indexController'
+    templateUrl: '/partials/app/machines/index.html'
+  }
+)
