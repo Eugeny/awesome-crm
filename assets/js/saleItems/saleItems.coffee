@@ -59,8 +59,8 @@ angular.module('awesomeCRM.saleItems', [
 
           netPrice = amount * price
           return {
-            netPrice: netPrice
-            totalPrice: netPrice * (1.0 - discount / 100) * (1 + (if vatEligible then 0.19 else 0))
+            netPrice: netPrice * (1.0 - discount / 100)
+            totalPrice: netPrice * (1 + (if vatEligible then 0.19 else 0))
             purchasePrice: amount * purchasePrice
           }
         ).reduce((carry, x) ->
