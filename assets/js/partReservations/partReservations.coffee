@@ -15,7 +15,9 @@ angular.module('awesomeCRM.partReservations', [
   $scope.partReservation = angular.copy(initialPartReservation)
 
   $scope.addPartReservation = () ->
+    partType = $scope.partReservation.partType
     partReservationsProvider.save($scope.partReservation, (partReservation) ->
+      partReservation.partType = partType
       $scope.partReservations.push(partReservation)
     )
     $scope.partReservation = angular.copy(initialPartReservation)
