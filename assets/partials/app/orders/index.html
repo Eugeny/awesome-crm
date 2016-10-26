@@ -34,7 +34,8 @@
             </tbody>
           </table>
           <div class="pull-right">
-            <a ng-if="sale.state == 'Order'" class="btn btn-default" href ng-click="add()">Create New Order</a>
+            <a ng-if="sale.state == 'Ordered'" class="btn btn-default" href ng-click="add()">Create New Order</a>
+            <a ng-if="sale.state != 'Ordered'" class="btn btn-success" href ng-click="sale.state = 'Ordered'">Create Order</a>
           </div>
         </div>
       </div>

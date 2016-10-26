@@ -88,8 +88,8 @@ angular.module('awesomeCRM.sales', [
     salesProvider.delete(sale)
     $scope.close()
 
-  $scope.setState = (state) ->
-    $scope.sale.state = state
+  $scope.$watch('sale.state', (state, prevState) ->
+    return if state == prevState
     salesProvider.update({id: sale.id}, {state: state})
     if state == 'Ordered'
       offer = $scope.sale.offers.find((x) -> x.active)
@@ -99,12 +99,12 @@ angular.module('awesomeCRM.sales', [
 
           delete order.id
           ordersProvider.save(order, (order) ->
-#            saleItemsProvider.addOrder(id: i.id, orderId: order.id) for i in offer.products
             salesProvider.addOrder(id: sale.id, orderId: order.id)
             sale.orders ?= []
             sale.orders.push(order)
           )
         )
+  )
 
   $scope.createInvoiceOrDelivery = () ->
     promises = (ordersProvider.get(id: o.id).$promise for o in sale.orders)
