@@ -25,9 +25,9 @@
                 <td>{{i.comment}}</td>
                 <td><span class="label" ng-class="{'label-success': i.active, 'label-danger': !i.active, }">{{i.active ? 'Yes' : 'No'}}</span></td>
                 <td class="actions">
-                  <div class="list-group">
-                    <a ng-if="i.id" class="list-group-item list-group-item-info" ng-click="$event.stopPropagation()" href="/export/offer/{{i.id}}" target="_blank">Export to PDF</a>
-                    <a ng-if="i.id" class="list-group-item list-group-item-danger" href ng-click="delete(i)">Delete</a>
+                  <div class="btn-group">
+                    <a ng-if="i.id" class="btn btn-info" ng-click="$event.stopPropagation()" href="/export/offer/{{i.id}}" target="_blank">Export to PDF</a>
+                    <a ng-if="i.id" class="btn btn-danger" href ng-click="delete(i)">Delete</a>
                   </div>
                 </td>
               </tr>
