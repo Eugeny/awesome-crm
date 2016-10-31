@@ -19,39 +19,39 @@
               <tr>
                 <th ng-if="!offer"></th>
                 <th>#</th>
-                <th>Name</th>
+                <th>Name/Type</th>
                 <th>Description</th>
-                <th>Type</th>
-                <th>Price</th>
-                <th>Purchase Price</th>
-                <th>Discount</th>
-                <th>Currency</th>
-                <th>Amount</th>
-                <th>State</th>
+                <th>Price/Purchase Price</th>
+                <th>Amount/Discount</th>
                 <th class="actions">Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="(k,i) in saleItems" ng-class="{'new-item': !i.id}">
-                <td ng-if="!offer">
+              <tr ng-repeat-start="(k,i) in saleItems" ng-class="{'new-item': !i.id}">
+                <td ng-if="!offer" rowspan="2">
                   <div checkbox ng-model="selected[i.id]"></div>
                 </td>
-                <td>{{i.id ? k + 1 : 'new'}}</td>
+                <td rowspan="2">{{i.id ? k + 1 : 'new'}}</td>
                 <td><input class="form-control" type="text" ng-model="i.name" ng-disabled="!editable && i.id"></td>
-                <td><textarea class="form-control" type="text" ng-model="i.description" ng-disabled="!editable && i.id"></textarea></td>
-                <td><div product-type-select model="i.type" ng-disabled="!editable && i.id"></div></td>
-                <td><input class="form-control" type="text" ng-model="i.price" ng-disabled="!editable && i.id"></td>
-                <td><input class="form-control" type="text" ng-model="i.purchasePrice" ng-disabled="!editable && i.id"></td>
-                <td><input class="form-control" type="text" ng-model="i.discount" ng-disabled="!editable && i.id"></td>
-                <td><div currency-select label="" model="i.currency" ng-disabled="!editable && i.id"></div></td>
-                <td><input class="form-control" type="text" ng-model="i.amount" ng-disabled="!editable && i.id"></td>
+                <td rowspan="2"><textarea class="form-control" type="text" ng-model="i.description" ng-disabled="!editable && i.id"></textarea></td>
                 <td>
-                  <div product-state-select model="i.state" ng-disabled="!stateEditable"></div>
+                  <input class="form-control" type="text" ng-model="i.price" ng-disabled="!editable && i.id">
+                  <div currency-select label="" model="i.currency" ng-disabled="!editable && i.id"></div>
                 </td>
+                <td><input class="form-control" type="text" ng-model="i.amount" ng-disabled="!editable && i.id"></td>
                 <td class="text-right">
                   <div class="list-group">
                     <a class="list-group-item list-group-item-success" ng-if="!i.id" href ng-click="add(i)">Add</a>
                     <a class="list-group-item list-group-item-info" ng-if="editable && i.id && i.type == 'Product'" href ng-click="createMachine(i)">Create Machine</a>
+                  </div>
+                </td>
+              </tr>
+              <tr ng-repeat-end ng-class="{'new-item': !i.id}">
+                <td><div product-type-select model="i.type" ng-disabled="!editable && i.id"></div></td>
+                <td><input class="form-control" type="text" ng-model="i.purchasePrice" ng-disabled="!editable && i.id"></td>
+                <td><input class="form-control" type="text" ng-model="i.discount" ng-disabled="!editable && i.id"></td>
+                <td class="text-right">
+                  <div class="list-group">
                     <a class="list-group-item list-group-item-danger" ng-if="editable && i.id" href confirm="{{'DELETE_CONFIRMATION' | translate:{title: i.name} }}" ng-click="delete(i)">Delete</a>
                   </div>
                 </td>
@@ -59,7 +59,7 @@
             </tbody>
             <tfoot ng-if="!delivery">
               <tr>
-                <td colspan="4"></td>
+                <td colspan="1"></td>
 
                 <td class="text-right">Net Price:</td>
                 <td><input class="form-control" type="text" ng-model="parentEntity.netPrice"></td>
