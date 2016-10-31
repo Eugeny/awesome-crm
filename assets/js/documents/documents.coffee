@@ -5,7 +5,7 @@ angular.module('awesomeCRM.documents', [
     url: '/documents/:type'
     templateUrl: '/partials/app/documents/index.html'
 
-    controller: ($scope, $stateParams, $state, offersProvider, ordersProvider, invoicesProvider, deliveriesProvider, invoiceModal, offerModal, orderModal, deliveryModal) ->
+    controller: ($scope, $stateParams, $state, salesProvider, offersProvider, ordersProvider, invoicesProvider, deliveriesProvider, invoiceModal, offerModal, orderModal, deliveryModal) ->
       $scope.type = type = $stateParams.type
 
       cb = (docs) -> $scope.documents = docs
@@ -31,6 +31,9 @@ angular.module('awesomeCRM.documents', [
 
       $scope.title = title
       $scope.go = (entity) ->
-        editModal(entity, entity.sale)
+        if typeof entity.sale == 'object'
+          editModal(entity, entity.sale)
+        else
+          salesProvider.get(id: entity.sale, (sale) -> entity.sale = sale; $scope.go(entity))
   )
 )
