@@ -55,7 +55,7 @@
                 <td><a href="tel:{{i.phone}}">{{i.phone}}</a></td>
                 <td class="actions">
                   <div class="btn-group">
-                    <a class="btn btn-danger" href ng-click="delete(i)">Delete</a>
+                    <a class="btn btn-danger" href confirm="{{'DELETE_CONFIRMATION' | translate:{title: i.firstName + ' ' + i.lastName} }}" ng-click="delete(i)">Delete</a>
                   </div>
                 </td>
               </tr>

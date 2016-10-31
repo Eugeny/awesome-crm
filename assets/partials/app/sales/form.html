@@ -36,7 +36,7 @@
               <div class="form-group text-center">
                 <a href ng-click="close()" class="btn btn-primary">Cancel</a>
                 <button type="submit" class="btn btn-success">Save</button>
-                <a ng-if="sale.id" href ng-click="delete(sale)" class="btn btn-danger">Delete</a>
+                <a ng-if="sale.id" href confirm="{{'DELETE_CONFIRMATION' | translate:{title: sale.name} }}" ng-click="delete(sale)" class="btn btn-danger">Delete</a>
                 <a ng-if="sale.id" href ng-click="createInvoiceOrDelivery()" class="btn btn-default">Create Invoice or Delivery</a>
               </div>
             </fieldset>

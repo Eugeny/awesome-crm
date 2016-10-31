@@ -109,7 +109,7 @@
                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                   <a ui-sref="contacts" class="btn btn-primary">Cancel</a>
                   <button type="submit" class="btn btn-success">Save</button>
-                  <a ng-if="person.id" href ng-click="delete(person.id)" class="btn btn-danger">Delete</a>
+                  <a ng-if="person.id" href confirm="{{'DELETE_CONFIRMATION' | translate:{title: person.firstName + ' ' + person.lastName} }}" ng-click="delete(person.id)" class="btn btn-danger">Delete</a>
                 </div>
               </div>
             </fieldset>

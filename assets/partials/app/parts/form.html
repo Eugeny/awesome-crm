@@ -25,7 +25,7 @@
                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                   <a href ng-click="close()" class="btn btn-primary">Cancel</a>
                   <button type="submit" class="btn btn-success">Save</button>
-                  <a ng-if="part.id" href ng-click="delete(part.id)" class="btn btn-danger">Delete</a>
+                  <a ng-if="part.id" href confirm="{{'DELETE_CONFIRMATION' | translate:{title: part.name} }}" ng-click="delete(part.id)" class="btn btn-danger">Delete</a>
                 </div>
               </div>
             </fieldset>

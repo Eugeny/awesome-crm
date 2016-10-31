@@ -55,6 +55,7 @@ var jsFilesToInject = [
   'bower_components/angular-filter/dist/angular-filter.min.js',
   'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
   'bower_components/angular-cookies/angular-cookies.min.js',
+  'bower_components/angular-translate/angular-translate.min.js',
 
   // All of the rest of your client-side js files
   // will be injected here in no particular order.

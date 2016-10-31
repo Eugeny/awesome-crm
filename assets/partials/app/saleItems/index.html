@@ -52,7 +52,7 @@
                   <div class="list-group">
                     <a class="list-group-item list-group-item-success" ng-if="!i.id" href ng-click="add(i)">Add</a>
                     <a class="list-group-item list-group-item-info" ng-if="editable && i.id && i.type == 'Product'" href ng-click="createMachine(i)">Create Machine</a>
-                    <a class="list-group-item list-group-item-danger" ng-if="editable && i.id" href ng-click="delete(i)">Delete</a>
+                    <a class="list-group-item list-group-item-danger" ng-if="editable && i.id" href confirm="{{'DELETE_CONFIRMATION' | translate:{title: i.name} }}" ng-click="delete(i)">Delete</a>
                   </div>
                 </td>
               </tr>

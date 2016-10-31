@@ -41,7 +41,7 @@
                 <td><a ui-sref="machines.edit({id: i.id})">{{i.name}}</a></td>
                 <td class="actions">
                   <div class="btn-group">
-                    <a class="btn btn-danger" href ng-click="delete(i)">Delete</a>
+                    <a class="btn btn-danger" href confirm="{{'DELETE_CONFIRMATION' | translate:{title: i.name} }}" ng-click="delete(i)">Delete</a>
                   </div>
                 </td>
               </tr>

@@ -154,4 +154,13 @@ angular.module('awesomeCRM.services', [
 
       i.addClass('active') for i in activeSubmenus
     )
+).directive('confirm', () ->
+  priority: -1
+  link: (scope, element, attrs) ->
+    element.bind('click', (e) ->
+      message = attrs.confirm
+      if(message && !confirm(message))
+        e.stopImmediatePropagation()
+        e.preventDefault()
+    )
 )

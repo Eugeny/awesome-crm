@@ -29,7 +29,7 @@
                   <a class="btn btn-success" ng-if="!i.part" ng-click="reserveByCode(i)">Reserve By Code</a>
                   <a class="btn btn-success" ng-if="!i.part" ng-click="reserveAny(i)">Reserve Any</a>
                   <a class="btn btn-warning" ng-if="i.part" ng-click="cancelReservation(i)">Cancel Reservation</a>
-                  <a class="btn btn-danger" ng-click="delete(i)">Delete</a>
+                  <a class="btn btn-danger" confirm="{{'DELETE_CONFIRMATION' | translate:{title: 'part reservation ' + i.id} }}" ng-click="delete(i)">Delete</a>
                 </div>
               </td>
             </tr>

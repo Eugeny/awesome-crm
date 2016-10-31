@@ -50,7 +50,7 @@
                 <td><span class="label" ng-class="{'label-success': i.isAvailable, 'label-danger': !i.isAvailable, }">{{i.isAvailable ? 'Yes' : 'No'}}</span></td>
                 <td class="actions">
                   <div class="btn-group">
-                    <a class="btn btn-danger" href ng-click="delete(i)">Delete</a>
+                    <a class="btn btn-danger" href confirm="{{'DELETE_CONFIRMATION' | translate:{title: 'part ' + i.id} }}" ng-click="delete(i)">Delete</a>
                   </div>
                 </td>
               </tr>
