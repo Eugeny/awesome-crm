@@ -106,7 +106,7 @@ angular.module('awesomeCRM.sales', [
         )
   )
 
-  $scope.createInvoiceOrDelivery = () ->
+  $scope.createDelivery = () ->
     promises = (ordersProvider.get(id: o.id).$promise for o in sale.orders)
     $q.allSettled(promises).then((data) ->
       items = []
@@ -121,18 +121,38 @@ angular.module('awesomeCRM.sales', [
             itemMarked[p.id] = true
 
       $uibModal.open(
-        templateUrl: '/partials/app/sales/deliveryOrInvoiceModal.html'
+        templateUrl: '/partials/app/sales/deliveryModal.html'
         controller: ($scope) ->
           $scope.saleItems = items
           $scope.sale = sale
-
           $scope.selected = {}
-          $scope.createDelivery = () -> $scope.deliveryProducts = $scope.saleItems.filter((x) -> $scope.selected[x.id])
-          $scope.createInvoice = () -> $scope.invoiceProducts = $scope.saleItems.filter((x) -> $scope.selected[x.id])
-
+          $scope.createDelivery = () -> $scope.deliveryProducts = $scope.saleItems.filter((x) -> $scope.selected[x.id]);
         size: 'lg'
-#        resolve:
-#          products: items
+      )
+    )
+
+  $scope.createInvoice = () ->
+    promises = (deliveriesProvider.get(id: o.id).$promise for o in sale.deliveries)
+    $q.allSettled(promises).then((data) ->
+      items = []
+      itemMarked = []
+
+      for i in data
+        continue if i.state != 'fulfilled'
+
+        for p in i.value.products
+          if !itemMarked[p.id]
+            items.push(p)
+            itemMarked[p.id] = true
+
+      $uibModal.open(
+        templateUrl: '/partials/app/sales/invoiceModal.html'
+        controller: ($scope) ->
+          $scope.saleItems = items
+          $scope.sale = sale
+          $scope.selected = {}
+          $scope.createInvoice = () -> $scope.invoiceProducts = $scope.saleItems.filter((x) -> $scope.selected[x.id]);
+        size: 'lg'
       )
     )
 ).directive('saleSelect', ['salesProvider', 'dynamicSelect', (salesProvider, dynamicSelect) ->

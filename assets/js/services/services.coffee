@@ -115,7 +115,7 @@ angular.module('awesomeCRM.services', [
       ), interval)
 ).directive('checkbox', () ->
   scope:
-    ngModel: '='
+    model: '='
     label: '@'
   template: '<div class="checkbox"><label><input ng-model="ngModel" type="checkbox">{{label}}</label></div>'
 ).factory('formErrorHandler', () ->
