@@ -44,10 +44,15 @@ module.exports = {
     .populate('products')
     .then((x) ->
       injectSale(x, (x) ->
-        # for dev
-        #        console.log(x)
-        #        x.products.push(i) for i in x.products
-        #        x.products.push(i) for i in x.products
+        # for development
+        ###
+        console.log(x)
+        x.products.push(i) for i in x.products
+        x.products.push(i) for i in x.products
+        x.products.push(i) for i in x.products
+        x.products.push(i) for i in x.products
+        x.products.push(i) for i in x.products
+        ###
 
         outputExport(res, {
           object: x
