@@ -33,43 +33,49 @@
                 </td>
                 <td rowspan="2">{{i.id ? k + 1 : 'new'}}</td>
                 <td><input class="form-control" type="text" ng-model="i.name" ng-disabled="!editable && i.id"></td>
-                <td rowspan="2"><textarea class="form-control" type="text" ng-model="i.description" ng-disabled="!editable && i.id"></textarea></td>
+                <td rowspan="2"><textarea style="height: 100%" class="form-control" type="text" ng-model="i.description" ng-disabled="!editable && i.id"></textarea></td>
                 <td>
-                  <input class="form-control" type="text" ng-model="i.price" ng-disabled="!editable && i.id">
-                  <div currency-select label="" model="i.currency" ng-disabled="!editable && i.id"></div>
+
+                  <div class="input-group">
+                    <input class="form-control" type="text" ng-model="i.price" ng-disabled="!editable && i.id">
+                    <div class="input-group-btn">
+                      <div currency-select label="" model="i.currency" ng-disabled="!editable && i.id"></div>
+                    </div>
+                  </div>
+
+                  <!--<div class="row">
+                    <div class="col-xs-6">
+                      <input class="form-control" type="text" ng-model="i.price" ng-disabled="!editable && i.id">
+                    </div>
+                    <div class="col-xs-6">
+                      <div currency-select label="" model="i.currency" ng-disabled="!editable && i.id"></div>
+                    </div>
+                  </div>-->
                 </td>
                 <td><input class="form-control" type="text" ng-model="i.amount" ng-disabled="!editable && i.id"></td>
-                <td class="text-right">
+                <td class="text-right" rowspan="2">
                   <div class="list-group">
                     <a class="list-group-item list-group-item-success" ng-if="!i.id" href ng-click="add(i)">Add</a>
                     <a class="list-group-item list-group-item-info" ng-if="editable && i.id && i.type == 'Product'" href ng-click="createMachine(i)">Create Machine</a>
-                  </div>
-                </td>
-              </tr>
-              <tr ng-repeat-end ng-class="{'new-item': !i.id}">
-                <td><div product-type-select model="i.type" ng-disabled="!editable && i.id"></div></td>
-                <td><input class="form-control" type="text" ng-model="i.purchasePrice" ng-disabled="!editable && i.id"></td>
-                <td><input class="form-control" type="text" ng-model="i.discount" ng-disabled="!editable && i.id"></td>
-                <td class="text-right">
-                  <div class="list-group">
                     <a class="list-group-item list-group-item-danger" ng-if="editable && i.id" href confirm="{{'DELETE_CONFIRMATION' | translate:{title: i.name} }}" ng-click="delete(i)">Delete</a>
                   </div>
                 </td>
               </tr>
+              <tr ng-repeat-end ng-class="{'new-item': !i.id}">
+                <td style="border:none;"><div product-type-select model="i.type" ng-disabled="!editable && i.id"></div></td>
+                <td style="border:none;"><input class="form-control" type="text" ng-model="i.purchasePrice" ng-disabled="!editable && i.id"></td>
+                <td style="border:none;"><input class="form-control" type="text" ng-model="i.discount" ng-disabled="!editable && i.id"></td>
+              </tr>
             </tbody>
             <tfoot ng-if="!delivery">
               <tr>
-                <td colspan="1"></td>
-
-                <td class="text-right">Net Price:</td>
-                <td><input class="form-control" type="text" ng-model="parentEntity.netPrice"></td>
-
-                <td class="text-right">Total Price:</td>
-                <td><input class="form-control" type="text" ng-model="parentEntity.totalPrice"></td>
-
-                <td class="text-right">Purchase Price:</td>
-                <td><input class="form-control" type="text" ng-model="parentEntity.purchasePrice"></td>
-                <td></td>
+                <td colspan="6">
+                  <div class="row">
+                    <div class="col-xs-4">Net Price:<input class="form-control" type="text" ng-model="parentEntity.netPrice"></div>
+                    <div class="col-xs-4">Total Price:<input class="form-control" type="text" ng-model="parentEntity.totalPrice"></div>
+                    <div class="col-xs-4">Purchase Price:<input class="form-control" type="text" ng-model="parentEntity.purchasePrice"></div>
+                  </div>
+                </td>
               </tr>
             </tfoot>
           </table>
