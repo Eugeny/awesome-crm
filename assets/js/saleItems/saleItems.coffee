@@ -103,7 +103,11 @@ angular.module('awesomeCRM.saleItems', [
     saleItem.deliveries = [delivery] if delivery
     saleItem.invoices = [invoice] if invoice
     saleItem.sale = sale
-    saleItem.state = 'New'
+    if delivery
+      saleItem.state = 'Delivery'
+    else
+      saleItem.state = 'New'
+
     saleItemsProvider.save(
       saleItem,
       (saleItem) ->
