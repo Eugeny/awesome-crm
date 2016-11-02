@@ -28,7 +28,6 @@ angular.module('awesomeCRM.saleItems', [
   else
     throw 'saleItems indexController requires offer, delivery, invoice or order to be set in the scope'
   sale = $scope.sale
-  console.log(sale)
 
   $scope.parentEntity = parentEntity
   $scope.editable = true
@@ -64,12 +63,14 @@ angular.module('awesomeCRM.saleItems', [
             totalPrice: netPrice * (1 + (if vatEligible then 0.19 else 0))
             purchasePrice: amount * purchasePrice
           }
-        ).reduce((carry, x) ->
-          carry ?= {}
-          for k,i of x
-            carry[k] ?= 0
-            carry[k] += i
-          return carry
+        ).reduce(
+          (carry, x) ->
+            carry ?= {}
+            for k,i of x
+              carry[k] ?= 0
+              carry[k] += i
+            return carry
+          []
         )
       else
         null
@@ -87,8 +88,8 @@ angular.module('awesomeCRM.saleItems', [
     for i in $scope.saleItems
       i.discount ?= 0
       watch(i)
-    $scope.saleItems.push(angular.copy(initialProduct)) if canAdd
   )
+  $scope.newItem = angular.copy(initialProduct)
 
   $scope.delete = (saleItem) ->
     saleItemsProvider.delete(saleItem)
@@ -107,9 +108,10 @@ angular.module('awesomeCRM.saleItems', [
       (newSaleItem) ->
         $scope.errors = null
         saleItem.id = newSaleItem.id
+        $scope.saleItems.push(saleItem)
         watch(saleItem)
         if fromTable
-          $scope.saleItems.push(angular.copy(initialProduct))
+          $scope.newItem = angular.copy(initialProduct)
         else
           $scope.saleItems.splice($scope.saleItems.length - 1, 0, saleItem)
 
