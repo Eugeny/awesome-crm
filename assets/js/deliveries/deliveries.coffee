@@ -72,6 +72,7 @@ angular.module('awesomeCRM.deliveries', [
       sale: '='
       order: '='
       orders: '='
+      onSaved: '='
     }
     templateUrl: '/partials/app/deliveries/form.html'
     link: (scope, element, attrs) ->
@@ -107,9 +108,12 @@ angular.module('awesomeCRM.deliveries', [
             ordersProvider.get({id: order.id}, (order) ->
               for i in order.products
                 return if i.state != 'Delivery'
-              #all products are in Delivery State
+              #all products should be in Delivery State
+
               sale.state = 'Closed'
-              salesProvider.update({id: sale.id}, {state: 'Closed'})
+              salesProvider.update({id: sale.id}, {state: 'Closed'}, () ->
+                scope.onSaved() if scope.onSaved
+              )
             ) for order in orders
           )
         )

@@ -122,11 +122,12 @@ angular.module('awesomeCRM.sales', [
 
       $uibModal.open(
         templateUrl: '/partials/app/sales/deliveryModal.html'
-        controller: ($scope) ->
+        controller: ($scope, $uibModalInstance) ->
           $scope.saleItems = items
           $scope.sale = sale
           $scope.selected = {}
           $scope.createDelivery = () -> $scope.deliveryProducts = $scope.saleItems.filter((x) -> $scope.selected[x.id]);
+          $scope.onDeliverySaved = () -> $uibModalInstance.close()
         size: 'lg'
       )
     )
@@ -147,11 +148,12 @@ angular.module('awesomeCRM.sales', [
 
       $uibModal.open(
         templateUrl: '/partials/app/sales/invoiceModal.html'
-        controller: ($scope) ->
+        controller: ($scope, $uibModalInstance) ->
           $scope.saleItems = items
           $scope.sale = sale
           $scope.selected = {}
-          $scope.createInvoice = () -> $scope.invoiceProducts = $scope.saleItems.filter((x) -> $scope.selected[x.id]);
+          $scope.createInvoice = () -> $scope.invoiceProducts = $scope.saleItems.filter((x) -> $scope.selected[x.id])
+          $scope.onInvoiceSaved = () -> $uibModalInstance.close()
         size: 'lg'
       )
     )

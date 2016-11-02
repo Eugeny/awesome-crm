@@ -65,11 +65,12 @@ angular.module('awesomeCRM.invoices', [
     }
     templateUrl: '/partials/app/invoices/index.html'
   }
-).directive('invoiceForm', (invoicesProvider, saleItemsProvider, companiesProvider) ->
+).directive('invoiceForm', (invoicesProvider, saleItemsProvider, companiesProvider, $q) ->
   return {
     scope:{
       products: '='
       sale: '='
+      onSaved: '='
     }
     templateUrl: '/partials/app/invoices/form.html'
     link: (scope, element, attrs) ->
@@ -93,10 +94,11 @@ angular.module('awesomeCRM.invoices', [
       scope.save = () ->
         invoicesProvider.save(scope.invoice, (invoice) ->
           scope.shown = false
-          #          salesProvider.addInvoice(id: sale.id, invoiceId: invoice.id)
+          promises = []
           for i in scope.invoice.products
-            saleItemsProvider.update({id: i.id}, {state: 'Invoice'})
+            promises.push(saleItemsProvider.update({id: i.id}, {state: 'Invoice'}).$promise)
           sale.invoices.push(invoice)
+          $q.all(promises).then(scope.onSaved) if scope.onSaved
         )
   }
 ).directive('invoiceStateSelect', ['staticSelect', (staticSelect) ->
