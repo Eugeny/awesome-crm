@@ -35,11 +35,12 @@ angular.module('awesomeCRM.saleItems', [
 
   watch = (saleItem) ->
     $scope.$watch(
-      () -> JSON.stringify(saleItem)
+      () -> saleItem
       debounce(1000, (newValue, oldValue) ->
         return if newValue == oldValue
         saleItemsProvider.update(saleItem)
       )
+      true
     )
     saleItem.amount ?= 0
     saleItem.price ?= 0
@@ -105,11 +106,12 @@ angular.module('awesomeCRM.saleItems', [
     saleItem.state = 'New'
     saleItemsProvider.save(
       saleItem,
-      (newSaleItem) ->
+      (saleItem) ->
         $scope.errors = null
-        saleItem.id = newSaleItem.id
         $scope.saleItems.push(saleItem)
+        parentEntity.products.push(saleItem)
         watch(saleItem)
+
         if fromTable
           $scope.newItem = angular.copy(initialProduct)
         else

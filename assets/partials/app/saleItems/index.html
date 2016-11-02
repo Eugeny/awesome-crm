@@ -27,7 +27,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat-start="(k,i) in saleItems">
+              <tr ng-repeat-start="(k,i) in saleItems track by $index">
                 <td ng-if="!offer" rowspan="2">
                   <div checkbox ng-model="selected[i.id]"></div>
                 </td>
