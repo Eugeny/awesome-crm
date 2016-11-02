@@ -23,8 +23,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="clickable" ng-click="edit(i)" ng-repeat="i in deliveries">
-              <td>{{i.id}}</td>
+            <tr class="clickable" ng-click="edit(i)" ng-repeat="(k,i) in deliveries">
+              <td>{{k + 1}}</td>
               <td>
                 <ul class="list-group">
                   <li ng-repeat="i in i.products" class="list-group-item">

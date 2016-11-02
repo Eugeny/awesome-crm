@@ -25,11 +25,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="clickable" ng-click="selected[i.id] = !selected[i.id]" ng-repeat="i in saleItems">
+            <tr class="clickable" ng-click="selected[i.id] = !selected[i.id]" ng-repeat="(k,i) in saleItems">
               <td ng-if="!offer" width="32">
                 <i class="fa" ng-class="selected[i.id] ? 'fa-check-square-o' : 'fa-square-o'"></i>
               </td>
-              <td>{{i.id}}</td>
+              <td>{{k + 1}}</td>
               <td>{{i.name}}</td>
               <td>{{i.description}}</td>
               <td>{{i.type}}</td>

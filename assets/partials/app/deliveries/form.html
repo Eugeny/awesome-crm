@@ -33,10 +33,10 @@
                   <div delivery-state-select label="State" model="delivery.state"></div>
 
                   <fs-row label="Start Date">
-                    <div fs-datetime="" ng-model="delivery.startDate" ng-disabled="disabled"></div>
+                    <input class="form-control" type="date" ng-model="delivery.startDate" ng-disabled="disabled">
                   </fs-row>
                   <fs-row label="End Date">
-                    <div fs-datetime="" ng-model="delivery.endDate" ng-disabled="disabled"></div>
+                    <input class="form-control" type="date" ng-model="delivery.endDate" ng-disabled="disabled">
                   </fs-row>
 
                   <fs-input as="text" name="tracking" label="Tracking"></fs-input>

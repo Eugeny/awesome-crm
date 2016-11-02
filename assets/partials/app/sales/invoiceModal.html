@@ -15,27 +15,21 @@
             <tr>
               <th></th>
               <th>ID</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Type</th>
-              <th>Price</th>
-              <th>Currency</th>
-              <th>Amount</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Tracking</th>
               <th>State</th>
             </tr>
             </thead>
             <tbody>
-            <tr class="clickable" ng-click="selected[i.id] = !selected[i.id]" ng-repeat="i in saleItems">
+            <tr class="clickable" ng-click="selected[i.id] = !selected[i.id]" ng-repeat="(k,i) in deliveries">
               <td ng-if="!offer" width="32">
                 <i class="fa" ng-class="selected[i.id] ? 'fa-check-square-o' : 'fa-square-o'"></i>
               </td>
-              <td>{{i.id}}</td>
-              <td>{{i.name}}</td>
-              <td>{{i.description}}</td>
-              <td>{{i.type}}</td>
-              <td>{{i.price}}</td>
-              <td>{{i.currency}}</td>
-              <td>{{i.amount}}</td>
+              <td>{{k + 1}}</td>
+              <td>{{i.startDate | amDateFormat:'ddd, MMM Do YYYY, h:mm a'}}</td>
+              <td>{{i.endDate | amDateFormat:'ddd, MMM Do YYYY, h:mm a'}}</td>
+              <td>{{i.tracking}}</td>
               <td>{{i.state}}</td>
             </tr>
             </tbody>

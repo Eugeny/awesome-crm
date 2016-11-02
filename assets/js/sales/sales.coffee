@@ -51,7 +51,7 @@ angular.module('awesomeCRM.sales', [
       $uibModalInstance: () -> null
     controller: 'awesomeCRM.sales.formController'
   )
-).controller('awesomeCRM.sales.formController', ($scope, $state, salesProvider, sale, $uibModalInstance, ordersProvider, offersProvider, deliveriesProvider, invoicesProvider, $q, $uibModal, $http) ->
+).controller('awesomeCRM.sales.formController', ($scope, $state, salesProvider, sale, $uibModalInstance, ordersProvider, offersProvider, deliveriesProvider, invoicesProvider, $q, $uibModal) ->
   sale.state ?= 'Offer'
   $scope.sale = sale
 
@@ -122,7 +122,7 @@ angular.module('awesomeCRM.sales', [
 
       $uibModal.open(
         templateUrl: '/partials/app/sales/deliveryModal.html'
-        controller: ($scope, $uibModalInstance) ->
+        controller: ($scope, $uibModalInstance, $q) ->
           $scope.saleItems = items
           $scope.sale = sale
           $scope.selected = {}
@@ -133,26 +133,29 @@ angular.module('awesomeCRM.sales', [
     )
 
   $scope.createInvoice = () ->
-    promises = (deliveriesProvider.get(id: o.id).$promise for o in sale.deliveries)
+    promises = (deliveriesProvider.get(id: d.id).$promise for d in sale.deliveries)
+
     $q.allSettled(promises).then((data) ->
-      items = []
-      itemMarked = []
-
-      for i in data
-        continue if i.state != 'fulfilled'
-
-        for p in i.value.products
-          if !itemMarked[p.id]
-            items.push(p)
-            itemMarked[p.id] = true
+      deliveries = (i.value for i in data when i.state == 'fulfilled')
 
       $uibModal.open(
         templateUrl: '/partials/app/sales/invoiceModal.html'
-        controller: ($scope, $uibModalInstance) ->
-          $scope.saleItems = items
+        controller: ($scope, $uibModalInstance, $q) ->
+          $scope.deliveries = deliveries
           $scope.sale = sale
           $scope.selected = {}
-          $scope.createInvoice = () -> $scope.invoiceProducts = $scope.saleItems.filter((x) -> $scope.selected[x.id])
+          $scope.createInvoice = () ->
+            items = []
+            itemMarked = []
+            for i in deliveries
+              continue if !$scope.selected[i.id]
+
+              for p in i.products
+                if !itemMarked[p.id]
+                  items.push(p)
+                  itemMarked[p.id] = true
+            $scope.invoiceProducts = items
+
           $scope.onInvoiceSaved = () -> $uibModalInstance.close()
         size: 'lg'
       )
