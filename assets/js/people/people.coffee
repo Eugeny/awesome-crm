@@ -17,12 +17,11 @@ angular.module('awesomeCRM.people', [
         groupField:
           key: 'alph'
         reverseName: $cookies.getObject("#{cookiePrefix}.reverseName")
+        createdAt:
+          startDate: null
+          endDate: null
       }
       $scope.groupHidden = {}
-
-      $scope.resetFilters = () ->
-        for k of $scope.filters
-          delete $scope.filters[k]
 
       $scope.$watch('filter.groupField.key', () ->
         $scope.groupHidden = {}
@@ -45,6 +44,34 @@ angular.module('awesomeCRM.people', [
 
       $scope.groupMinSortField = (group) ->
         return group[0].alph
+
+
+      $scope.filterDateRangeOptions =
+        ranges:
+          'Today': [
+            moment()
+            moment()
+          ]
+          'Yesterday': [
+            moment().subtract(1, 'days')
+            moment().subtract(1, 'days')
+          ]
+          'Last 7 Days': [
+            moment().subtract(6, 'days')
+            moment()
+          ]
+          'Last 30 Days': [
+            moment().subtract(29, 'days')
+            moment()
+          ]
+          'This Month': [
+            moment().startOf('month')
+            moment()
+          ]
+          'Last Month': [
+            moment().subtract(1, 'month').startOf('month')
+            moment().subtract(1, 'month').endOf('month')
+          ]
   )
 
   # Create page
@@ -126,4 +153,13 @@ angular.module('awesomeCRM.people', [
     )
 ).directive('personSelect', ['peopleProvider', 'dynamicSelect', (peopleProvider, dynamicSelect) ->
   return dynamicSelect(peopleProvider, 'people', {noneSelectedLabel: 'No Person', labelFn: (p) -> "#{p.firstName} #{p.lastName}"})
-])
+]).filter('dateRangeFilter', ($filter) ->
+  (items, field, range) ->
+    $filter('filter')(items, (v) ->
+      return true if !range.startDate and !range.endDate
+      date = moment(v[field])
+      return false if range.startDate and date < range.startDate
+      return false if range.endDate and date > range.endDate
+      return true
+    )
+)

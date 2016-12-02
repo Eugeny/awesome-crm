@@ -8,6 +8,7 @@ angular.module('awesomeCRM', [
   'ui.bootstrap'
   'ngCookies'
   'pascalprecht.translate'
+  'daterangepicker'
   'awesomeCRM.services'
   'awesomeCRM.translations'
   'awesomeCRM.people'

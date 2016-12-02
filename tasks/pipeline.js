@@ -26,7 +26,7 @@ var cssFilesToInject = [
   'bower_components/gentelella/vendors/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2',
   'bower_components/angular-formstamp/formstamp.css',
   'bower_components/angular-bootstrap/ui-bootstrap-csp.css',
-
+  'bower_components/bootstrap-daterangepicker/daterangepicker.css',
 
   'styles/**/*.css'
 ];
@@ -56,6 +56,8 @@ var jsFilesToInject = [
   'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
   'bower_components/angular-cookies/angular-cookies.min.js',
   'bower_components/angular-translate/angular-translate.min.js',
+  'bower_components/bootstrap-daterangepicker/daterangepicker.js',
+  'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
 
   // All of the rest of your client-side js files
   // will be injected here in no particular order.
