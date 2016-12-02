@@ -122,7 +122,7 @@
             <TD><P class="p10 ft0"><%= numeral(object.netPrice).format('0,0.00') %>€</P></TD>
           </TR>
           <% var vat = 0 %>
-          <% if(object.vatEligible){ %>
+          <% if(object.vatEligible || (object.sale.company && object.sale.company.vatId)){ %>
           <% vat = Math.round(object.netPrice * 19) / 100 %>
             <TR>
               <TD></TD>
@@ -145,7 +145,13 @@
       <p>&nbsp;</p>
       <P><b><%= type %> <NOBR><%= object.id %></NOBR></b></P>
       <P><%= typeDate %>: <%= moment().format('DD.MM.YYYY') %></P>
-      <% if(object.sale.company) { %><P>Ihre <NOBR>Kunden-Nr.</NOBR> <%= object.sale.company.id %></P><% } %>
+
+      <% if(object.sale.company) { %>
+        <P>Ihre <NOBR>Kunden-Nr.</NOBR> <%= object.sale.company.id %></P>
+        <% if(object.sale.company.vatId) { %>
+          <P>Vat ID <%= object.sale.company.vatId %></P>
+        <% } %>
+      <% } %>
 
       <% if (object.sale.localContact){ %>
       <p>&nbsp;</p>

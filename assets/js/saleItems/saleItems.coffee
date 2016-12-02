@@ -4,7 +4,6 @@ angular.module('awesomeCRM.saleItems', [
 ]).controller('awesomeCRM.saleItems.indexController', ($q, $scope, formErrorHandler, saleItemsProvider, offersProvider, ordersProvider, deliveriesProvider, invoicesProvider, debounce, machinesProvider, partTypeItemsProvider, partReservationsProvider) ->
   offer = null
   order = null
-  canAdd = true
 
   initialProduct =
     amount: 1
@@ -56,7 +55,7 @@ angular.module('awesomeCRM.saleItems', [
           amount = if saleItem.amount then saleItem.amount else 0
           purchasePrice = if saleItem.purchasePrice then saleItem.purchasePrice else 0
           discount = if saleItem.discount then saleItem.discount else 0
-          vatEligible = parentEntity.vatEligible
+          vatEligible = parentEntity.vatEligible or sale.company.vatId
 
           netPrice = amount * price
           return {
@@ -71,16 +70,16 @@ angular.module('awesomeCRM.saleItems', [
               carry[k] ?= 0
               carry[k] += i
             return carry
-          []
+          {}
         )
       else
         null
     (newValue, oldValue) ->
+      console.log(newValue)
       return if !newValue
       for k,i of newValue
         parentEntity[k] = i if !parentEntity[k] or (saleItemsWatchLoaded and oldValue[k] != i)
-      if not saleItemsWatchLoaded
-        saleItemsWatchLoaded = true
+      saleItemsWatchLoaded = true
     true
   )
 
