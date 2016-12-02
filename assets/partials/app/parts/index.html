@@ -47,7 +47,7 @@
                 <td>{{i.barcode}}</td>
                 <td>{{i.type.name}}</td>
                 <td>{{i.location}}</td>
-                <td><span class="label" ng-class="{'label-success': i.isAvailable, 'label-danger': !i.isAvailable, }">{{i.isAvailable ? 'Yes' : 'No'}}</span></td>
+                <td><span class="label" ng-class="{'label-success': i.isAvailable, 'label-danger': !i.isAvailable, }">{{i.isAvailable ? 'Available' : 'Reserved'}}</span></td>
                 <td class="actions">
                   <div class="btn-group">
                     <a class="btn btn-danger" href confirm="{{'DELETE_CONFIRMATION' | translate:{title: 'part ' + i.id} }}" ng-click="delete(i)">Delete</a>
