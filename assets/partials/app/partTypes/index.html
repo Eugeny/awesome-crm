@@ -38,6 +38,8 @@
                 <th>SubType</th>
                 <th>Price</th>
                 <th>Supplier</th>
+                <th>Available</th>
+                <th>Reserved</th>
                 <th class="actions">Actions</th>
               </tr>
             </thead>
@@ -49,6 +51,8 @@
                 <td>{{i.subtype}}</td>
                 <td>{{i.price}}</td>
                 <td>{{i.supplier.name}}</td>
+                <td>{{i.partsCount[1]}}</td>
+                <td>{{i.partsCount[0]}}</td>
                 <td class="actions">
                   <div class="btn-group">
                     <a class="btn btn-danger" href confirm="{{'DELETE_CONFIRMATION' | translate:{title: i.name} }}" ng-click="delete(i)">Delete</a>
