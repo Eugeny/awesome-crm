@@ -1,0 +1,546 @@
+<div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+      <div class="x_content">
+        <h3>Mainboard</h3>
+
+        <div>
+          <table class="table table-striped table-hover table-bordered">
+            <tr>
+              <th>Type</th>
+              <th>SN</th>
+            </tr>
+            <tr ng:repeat="mb in [machine.config.mb]">
+              <td>
+                <select class="form-control" ng:model="mb.type">
+                  <option>Supermicro X9DRH-7TF</option>
+                  <option>Supermicro X10SLH-F</option>
+                </select>
+              </td>
+              <td>
+                <input type="text" ng:model="mb.sn" class="form-control" />
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>CPU</h3>
+
+        <div>
+          <table class="table table-striped table-hover table-bordered">
+            <tr>
+              <th>Position</th>
+              <th>Type</th>
+              <th>SN</th>
+              <th></th>
+            </tr>
+            <tr ng:repeat="cpu in machine.config.cpus">
+              <td>
+                <input type="number" ng:model="cpu.id" class="form-control" />
+              </td>
+              <td>
+                <select class="form-control" ng:model="cpu.type">
+                  <option>Intel Xeon E5-2630 V2</option>
+                  <option>Intel Xeon E5-2620 V2</option>
+                  <option>Intel Xeon E5-2620</option>
+                  <option>Intel Xeon E3-1220 V3</option>
+                </select>
+              </td>
+              <td>
+                <input type="text" ng:model="cpu.sn" class="form-control" />
+              </td>
+              <td>
+                <a ng:click="machine.config.cpus.splice($index, 1)" class="btn btn-danger">
+                  <i class="fa fa-times"></i>
+                </a>
+              </td>
+            </tr>
+          </table>
+          <a class="btn btn-primary" ng:click="machine.config.cpus.push({})">
+            <i class="fa fa-plus"></i> Add
+          </a>
+        </div>
+
+        <h3>CPU Cooler</h3>
+
+        <div>
+          <table class="table table-striped table-hover table-bordered">
+            <tr>
+              <th>Position</th>
+              <th>Type</th>
+              <th>SN</th>
+              <th></th>
+            </tr>
+            <tr ng:repeat="cooler in machine.config.coolers">
+              <td>
+                <input type="number" ng:model="cooler.id" class="form-control" />
+              </td>
+              <td>
+                <select class="form-control" ng:model="cooler.type">
+                  <option>Dynatron R13</option>
+                  <option>Dynatron R14</option>
+                </select>
+              </td>
+              <td>
+                <input type="text" ng:model="cooler.sn" class="form-control" />
+              </td>
+              <td>
+                <a ng:click="machine.config.coolers.splice($index, 1)" class="btn btn-danger">
+                  <i class="fa fa-times"></i>
+                </a>
+              </td>
+            </tr>
+          </table>
+          <a class="btn btn-primary" ng:click="machine.config.coolers.push({})">
+            <i class="fa fa-plus"></i> Add
+          </a>
+        </div>
+
+
+        <h3>Internal interfaces</h3>
+
+        <div>
+          <table class="table table-striped table-hover table-bordered table-condensed">
+            <tr>
+              <th>Position</th>
+              <th>Name</th>
+              <th>Type, media</th>
+              <th>Speed</th>
+              <th>IP, MAC, Mask, Gateway</th>
+              <th></th>
+            </tr>
+            <tr ng:repeat="iface in machine.config.int_ifaces">
+              <td>
+                <input type="number" ng:model="iface.id" class="form-control" />
+              </td>
+              <td>
+                <select class="form-control" ng:model="iface.name">
+                  <option>ETH0</option>
+                  <option>ETH1</option>
+                  <option>ETH2</option>
+                  <option>IPMI</option>
+                </select>
+              </td>
+              <td>
+                <select class="form-control" ng:model="iface.type">
+                  <option>FC</option>
+                  <option>Ethernet</option>
+                  <option>SAS</option>
+                </select>
+                <select class="form-control" ng:model="iface.media">
+                  <option>Base-T</option>
+                  <option>SFP+</option>
+                  <option>Direct-Attach-Copper</option>
+                </select>
+              </td>
+              <td>
+                <select class="form-control" ng:model="iface.speed">
+                  <option>1 Gbit</option>
+                  <option>10 Gbit</option>
+              </td>
+              <td>
+                <input type="text" ng:model="iface.ip" class="form-control" />
+                <input type="text" ng:model="iface.mac" class="form-control" />
+                <input type="text" ng:model="iface.mask" class="form-control" />
+                <input type="text" ng:model="iface.gateway" class="form-control" />
+              </td>
+              <td>
+                <a ng:click="machine.config.int_ifaces.splice($index, 1)" class="btn btn-danger">
+                  <i class="fa fa-times"></i>
+                </a>
+              </td>
+            </tr>
+          </table>
+          <a class="btn btn-primary" ng:click="machine.config.int_ifaces.push({})">
+            <i class="fa fa-plus"></i> Add
+          </a>
+        </div>
+
+
+        <h3>RAM</h3>
+
+        <div>
+          <table class="table table-striped table-hover table-bordered">
+            <tr>
+              <th>Position</th>
+              <th>Type</th>
+              <th>SN</th>
+              <th></th>
+            </tr>
+            <tr ng:repeat="ram in machine.config.ram">
+              <td>
+                <input type="number" ng:model="ram.id" class="form-control" />
+              </td>
+              <td>
+                <select class="form-control" ng:model="ram.type">
+                  <option>8GB DDR3 1600 Reg. ECC Dual Rank</option>
+                </select>
+              </td>
+              <td>
+                <input type="text" ng:model="ram.sn" class="form-control" />
+              </td>
+              <td>
+                <a ng:click="machine.config.ram.splice($index, 1)" class="btn btn-danger">
+                  <i class="fa fa-times"></i>
+                </a>
+              </td>
+            </tr>
+          </table>
+          <a class="btn btn-primary" ng:click="machine.config.ram.push({})">
+            <i class="fa fa-plus"></i> Add
+          </a>
+        </div>
+
+        <h3>SSD</h3>
+
+        <div>
+          <table class="table table-striped table-hover table-bordered">
+            <tr>
+              <th>Position</th>
+              <th>Type</th>
+              <th>SN</th>
+              <th></th>
+            </tr>
+            <tr ng:repeat="ssd in machine.config.ssds">
+              <td>
+                <input type="number" ng:model="ssd.id" class="form-control" />
+              </td>
+              <td>
+                <select class="form-control" ng:model="ssd.type">
+                  <option>Intel 530 480GB</option>
+                  <option>Intel 530 180GB</option>
+                  <option>Intel 530 120GB</option>
+                  <option>Intel 530 80GB</option>
+                  <option>Intel 530 60GB</option>
+                  <option>Intel 330 60GB</option>
+                </select>
+              </td>
+              <td>
+                <input type="text" ng:model="ssd.sn" class="form-control" />
+              </td>
+              <td>
+                <a ng:click="machine.config.ssds.splice($index, 1)" class="btn btn-danger">
+                  <i class="fa fa-times"></i>
+                </a>
+              </td>
+            </tr>
+          </table>
+          <a class="btn btn-primary" ng:click="machine.config.ssds.push({})">
+            <i class="fa fa-plus"></i> Add
+          </a>
+        </div>
+
+        <h3>HDD</h3>
+
+        <script type="text/ng-template" id="hddrow-1.html">
+          <select class="form-control input-sm" ng:model="hdd.iface">
+            <option>SATA</option>
+            <option>SAS</option>
+            <option>SSD</option>
+          </select>
+        </script>
+        <script type="text/ng-template" id="hddrow-2.html">
+          <select class="form-control input-sm" ng:model="hdd.capacity">
+            <option>120 GB</option>
+            <option>240 GB</option>
+            <option>300 GB</option>
+            <option>480 GB</option>
+            <option>600 GB</option>
+            <option>900 GB</option>
+            <option>1 TB</option>
+            <option>1200 GB</option>
+            <option>1800 GB</option>
+            <option>2 TB</option>
+            <option>3 TB</option>
+            <option>4 TB</option>
+          </select>
+        </script>
+        <script type="text/ng-template" id="hddrow-3.html">
+          <select class="form-control input-sm" ng:model="hdd.rpm">
+            <option>7200rpm</option>
+            <option>10000rpm</option>
+            <option>15000rpm</option>
+          </select>
+        </script>
+        <script type="text/ng-template" id="hddrow-4.html">
+          <select class="form-control input-sm" ng:model="hdd.manufacturer">
+            <option>HGST Ultrastar</option>
+            <option>Western Digital</option>
+            <option>Seagate</option>
+          </select>
+        </script>
+
+
+        <div>
+          <table class="table table-striped table-hover table-bordered table-condensed">
+            <tr>
+              <th>Position</th>
+              <th>Type</th>
+              <th>Capacity</th>
+              <th>RPM</th>
+              <th>Manufacturer</th>
+              <th>SN</th>
+              <th></th>
+            </tr>
+            <tr ng:repeat="hdd in machine.config.hdds">
+              <td>
+                <input type="number" ng:model="hdd.id" class="form-control input-sm" />
+              </td>
+              <td><ng:include src="'hddrow-1.html'" /></td>
+              <td><ng:include src="'hddrow-2.html'" /></td>
+              <td><ng:include src="'hddrow-3.html'" /></td>
+              <td><ng:include src="'hddrow-4.html'" /></td>
+              <td>
+                <input type="text" ng:model="hdd.sn" class="form-control input-sm" />
+              </td>
+              <td>
+                <div class="btn-group">
+                  <a ng:click="clone(machine.config.hdds, hdd)" class="btn btn-default">
+                    <i class="fa fa-copy"></i>
+                  </a>
+                  <a ng:click="machine.config.hdds.splice($index, 1)" class="btn btn-danger">
+                    <i class="fa fa-times"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </table>
+          <textarea type="text" class="form-control" style="float:right; width: 50%; height: 32px" placeholder="Paste XLS" ng:model="_.pastedTable" ng:change="pasteHDDs(machine.config.hdds)"></textarea>
+          <a class="btn btn-primary" ng:click="machine.config.hdds.push({})">
+            <i class="fa fa-plus"></i> Add
+          </a>
+        </div>
+
+
+        <h3>JBODs</h3>
+
+        <div>
+          <table class="table table-striped table-hover table-bordered table-condensed">
+            <tr>
+              <th>Position</th>
+              <th>HDDs</th>
+              <th>SN</th>
+              <th></th>
+            </tr>
+            <tr ng:repeat="jbod in machine.config.jbods">
+              <td>
+                <input type="number" ng:model="jbod.id" class="form-control" />
+              </td>
+              <td>
+                <table class="table table-striped table-hover table-bordered table-condensed">
+                  <tr>
+                    <th>Position</th>
+                    <th>Type</th>
+                    <th>Capacity</th>
+                    <th>RPM</th>
+                    <th>Manufacturer</th>
+                    <th>SN</th>
+                    <th></th>
+                  </tr>
+                  <tr ng:repeat="hdd in jbod.hdds">
+                    <td>
+                      <input type="number" ng:model="hdd.id" class="form-control input-sm" />
+                    </td>
+                    <td><ng:include src="'hddrow-1.html'" /></td>
+                    <td><ng:include src="'hddrow-2.html'" /></td>
+                    <td><ng:include src="'hddrow-3.html'" /></td>
+                    <td><ng:include src="'hddrow-4.html'" /></td>
+                    <td>
+                      <input type="text" ng:model="hdd.sn" class="form-control input-sm" />
+                    </td>
+                    <td>
+                      <div class="btn-group">
+                        <a ng:click="clone(jbod.hdds, hdd)" class="btn btn-default">
+                          <i class="fa fa-copy"></i>
+                        </a>
+                        <a ng:click="jbod.hdds.splice($index, 1)" class="btn btn-danger">
+                          <i class="fa fa-times"></i>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+                <textarea type="text" class="form-control" style="float:right; width: 50%; height: 32px" placeholder="Paste XLS" ng:model="_.pastedTable" ng:change="pasteHDDs(jbod.hdds)"></textarea>
+                <a class="btn btn-primary" ng:click="jbod.hdds.push({})">
+                  <i class="fa fa-plus"></i> Add
+                </a>
+              </td>
+              <td>
+                <input type="text" ng:model="jbod.sn" class="form-control" />
+                <select class="form-control" ng:model="jbod.type">
+                  <option>24 bay</option>
+                  <option>60 bay</option>
+                </select>
+              </td>
+              <td>
+                <a ng:click="machine.config.jbods.splice($index, 1)" class="btn btn-danger">
+                  <i class="fa fa-times"></i>
+                </a>
+              </td>
+            </tr>
+          </table>
+          <a class="btn btn-primary" ng:click="machine.config.jbods.push({hdds:[]})">
+            <i class="fa fa-plus"></i> Add JBOD
+          </a>
+        </div>
+
+        <h3>RAID Controllers</h3>
+
+        <div>
+          <table class="table table-striped table-hover table-bordered">
+            <tr>
+              <th>Position</th>
+              <th>Type</th>
+              <th>Cache</th>
+              <th>BBU, BBU SN</th>
+              <th>SN</th>
+              <th></th>
+            </tr>
+            <tr ng:repeat="raid in machine.config.raids">
+              <td>
+                <input type="number" ng:model="raid.id" class="form-control" />
+              </td>
+              <td>
+                <select class="form-control" ng:model="raid.type">
+                  <option>ARECA ARC-1882-ix-12</option>
+                  <option>ARECA ARC-1882-ix-16</option>
+                  <option>ARECA ARC-1882-ix-24</option>
+                  <option>ARECA ARC-1883I</option>
+                  <option>ARECA ARC-1883-ix-12</option>
+                  <option>ARECA ARC-1883-ix-16</option>
+                  <option>ARECA ARC-1883-ix-24</option>
+                  <option>ARECA ARC-1883-LP</option>
+                  <option>LSI 9271-8i</option>
+                  <option>LSI 9280-16I4E</option>
+                </select>
+              </td>
+              <td>
+                <select class="form-control" ng:model="raid.cache">
+                  <option>1 GB</option>
+                  <option>2 GB</option>
+                  <option>4 GB</option>
+                  <option>8 GB</option>
+                </select>
+              </td>
+              <td>
+                <input type="checkbox" ng:model="raid.bbu" />
+                <input type="text" ng:model="raid.bbu_sn" />
+              </td>
+              <td>
+                <input type="text" ng:model="raid.sn" class="form-control" />
+              </td>
+              <td>
+                <a ng:click="machine.config.raids.splice($index, 1)" class="btn btn-danger">
+                  <i class="fa fa-times"></i>
+                </a>
+              </td>
+            </tr>
+          </table>
+          <a class="btn btn-primary" ng:click="machine.config.raids.push({})">
+            <i class="fa fa-plus"></i> Add
+          </a>
+        </div>
+
+        <h3>Interface cards</h3>
+
+        <div>
+          <table class="table table-striped table-hover table-bordered table-condensed">
+            <tr>
+              <th>Position</th>
+              <th>Type, media</th>
+              <th>Manufacturer, speed</th>
+              <th>Ports</th>
+              <th>PN, SN</th>
+              <th></th>
+            </tr>
+            <tr ng:repeat="iface in machine.config.ifaces">
+              <td>
+                <input type="number" ng:model="iface.id" class="form-control" />
+              </td>
+              <td>
+                <select class="form-control" ng:model="iface.type">
+                  <option>FC</option>
+                  <option>Ethernet</option>
+                  <option>SAS</option>
+                </select>
+                <select class="form-control" ng:model="iface.media">
+                  <option>Base-T</option>
+                  <option>SFP+</option>
+                  <option>QSFP+</option>
+                  <option>Direct-Attach-Copper</option>
+                  <option>SFF 8088</option>
+                </select>
+              </td>
+              <td>
+                <select class="form-control" ng:model="iface.manufacturer">
+                  <option>ATTO</option>
+                  <option>Chelsio</option>
+                  <option>Emulex</option>
+                  <option>Intel</option>
+                  <option>Mellanox</option>
+                  <option>Myricom</option>
+                  <option>Qlogic</option>
+                  <option>Silicom</option>
+                  <option>Small Tree</option>
+                  <option>Solarflare</option>
+                </select>
+                <select class="form-control" ng:model="iface.speed">
+                  <option>1 Gb</option>
+                  <option>4 Gb</option>
+                  <option>6 Gb</option>
+                  <option>8 Gb</option>
+                  <option>10 Gb</option>
+                  <option>12 Gb</option>
+                  <option>16 Gb</option>
+                  <option>40 Gb</option>
+                  <option>100 Gb</option>
+                </select>
+              </td>
+              <td>
+                <table class="table table-striped table-hover table-bordered table-condensed">
+                  <tr>
+                    <th>Position, IP, Mask, Gateway</th>
+                    <th>MAC, WWPN</th>
+                    <th></th>
+                  </tr>
+                  <tr ng:repeat="port in iface.ports">
+                    <td>
+                      <input type="number" ng:model="port.id" class="form-control input-sm" />
+                      <input type="text" ng:model="port.ip" class="form-control input-sm" />
+                      <input type="text" ng:model="port.mask" class="form-control input-sm" />
+                      <input type="text" ng:model="port.gateway" class="form-control input-sm" />
+                    </td>
+                    <td>
+                      <input type="text" ng:model="port.mac" class="form-control input-sm" />
+                      <input type="text" ng:model="port.wwpn" class="form-control input-sm" />
+                    </td>
+                    <td>
+                      <a ng:click="iface.ports.splice($index, 1)" class="btn btn-danger">
+                        <i class="fa fa-times"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+                <a class="btn btn-primary" ng:click="iface.ports.push({})">
+                  <i class="fa fa-plus"></i> Add
+                </a>
+              </td>
+              <td>
+                <input type="text" ng:model="iface.pn" class="form-control" />
+                <input type="text" ng:model="iface.sn" class="form-control" />
+              </td>
+              <td>
+                <a ng:click="machine.config.ifaces.splice($index, 1)" class="btn btn-danger">
+                  <i class="fa fa-times"></i>
+                </a>
+              </td>
+            </tr>
+          </table>
+          <a class="btn btn-primary" ng:click="machine.config.ifaces.push({ports:[]})">
+            <i class="fa fa-plus"></i> Add
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

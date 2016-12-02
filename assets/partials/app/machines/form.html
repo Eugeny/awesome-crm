@@ -21,7 +21,6 @@
                   <div machine-state-select model="machine.state"></div>
                   <fs-input as="text" name="serialNumber" label="Serial Number"></fs-input>
                   <div machine-type-select model="machine.type"></div>
-                  <fs-input as="text" name="config" label="Config"></fs-input>
                   <div company-select model="machine.company"></div>
                   <div sale-select model="machine.sale"></div>
                   <fs-row label="Manufactured On">
@@ -61,6 +60,7 @@
   </div>
 
   <div ng-if="machine.id">
+    <div machine-configurator machine="machine"></div>
     <div part-reservations-table machine="machine"></div>
   </div>
 </div>

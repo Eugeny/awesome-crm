@@ -104,4 +104,52 @@ angular.module('awesomeCRM.machines', [
     controller: 'awesomeCRM.machines.indexController'
     templateUrl: '/partials/app/machines/index.html'
   }
+).directive('machineConfigurator', () ->
+  return {
+    templateUrl: '/partials/app/machines/configurator.html'
+    scope:
+      machine: '='
+    link: (scope, elements, attrs) ->
+      scope._ = {}
+
+      scope.clone = (a, e) =>
+        e = angular.extend({}, e)
+        e.id += 1
+        for ee in a
+          if ee.id >= e.id
+            e.id = ee.id + 1
+        a.push(e)
+
+      scope.$watch(
+        () -> scope.machine.config
+        () ->
+          scope.machine.config ?= {}
+          scope.machine.config.mb ?= {}
+          scope.machine.config.cpus ?= []
+          scope.machine.config.coolers ?= []
+          scope.machine.config.ssds ?= []
+          scope.machine.config.hdds ?= []
+          scope.machine.config.jbods ?= []
+          scope.machine.config.ram ?= []
+          scope.machine.config.raids ?= []
+          scope.machine.config.ifaces ?= []
+          scope.machine.config.int_ifaces ?= []
+        true
+      )
+
+      scope.pasteHDDs = (target) ->
+        for line in scope._.pastedTable.split('\n')
+          tokens = line.split('\t')
+          if tokens[0] == 'Position'
+            continue
+          target.push {
+            id: parseInt(tokens[0])
+            iface: tokens[1]
+            capacity: tokens[2]
+            rpm: tokens[3]
+            manufacturer: tokens[4]
+            sn: tokens[5]
+          }
+        scope._.pastedTable = ''
+  }
 )
