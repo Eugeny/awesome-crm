@@ -72,6 +72,7 @@ angular.module('awesomeCRM.people', [
             moment().subtract(1, 'month').startOf('month')
             moment().subtract(1, 'month').endOf('month')
           ]
+      $scope.filterDateRangeClearable = true
   )
 
   # Create page
