@@ -75,7 +75,6 @@ angular.module('awesomeCRM.saleItems', [
       else
         null
     (newValue, oldValue) ->
-      console.log(newValue)
       return if !newValue
       for k,i of newValue
         parentEntity[k] = i if !parentEntity[k] or (saleItemsWatchLoaded and oldValue[k] != i)
