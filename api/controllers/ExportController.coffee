@@ -15,8 +15,8 @@ injectSale = (x, callback) ->
     callback(x)
   )
 
-outputExport = (res, viewOptions, pdf) ->
-  view = 'export'
+outputExport = (res, viewOptions, language, pdf) ->
+  view = "export/#{language.toLowerCase()}"
   viewOptions = Object.assign({
     layout: null
     moment: require('moment')
@@ -40,6 +40,7 @@ outputExport = (res, viewOptions, pdf) ->
 
 module.exports = {
   invoice: (req, res) ->
+    language = req.query.language
     Invoice.findOne(id: req.param('id'))
     .populate('products')
     .then((x) ->
@@ -59,11 +60,12 @@ module.exports = {
           type: 'Rechnung'
           typeDate: 'Rechnungsdatum'
           showPrices: true
-        }, typeof req.query['html'] == 'undefined')
+        }, language, typeof req.query['html'] == 'undefined')
       )
     )
 
   order: (req, res) ->
+    language = req.query.language
     Order.findOne(id: req.param('id'))
     .populate('products')
     .then((x) ->
@@ -73,11 +75,12 @@ module.exports = {
           type: 'Bestellung'
           typeDate: 'Bestellungsdatum'
           showPrices: true
-        }, typeof req.query['html'] == 'undefined')
+        }, language, typeof req.query['html'] == 'undefined')
       )
     )
 
   offer: (req, res) ->
+    language = req.query.language
     Offer.findOne(id: req.param('id'))
     .populate('products')
     .then((x) ->
@@ -87,11 +90,12 @@ module.exports = {
           type: 'Angebot'
           typeDate: 'Angebotsdatum'
           showPrices: true
-        }, typeof req.query['html'] == 'undefined')
+        }, language, typeof req.query['html'] == 'undefined')
       )
     )
 
   delivery: (req, res) ->
+    language = req.query.language
     Delivery.findOne(id: req.param('id'))
     .populate('products')
     .then((x) ->
@@ -101,7 +105,7 @@ module.exports = {
           type: 'Lieferschein'
           typeDate: 'Lieferscheindatum'
           showPrices: false
-        }, typeof req.query['html'] == 'undefined')
+        }, language, typeof req.query['html'] == 'undefined')
       )
     )
 }

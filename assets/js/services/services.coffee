@@ -163,4 +163,28 @@ angular.module('awesomeCRM.services', [
         e.stopImmediatePropagation()
         e.preventDefault()
     )
+).directive('exportLanguageSelect', ['staticSelect', (staticSelect) ->
+  return staticSelect({label: 'Language', noneSelectedLabel: 'No Language', items: ['En', 'De']})
+]).directive('exportLink', ($window, $uibModal) ->
+  priority: -1
+  scope:
+    type: '@'
+    exportLink: '='
+  link: (scope, element, attrs) ->
+    element.bind('click', (e) ->
+      $uibModal.open(
+        size: 'sm'
+        templateUrl: '/partials/app/misc/exportLanguageModal.html'
+        controller: ($scope, $uibModalInstance) ->
+          $scope.cancel = () -> $uibModalInstance.close(false)
+          $scope.save = () -> $uibModalInstance.close($scope.language)
+
+      ).result.then((result) ->
+        #result is false of language string
+        if result
+          $window.open("/export/#{scope.type}/#{scope.exportLink}?language=#{result.toLowerCase()}", '_blank');
+      )
+      e.stopImmediatePropagation()
+      e.preventDefault()
+    )
 )

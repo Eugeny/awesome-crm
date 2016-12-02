@@ -1,0 +1,30 @@
+<div class="">
+  <div class="page-title">
+    <div class="title">
+      <h3>Choose Export Language</h3>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_content">
+          <form ng-submit="save()">
+            <fieldset class="form-horizontal">
+              <div export-language-select model="language"></div>
+
+              <div class="ln_solid"></div>
+              <div class="form-group">
+                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                  <a ng-click="cancel()" class="btn btn-primary">Cancel</a>
+                  <button type="submit" class="btn btn-success">Continue</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
