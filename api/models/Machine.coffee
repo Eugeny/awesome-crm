@@ -39,3 +39,5 @@ module.exports =
       type: 'string'
     cvfsID:
       type: 'string'
+    comment:
+      type: 'string'

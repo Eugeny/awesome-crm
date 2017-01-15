@@ -40,7 +40,6 @@ angular.module('awesomeCRM', [
       'responseError': (response) ->
         status = response.status
         if status == 403
-#          $injector.get('$state').transitionTo('auth')
           $location.path('/auth')
 
         $q.reject(response)
