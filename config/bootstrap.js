@@ -154,6 +154,11 @@ var createMachines = function(machines){
     for (k = 0; k < machines.length; k++) {
       i = machines[k];
 
+      var manufacturedOn = moment(i.manufactured_on, 'DD.MM.YYYY')._d;
+      var maintenanceStart = moment(i.maintenance_start, 'DD.MM.YYYY')._d;
+      var maintenanceEnd = moment(i.maintenance_end, 'DD.MM.YYYY')._d;
+      console.log(manufacturedOn, maintenanceStart, maintenanceEnd);
+
       toPersist.push({
         name: i.name,
         serialNumber: i.sn,
@@ -161,9 +166,9 @@ var createMachines = function(machines){
         config: delHash(i.config),
         company: persisted.companies[i.company_id],
         sale: persisted.sales[i.project_id],
-        manufactured_on: moment(i.manufactured_on, 'DD.MM.YYYY')._d,
-        maintenance_start: moment(i.maintenance_start, 'DD.MM.YYYY')._d,
-        maintenance_end: moment(i.maintenance_end, 'DD.MM.YYYY')._d,
+        manufacturedOn: !isNaN(manufacturedOn) ? manufacturedOn : '',
+        maintenanceStart: !isNaN(maintenanceStart) ? maintenanceStart : '',
+        maintenanceEnd: !isNaN(maintenanceEnd) ? maintenanceEnd : '',
         serviceLevel: i.service_level,
         softwareRelease: i.software_release,
         chassis: i.chassis,
