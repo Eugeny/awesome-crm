@@ -162,5 +162,10 @@ angular.module('awesomeCRM.sales', [
     )
 ).directive('saleSelect', ['salesProvider', 'dynamicSelect', (salesProvider, dynamicSelect) ->
   return dynamicSelect(salesProvider, 'sales', {noneSelectedLabel: 'No Sale', label: 'Sale'})
+]).directive('saleStateSelect', ['staticSelect', (staticSelect) ->
+  return staticSelect(label: 'State', noneSelectedLabel: 'No State', items: ['Offer', 'Ordered', 'Closed', 'Cancelled', 'Tender', 'Project Identified'])
+]).directive('saleUsecaseSelect', ['staticSelect', (staticSelect) ->
+  return staticSelect(label: 'Use Case', noneSelectedLabel: 'No Use Case', items: ['Avid', 'Avid+Premiere', 'OB', 'Corporate Video'], freetext: true)
 ])
+
 

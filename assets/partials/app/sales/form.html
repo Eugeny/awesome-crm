@@ -20,14 +20,16 @@
                   <fs-input as="text" name="name" label="Name"></fs-input>
                   <div company-select label="Company" model="sale.company"></div>
                   <div person-select provider-options="{company: sale.company.id}" label="Company Contact" model="sale.companyContact"></div>
+                  <div person-select label="Tech Lead" model="sale.techLead"></div>
+                  <div person-select label="Sales Lead" model="sale.localContact"></div>
+                  <div sale-state-select model="sale.state"></div>
                 </div>
                 <div class="col-xs-6">
-                  <div person-select label="Local Contact" model="sale.localContact"></div>
-                  <fs-row label="State">
-                    <div fs-select ng-model="sale.state" items="['Offer', 'Ordered', 'Closed', 'Cancelled']">
-                      <span ng-show="item">{{item}}</span>
-                      <span ng-hide="item">No State</span>
-                    </div>
+                  <div sale-usecase-select model="sale.useCase"></div>
+                  <fs-input as="text" name="expectedRevenue" label="Expected Revenue"></fs-input>
+                  <fs-input as="text" name="reasonOfLoss" label="Reason of Loss"></fs-input>
+                  <fs-row label="Expected close date">
+                    <input class="form-control" type="date" ng-model="sale.expectedCloseDate">
                   </fs-row>
                   <fs-input as="textarea" name="description" label="Description"></fs-input>
                 </div>

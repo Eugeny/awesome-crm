@@ -14,10 +14,20 @@ module.exports =
       model: 'Person'
     localContact:
       model: 'Person'
+    techLead:
+      model: 'Person'
     state:
       type: 'string'
     description:
       type: 'string'
+    useCase:
+      type: 'string'
+    expectedRevenue:
+      type: 'float'
+    reasonOfLoss:
+      type: 'string'
+    expectedCloseDate:
+      type: 'datetime'
     offers:
       collection: 'Offer'
       via: 'sale'
