@@ -90,8 +90,12 @@ angular.module('awesomeCRM.machines', [
     'ELEMENTS GRID'
     'ELEMENTS CUBE'
   ]})
+]).directive('machineBackplaneSelect', ['staticSelect', (staticSelect) ->
+  return staticSelect(label: 'Backplane', noneSelectedLabel: 'No Backplane', items: ['Single Port', 'Expander'])
+]).directive('machineChassisSelect', ['staticSelect', (staticSelect) ->
+  return staticSelect(label: 'Chassis', noneSelectedLabel: 'No Chassis', items: ['1.0 - 2012', '2.0 - 11/2013', '3.0 - 04/2014', '4.0 - 2015'])
 ]).directive('machineServiceLevelSelect', ['staticSelect', (staticSelect) ->
-  return staticSelect({noneSelectedLabel: 'No Service Level', label: 'Service Level', items: ['serviceLevel 1', 'serviceLevel 2', 'serviceLevel 3']})
+  return staticSelect(label: 'Service Level', noneSelectedLabel: 'No Service Level', items: ['Silver', 'Gold'])
 ]).directive('machineSelect', ['machinesProvider', 'dynamicSelect', (machinesProvider, dynamicSelect) ->
   return dynamicSelect(machinesProvider, 'machines', {noneSelectedLabel: 'No Machine', label: 'Machine'})
 ]).directive('machinesTable', () ->
