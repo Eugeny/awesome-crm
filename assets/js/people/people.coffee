@@ -165,4 +165,6 @@ angular.module('awesomeCRM.people', [
     )
 ).directive('personRelationSelect', ['staticSelect', (staticSelect) ->
   return staticSelect(label: 'Relation', noneSelectedLabel: 'No Relation', items: ['Touch', 'Lead', 'Qualified lead', 'Potential customer', 'Customer'])
+]).directive('personTitleSelect', ['staticSelect', (staticSelect) ->
+  return staticSelect(label: 'Title', noneSelectedLabel: 'No Title', items: ['Mr.', 'Mrs.', 'Ms.', 'Dr.', 'Prof.', 'Prof. Dr.', 'Dipl-Ing.'], freetext: true)
 ])
