@@ -1,0 +1,108 @@
+{
+  "files": [
+    {
+      "project_id": 61,
+      "machine_id": null,
+      "user_id": 4,
+      "id": 2,
+      "name": "Angebot_2220.pdf"
+    },
+    ...
+  ],
+    "users": [
+      {
+        "username": "root",
+        "first_name": "Admin",
+        "last_name": "One",
+        "email": "a@a.com",
+        "is_superuser": true,
+        "id": 1
+      },
+      ...
+    ],
+  "contacts": [
+    {
+      "website": "www.mmc.de",
+      "city": "K\u00f6ln",
+      "first_name": "Martin",
+      "last_name": "Dirksen",
+      "zip": "50829",
+      "company_id": 203,
+      "country": "GERMANY",
+      "is_company_contact": false,
+      "fax": "",
+      "email": "\"martin.spaeth@mmc.de frank.dirksen@mmc.de\"",
+      "phone": "+49 221 250 1442",
+      "address": "Am Coloneum 1",
+      "id": 50
+    },
+    ...
+  ],
+  "companies": [
+    {
+      "website": "www.slgh.com",
+      "city": "Hamburg",
+      "fax": "+49 40 6579805-55",
+      "name": "Slaughterhouse\u00a0",
+      "zip": "20357",
+      "phone": "+49 40 657 98 050",
+      "country": "Germany",
+      "email": null,
+      "subtype": "Postproduction",
+      "address": "Neuer Kamp 30, Eingang A",
+      "type": "End customer",
+      "id": 36
+    },
+    ...
+  ],
+  "comments": [
+    {
+      "text": "IBC2014: war am Stand",
+      "project_id": null,
+      "user_id": 9,
+      "id": 101,
+      "contact_id": 187
+    },
+    ...
+  ],
+  "projects": [
+    {
+      "comment": "",
+      "status": "Request",
+      "name": "ZDF XSAN UPGRADE",
+      "num_clients_san": "19 XSAN /zus. WIN geplant",
+      "internal_contact_id": 8,
+      "contact_id": 143,
+      "company_id": 119,
+      "topic": "",
+      "throughput": "",
+      "num_clients_nas": "",
+      "date": "",
+      "id": 75
+    },
+    ...
+  ],
+  "machines": [
+    {
+      "comment": "Seriennummern der Festplatten - ygk0ndga\nygk0s8ka\nygjylksa\nygk0hn4a\nygk0p34a\nygk0weaa\nygk0hgwa\nygk0ndka\nygk0spla\nygk0weua\nygk0pe2a\nygk0hnga\nygk0hg1a\nygk0st5a\nygk0nvra\nygk0hlna\nygk0n04a\nygk0rtka\nygk1103a\nyk0hg5a\nygk0ljza\nygjyvgra\nygk0ljka\nygk0lkea\nygk0sdba",
+      "maintenance_end": "11.08.2014",
+      "service_level": "Silver",
+      "cvfs_id": "",
+      "type": "ELEMENTS ONE",
+      "config": { ... },
+      "company_id": null,
+      "maintenance_start": "12.08.2013",
+      "stornext_sn": "",
+      "software_release": "",
+      "chassis": "1.0 - 2012",
+      "sn": "",
+      "stornext_license": "",
+      "backplane": "Single Port Backplane",
+      "project_id": null,
+      "manufactured_on": "01.08.2013",
+      "id": 27,
+      "name": "SBA - BIG BROTHER"
+    },
+    ...
+  ]
+}

@@ -2,7 +2,6 @@ angular.module('awesomeCRM.companies', [
   'ui.router'
   'awesomeCRM.companies.provider'
   'awesomeCRM.countries.provider'
-  'awesomeCRM.comments.provider'
 ]).config(($stateProvider, $urlRouterProvider) ->
   companyTypes = [
     'End Customer'
@@ -107,40 +106,10 @@ angular.module('awesomeCRM.companies', [
       company: (companiesProvider, $stateParams) ->
         companiesProvider.get(id: $stateParams.id)
 
-    controller: ($scope, $state, company, companiesProvider, commentsProvider, Upload, $timeout, $uibModal) ->
+    controller: ($scope, $state, company, companiesProvider, Upload, $timeout, $uibModal) ->
       $scope.company = company
-      $scope.comment = {}
       $scope.companyTypes = companyTypes
 
-      $scope.addComment = () ->
-        $scope.comment.company = company.id
-        commentsProvider.save($scope.comment, (comment) ->
-          company.comments.push(comment)
-          companiesProvider.addComment({id: company.id, commentId: comment.id})
-          $scope.comment = {}
-        )
-
-      $scope.uploadingProgress = -1
-      $scope.uploadFiles = (files, errFiles) ->
-        $scope.uploadingProgress = 0
-        Upload.upload(
-          url: '/filey/upload'
-          arrayKey: '' # this is some weird piece of hack
-          data:
-            files: files
-        ).then(
-          (response) ->
-            $scope.uploadingProgress = -1
-            $scope.comment.files ?= []
-            $scope.comment.files = $scope.comment.files.concat(response.data)
-          ,
-          (response) ->
-            if response.status > 0
-              $scope.uploadingError = response.status + ': ' + response.data
-          ,
-          (evt) ->
-            $scope.uploadingProgress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total))
-        )
 
       $scope.save = () ->
         companiesProvider.update($scope.company, () -> $state.go('companies', null, {reload: true}))

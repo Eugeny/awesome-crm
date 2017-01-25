@@ -13,8 +13,8 @@ module.exports =
     .populate('orders')
     .populate('deliveries')
     .populate('invoices')
-    .then((partType) ->
-      res.json(partType)
+    .then((sale) ->
+      res.json(sale)
     ).catch((err) ->
       res.serverError(err)
     )
@@ -28,8 +28,8 @@ module.exports =
     .populate('orders')
     .populate('deliveries')
     .populate('invoices')
-    .then((partTypes) ->
-      res.json(partTypes)
+    .then((sales) ->
+      res.json(sales)
     ).catch((err) ->
       res.serverError(err)
     )

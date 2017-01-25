@@ -29,6 +29,7 @@
                       <span ng-hide="item">No State</span>
                     </div>
                   </fs-row>
+                  <fs-input as="textarea" name="description" label="Description"></fs-input>
                 </div>
               </div>
 
@@ -48,6 +49,7 @@
   </div>
 
   <div ng-if="sale.id">
+    <div comments-list sale="sale"></div>
     <div offers-table sale="sale"></div>
     <div orders-table sale="sale"></div>
     <div deliveries-table sale="sale"></div>

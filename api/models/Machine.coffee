@@ -41,3 +41,6 @@ module.exports =
       type: 'string'
     comment:
       type: 'string'
+    comments:
+      collection: 'Comment'
+      via: 'machine'

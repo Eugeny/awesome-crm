@@ -13,6 +13,7 @@ angular.module('awesomeCRM', [
   'awesomeCRM.translations'
   'awesomeCRM.people'
   'awesomeCRM.companies'
+  'awesomeCRM.comments'
   'awesomeCRM.partTypes'
   'awesomeCRM.productTemplates'
   'awesomeCRM.partTypeItems.provider'

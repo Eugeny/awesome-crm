@@ -120,4 +120,4 @@ nbproject
 /uploads/*
 /log
 /pm2.json
-1.json
+/fixtures/*.json

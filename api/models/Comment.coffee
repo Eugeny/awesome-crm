@@ -11,3 +11,10 @@ module.exports =
       model: 'company'
     person:
       model: 'person'
+    sale:
+      model: 'sale'
+    machine:
+      model: 'machine'
+    files:
+      collection: 'filey'
+      via: 'comment'

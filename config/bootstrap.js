@@ -17,6 +17,9 @@ var persisted = {
   people: {},
   sales: {},
   machines: {},
+  comments: {},
+  users: {},
+  files: {}
 };
 
 var createCompanies = function(companies){
@@ -89,6 +92,10 @@ var createPeople = function(people){
       }else{
         for(var i = 0; i < created.length; i++){
           persisted.people[people[i].id] = created[i];
+
+          if(people[i].is_company_contact){
+            Company.update(created[i].company, {contactPerson: created[i].id});
+          }
         }
         resolve();
       }
@@ -105,7 +112,8 @@ var createSales = function(sales){
       i = sales[k];
 
       var lines = [];
-      if(i.comment) lines.push("Comment: "+ i.comment);
+      var comments = [];
+      if(i.comment) comments.push({text:i.comment});
       if(i.topic) lines.push("Topic: "+ i.topic);
       if(i.throughput) lines.push("Throughput: "+ i.throughput);
       if(i.num_clients_san) lines.push("Num Clients San: "+ i.num_clients_san);
@@ -118,7 +126,8 @@ var createSales = function(sales){
         companyContact: persisted.people[i.contact_id],
         localContact: persisted.people[i.internal_contact_id],
         state: i.status,
-        comment: lines.join("\n")
+        description: lines.join("\n"),
+        comments: comments
       });
     }
 
@@ -157,7 +166,6 @@ var createMachines = function(machines){
       var manufacturedOn = moment(i.manufactured_on, 'DD.MM.YYYY')._d;
       var maintenanceStart = moment(i.maintenance_start, 'DD.MM.YYYY')._d;
       var maintenanceEnd = moment(i.maintenance_end, 'DD.MM.YYYY')._d;
-      console.log(manufacturedOn, maintenanceStart, maintenanceEnd);
 
       toPersist.push({
         name: i.name,
@@ -195,8 +203,108 @@ var createMachines = function(machines){
   });
 };
 
+var createUsers = function(users){
+  return new Promise(function(resolve, reject) {
+    var k, i;
+    var promises = [];
+    for (k = 0; k < users.length; k++) {
+      i = users[k];
+
+      (function(i) {
+        promises.push(new Promise(function (resolve, reject) {
+          User.register({
+            username: i.username,
+            firstName: i.first_name,
+            lastName: i.last_name,
+            email: i.email,
+            password: 123456789''
+          }).then(function(created){
+            persisted.users[i.id] = created;
+            resolve(created);
+          }, function(err){
+            console.log(err)
+            sails.log.error('Error: ' + err);
+            reject(err);
+          })
+        }));
+      })(i);
+    }
+
+    Promise.all(promises).then(resolve, reject);
+
+    sails.log.info('Inserting ' + promises.length + ' users');
+  });
+};
+
+var createComments = function(comments){
+  return new Promise(function(resolve, reject) {
+    var toPersist = [];
+
+    var k, i, p;
+    for (k = 0; k < comments.length; k++) {
+      i = comments[k];
+
+      toPersist.push({
+        text: i.text,
+        sale: i.project_id ? persisted.sales[i.project_id] : null,
+        person: i.project_id ? persisted.people[i.contact_id] : null,
+        createdBy: persisted.users[i.user_id]
+      });
+    }
+
+    sails.log.info('Inserting ' + toPersist.length + ' comments');
+    Comment.create(toPersist).exec(function(err, created){
+      if(err){
+        sails.log.error('Error: ' + err);
+        reject(err);
+      }else{
+        for(var i = 0; i < created.length; i++){
+          persisted.comments[comments[i].id] = created[i];
+        }
+        resolve();
+      }
+    });
+  });
+};
+
+var createFiles = function(files){
+  return new Promise(function(resolve, reject) {
+    var toPersist = [];
+
+    var k, i, p, filename;
+    for (k = 0; k < files.length; k++) {
+      i = files[k];
+      filename = i.name.replace(/[ ]/, '_');
+
+      toPersist.push({
+        text: i.text,
+        sale: i.project_id ? persisted.sales[i.project_id] : null,
+        machine: i.machine_id ? persisted.machines[i.machine_id] : null,
+        files:[{
+          fd: "/uploads/"+filename,
+          filename:filename
+        }],
+        createdBy: persisted.users[i.user_id]
+      });
+    }
+
+    sails.log.info('Inserting ' + toPersist.length + ' comments with files');
+    Comment.create(toPersist).exec(function(err, created){
+      if(err){
+        sails.log.error('Error: ' + err);
+        reject(err);
+      }else{
+        for(var i = 0; i < created.length; i++){
+          persisted.files[files[i].id] = created[i];
+        }
+        resolve();
+      }
+    });
+  });
+};
+
 module.exports.bootstrap = function(cb) {
-  fs.readFile('1.json', function(err, data){
+  fs.readFile('fixtures/in.json', function(err, data){
     if(err) return cb();
 
     console.log(err);
@@ -210,6 +318,9 @@ module.exports.bootstrap = function(cb) {
         function(){return createPeople(data.contacts);},
         function(){return createSales(data.projects);},
         function(){return createMachines(data.machines);},
+        function(){return createUsers(data.users);},
+        function(){return createComments(data.comments);},
+        function(){return createFiles(data.files);}
       ];
 
       var f = function(){
@@ -217,6 +328,12 @@ module.exports.bootstrap = function(cb) {
           var cur = funcs.shift();
           cur().then(f);
         }else{
+          for(var i in persisted){
+            for(var j in persisted[i]){
+              persisted[i][j] = persisted[i][j].id
+            }
+          }
+          fs.writeFile('fixtures/out.json', JSON.stringify(persisted));
           cb();
         }
       };

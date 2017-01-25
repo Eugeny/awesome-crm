@@ -16,7 +16,7 @@ module.exports =
       model: 'Person'
     state:
       type: 'string'
-    comment:
+    description:
       type: 'string'
     offers:
       collection: 'Offer'
@@ -32,4 +32,7 @@ module.exports =
       via: 'sale'
     invoices:
       collection: 'Invoice'
+      via: 'sale'
+    comments:
+      collection: 'Comment'
       via: 'sale'
