@@ -163,4 +163,6 @@ angular.module('awesomeCRM.people', [
       return false if range.endDate and date > range.endDate
       return true
     )
-)
+).directive('personRelationSelect', ['staticSelect', (staticSelect) ->
+  return staticSelect(label: 'Relation', noneSelectedLabel: 'No Relation', items: ['Touch', 'Lead', 'Qualified lead', 'Potential customer', 'Customer'])
+])

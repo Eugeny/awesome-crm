@@ -217,12 +217,12 @@ var createUsers = function(users){
             firstName: i.first_name,
             lastName: i.last_name,
             email: i.email,
-            password: 123456789''
+            password: '123456789'
           }).then(function(created){
             persisted.users[i.id] = created;
             resolve(created);
           }, function(err){
-            console.log(err)
+            console.log(err);
             sails.log.error('Error: ' + err);
             reject(err);
           })

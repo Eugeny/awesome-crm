@@ -22,6 +22,7 @@
               <fs-row>
                 <input placeholder="Created Date" date-range-picker class="form-control date-picker" type="text" ng-model="filters.createdAt" options="filterDateRangeOptions"  clearable="filterDateRangeClearable"/>
               </fs-row>
+              <span person-relation-select model="filters.relation"></span>
 
               <div class="checkbox">
                 <label>
@@ -48,7 +49,7 @@
                 <th class="actions">Actions</th>
               </tr>
             </thead>
-            <tbody ng-repeat="(k,group) in people | filter:filters.search | dateRangeFilter:'createdAt':filters.createdAt | groupBy:'alph' | toArray:true | orderBy:groupMinSortField">
+            <tbody ng-repeat="(k,group) in people | filter:filters.search | filter:{relation:filters.relation} | dateRangeFilter:'createdAt':filters.createdAt | groupBy:'alph' | toArray:true | orderBy:groupMinSortField">
               <tr class="active" ng-if="filters.groupField.key">
                 <td colspan="3">
                   <a href ng-click="groupHidden[k] = !groupHidden[k]"><b>{{ group.$key }}</b></a>

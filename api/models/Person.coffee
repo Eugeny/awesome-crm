@@ -27,6 +27,8 @@ module.exports =
       type: 'string'
     email:
       type: 'string'
+    relation:
+      type: 'string'
     company:
       model: 'Company'
     comments:
