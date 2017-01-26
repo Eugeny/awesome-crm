@@ -1,4 +1,4 @@
-<div class="thumbnail text-center">
+<div class="thumbnail text-center" ng-if="!!file.type">
   <a ng-if="file.type.indexOf('image/') >= 0" href="{{file.fd}}">
     <img src="{{file.fd}}" alt="{{file.filename}}">
   </a>
