@@ -42,7 +42,7 @@
               <tr class="clickable" ui-sref="productTemplates.edit({id: i.id})" ng-repeat="i in productTemplates | filter:filters.search">
                 <td>{{i.name}}</td>
                 <td>{{i.type}}</td>
-                <td>{{i.price}}</td>
+                <td>{{i.price}} {{i.currency}}</td>
                 <td class="actions">
                   <div class="btn-group">
                     <a class="btn btn-danger" href confirm="{{'DELETE_CONFIRMATION' | translate:{title: i.name} }}" ng-click="delete(i)">Delete</a>
